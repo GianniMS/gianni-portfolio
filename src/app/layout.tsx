@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { ImageBoundsProvider } from '@/context/ImageBoundsContext'
+import { HoverProvider } from '@/context/HoverContext'
 import { ReactNode } from 'react'
 
 export const metadata: Metadata = {
@@ -10,7 +12,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>{children}</body>
+      <body>
+        <ImageBoundsProvider>
+          <HoverProvider>
+            {children}
+          </HoverProvider>
+        </ImageBoundsProvider>
+      </body>
     </html>
   )
 }
