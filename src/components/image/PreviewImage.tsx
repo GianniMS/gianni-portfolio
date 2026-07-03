@@ -44,6 +44,7 @@ export default function PreviewImage({ items }: { items: PortfolioItem[] }) {
               alt={hovered.title}
               fill
               className="object-cover"
+              data-preview=""
             />
           </motion.div>
         )}

@@ -30,7 +30,7 @@ export default function HeroImage({ src, alt }: { src: string; alt: string }) {
       layoutId="hero"
       className="relative w-[420px] h-[490px] shrink-0"
     >
-      <Image src={`/${src}`} alt={alt} fill className="object-cover" />
+      <Image src={`/${src}`} alt={alt} fill className="object-cover" data-hero="" />
     </motion.div>
   )
 }
