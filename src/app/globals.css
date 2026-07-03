@@ -10,7 +10,7 @@
 @theme {
   --color-background: #fefffd;
   --color-foreground: #1a1a1a;
-  --color-blue: #0E3AFF;
+  --color-blue: #0e3aff;
 
   --font-title: "AKIRA", sans-serif;
   --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -26,4 +26,6 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
