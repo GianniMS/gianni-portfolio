@@ -8,6 +8,6 @@ export const cvData: CVData = {
     'I also work with UX/UI design and user research. In this area, I focus on identifying and translating user needs into clear user stories and actionable requirements.',
     'What interests me most is shaping ideas from the ground up. In doing so, my strategic thinking and knowledge of digital marketing come into play.',
   ],
-  cvPdfPath: '/cv/gianni-cv.pdf',
+  cvPdfPath: '/cv/CV-GianniMS.pdf',
   email: 'giannims2002@gmail.com',
 }

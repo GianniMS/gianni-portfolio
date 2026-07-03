@@ -9,7 +9,7 @@ export const portfolioItems: PortfolioItem[] = [
     slug: 'soundcheckd',
     date: '2026-01-15',
     description: 'A music discovery platform for independent artists. Built to connect listeners with emerging talent.',
-    image: 'images/projects/soundcheckd.jpg',
+    image: 'images/projects/soundcheckd.png',
   },
   {
     title: 'Source',
