@@ -1,0 +1,62 @@
+import { PortfolioItem } from '@/types'
+
+export const portfolioItems: PortfolioItem[] = [
+  {
+    title: 'SoundCheckd',
+    year: 2026,
+    category: 'project',
+    link: 'internal',
+    slug: 'soundcheckd',
+    date: '2026-01-15',
+    description: 'A music discovery platform for independent artists. Built to connect listeners with emerging talent.',
+    image: 'images/projects/soundcheckd.jpg',
+  },
+  {
+    title: 'SoundCheckd Dashboard',
+    year: 2026,
+    category: 'project',
+    link: 'internal',
+    slug: 'soundcheckd-dashboard',
+    date: '2026-03-01',
+    description: 'Analytics and management dashboard for the SoundCheckd platform.',
+    image: 'images/projects/soundcheckd-dashboard.jpg',
+  },
+  {
+    title: 'Spreadsheet Validator (Private)',
+    year: 2026,
+    category: 'project',
+    link: 'internal',
+    slug: 'spreadsheet-validator',
+    date: '2026-02-10',
+    description: 'Internal tool for validating large spreadsheet datasets.',
+    image: 'images/projects/spreadsheet-validator.jpg',
+  },
+  {
+    title: 'Source',
+    year: 2026,
+    category: 'press',
+    link: 'external',
+    href: 'https://example.com',
+  },
+  {
+    title: 'Another Source',
+    year: 2026,
+    category: 'press',
+    link: 'external',
+    href: 'https://example.com',
+  },
+  {
+    title: 'Award',
+    year: 2026,
+    category: 'award',
+    link: 'external',
+    href: 'https://example.com',
+  },
+  {
+    title: 'Another Award',
+    year: 2026,
+    category: 'award',
+    link: 'external',
+    href: 'https://example.com',
+  },
+]
