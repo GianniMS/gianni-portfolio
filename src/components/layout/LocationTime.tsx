@@ -2,32 +2,35 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useImageBounds } from '@/context/ImageBoundsContext'
+import CollisionText from '@/components/image/CollisionText'
 
 export default function LocationTime({ showBack = false }: { showBack?: boolean }) {
   const [time, setTime] = useState('')
+  const { heroBounds } = useImageBounds()
 
   useEffect(() => {
     const update = () => {
-      setTime(new Date().toLocaleTimeString('nl-NL', { hour12: false }))
+      setTime(new Date().toLocaleTimeString('nl-NL', { hour12: false, timeZone: 'Europe/Amsterdam' }))
     }
     update()
     const id = setInterval(update, 1000)
     return () => clearInterval(id)
   }, [])
 
+  const rightPx = heroBounds && typeof window !== 'undefined' ? window.innerWidth - heroBounds.right : 24
+
   return (
-    <div className="fixed bottom-6 left-6 right-6 flex justify-between items-end pointer-events-none">
-      {showBack ? (
-        <Link href="/" className="text-foreground text-sm pointer-events-auto md:hidden">
-          ←
+    <>
+      {showBack && (
+        <Link href="/" className="fixed z-20 bottom-[30px] left-6 text-foreground text-2xl leading-none md:hidden">
+          <CollisionText>←</CollisionText>
         </Link>
-      ) : (
-        <div />
       )}
-      <div className="text-right text-sm pointer-events-auto">
-        <p>Rotterdam, The Netherlands</p>
-        <p>{time}</p>
+      <div className="fixed z-20 bottom-6 text-right text-sm" style={{ right: `${rightPx}px` }}>
+        <p><CollisionText>Rotterdam, The Netherlands</CollisionText></p>
+        <p><CollisionText>{time}</CollisionText></p>
       </div>
-    </div>
+    </>
   )
 }

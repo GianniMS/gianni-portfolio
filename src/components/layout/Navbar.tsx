@@ -3,41 +3,74 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useHover } from '@/context/HoverContext'
+import { PORTRAIT_HOVER_SLUG } from '@/components/image/PreviewImage'
+import CollisionText from '@/components/image/CollisionText'
 
 export default function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const { setHoveredSlug } = useHover()
 
-  const linkClass = (href: string) =>
-    pathname === href ? 'underline' : ''
+  const isActive = (href: string) => pathname === href
+
+  const close = () => setOpen(false)
 
   return (
     <>
-      <nav className="hidden md:flex absolute top-6 right-6 gap-2 text-sm">
-        <Link href="/" className={linkClass('/')}>Home</Link>
-        <span>|</span>
-        <Link href="/cv" className={linkClass('/cv')}>CV</Link>
-      </nav>
+      <div className="fixed top-0 left-0 right-0 z-[6] h-15 bg-background" />
 
-      <div className="md:hidden absolute top-6 right-6">
+      <div className="fixed top-0 left-0 right-0 z-20 h-15 flex items-center justify-between px-6 pointer-events-none">
+        <Link
+          href="/"
+          className="pointer-events-auto font-title text-blue text-2xl md:text-4xl tracking-wide"
+          onClick={close}
+          onMouseEnter={() => setHoveredSlug(PORTRAIT_HOVER_SLUG)}
+          onMouseLeave={() => setHoveredSlug(null)}
+        >
+          <CollisionText>GIANNI</CollisionText>
+        </Link>
+
+        <nav className="pointer-events-auto hidden md:flex gap-2 text-sm">
+          <Link href="/"><CollisionText underline={isActive('/')}>Home</CollisionText></Link>
+          <CollisionText>|</CollisionText>
+          <Link href="/cv"><CollisionText underline={isActive('/cv')}>CV</CollisionText></Link>
+        </nav>
+      </div>
+
+      <div className="fixed top-0 right-0 z-50 h-15 flex items-center px-6 md:hidden pointer-events-none">
         <button
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
-          className="text-foreground text-xl leading-none"
+          className="pointer-events-auto relative w-6 h-2.5"
         >
-          &#9776;
+          <motion.span
+            className="absolute left-0 top-0 w-6 h-0.5 bg-foreground"
+            animate={open ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
+          />
+          <motion.span
+            className="absolute left-0 top-[8px] w-6 h-0.5 bg-foreground"
+            animate={open ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
+          />
         </button>
-
-        {open && (
-          <div className="fixed inset-0 bg-background z-50 flex flex-col items-end p-6 gap-6 text-lg">
-            <button onClick={() => setOpen(false)} aria-label="Close menu" className="text-xl">
-              &#x2715;
-            </button>
-            <Link href="/" onClick={() => setOpen(false)} className={linkClass('/')}>Home</Link>
-            <Link href="/cv" onClick={() => setOpen(false)} className={linkClass('/cv')}>CV</Link>
-          </div>
-        )}
       </div>
+
+      <div className="fixed top-15 left-0 right-0 h-16 z-[6] bg-gradient-to-b from-background to-transparent pointer-events-none" />
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-background z-40 flex flex-col items-center justify-center gap-8 text-lg md:hidden"
+          >
+            <Link href="/" onClick={close}><CollisionText underline={isActive('/')}>Home</CollisionText></Link>
+            <Link href="/cv" onClick={close}><CollisionText underline={isActive('/cv')}>CV</CollisionText></Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }
