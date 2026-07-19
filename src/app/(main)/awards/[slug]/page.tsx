@@ -9,13 +9,13 @@ import { PortfolioItem } from '@/types'
 
 export function generateStaticParams() {
   return portfolioItems
-    .filter((i): i is Extract<PortfolioItem, { link: 'internal'; category: 'press' }> =>
-      i.link === 'internal' && i.category === 'press'
+    .filter((i): i is Extract<PortfolioItem, { link: 'internal' }> =>
+      i.link === 'internal' && i.category === 'award'
     )
     .map((i) => ({ slug: i.slug }))
 }
 
-export default async function PressDetailPage({
+export default async function AwardDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>
@@ -29,22 +29,19 @@ export default async function PressDetailPage({
 
   return (
     <PageShell showBack>
-      <div className="relative flex gap-8 pt-16">
-        <div className="absolute top-0 left-0">
-          <span className="font-title text-blue text-4xl tracking-wide">GIANNI</span>
+      <div className="relative flex gap-8">
+        <div className="hidden md:block">
+          <ItemList items={portfolioItems} />
         </div>
-        <ItemList items={portfolioItems} />
         <div className="hidden md:flex flex-1 gap-8">
-          <div className="relative">
+          <div className="relative flex-1">
             <HeroImage src={item.image} alt={item.title} />
             <PreviewImage items={portfolioItems} />
           </div>
           <ProjectPanel item={item} />
         </div>
         <div className="md:hidden flex flex-col gap-6 w-full mt-8">
-          <div className="relative w-full h-72">
-            <HeroImage src={item.image} alt={item.title} />
-          </div>
+          <HeroImage src={item.image} alt={item.title} layoutId="hero-mobile" />
           <ProjectPanel item={item} />
         </div>
       </div>

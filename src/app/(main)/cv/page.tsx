@@ -8,26 +8,22 @@ import { cvData } from '@/data/cv'
 
 export default function CVPage() {
   return (
-    <PageShell>
-      <div className="relative flex gap-8 pt-16">
-        <div className="absolute top-0 left-0">
-          <span className="font-title text-blue text-4xl tracking-wide">GIANNI</span>
+    <PageShell showBack>
+      <div className="relative flex gap-8">
+        <div className="hidden md:block">
+          <ItemList items={portfolioItems} />
         </div>
 
-        <ItemList items={portfolioItems} />
-
         <div className="hidden md:flex flex-1 gap-8">
-          <div className="relative">
-            <HeroImage src="images/portrait.png" alt="Gianni Mendonça Semedo" />
+          <div className="relative flex-1 max-w-4xl mt-12 -ml-24">
+            <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" />
             <PreviewImage items={portfolioItems} />
           </div>
           <CVPanel data={cvData} />
         </div>
 
-        <div className="md:hidden flex flex-col gap-6 w-full mt-8">
-          <div className="relative w-full h-72">
-            <HeroImage src="images/portrait.png" alt="Gianni Mendonça Semedo" />
-          </div>
+        <div className="md:hidden flex flex-col gap-3 w-full mt-8">
+          <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" layoutId="hero-mobile" />
           <CVPanel data={cvData} />
         </div>
       </div>
