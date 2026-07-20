@@ -20,7 +20,7 @@ export default function ListSection({
   return (
     <div className="mb-2">
       <p className="text-blue font-bold text-sm mb-1">
-        <CollisionText>{LABELS[category]}</CollisionText>
+        <CollisionText crossColor="var(--color-background)">{LABELS[category]}</CollisionText>
       </p>
       {items.map((item) => (
         <ListItem key={item.title} item={item} />

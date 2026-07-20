@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useHover } from '@/context/HoverContext'
 import { PORTRAIT_HOVER_SLUG } from '@/components/image/PreviewImage'
 import CollisionText from '@/components/image/CollisionText'
-import CollisionBar from '@/components/image/CollisionBar'
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -28,13 +27,13 @@ export default function Navbar() {
           onMouseEnter={() => setHoveredSlug(PORTRAIT_HOVER_SLUG)}
           onMouseLeave={() => setHoveredSlug(null)}
         >
-          <CollisionText>GIANNI</CollisionText>
+          <CollisionText imageCollision={false}>GIANNI</CollisionText>
         </Link>
 
         <nav className="pointer-events-auto hidden md:flex gap-2 text-sm">
-          <Link href="/"><CollisionText underline={isActive('/')}>Home</CollisionText></Link>
-          <CollisionText>|</CollisionText>
-          <Link href="/cv"><CollisionText underline={isActive('/cv')}>CV</CollisionText></Link>
+          <Link href="/"><CollisionText underline={isActive('/')} imageCollision={false}>Home</CollisionText></Link>
+          <CollisionText imageCollision={false}>|</CollisionText>
+          <Link href="/cv"><CollisionText underline={isActive('/cv')} imageCollision={false}>CV</CollisionText></Link>
         </nav>
       </div>
 
@@ -44,12 +43,12 @@ export default function Navbar() {
           aria-label="Toggle menu"
           className="pointer-events-auto relative w-6 h-2.5"
         >
-          <CollisionBar
-            className="absolute left-0 top-0 w-6 h-0.5"
+          <motion.span
+            className="absolute left-0 top-0 w-6 h-0.5 bg-foreground"
             animate={open ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
           />
-          <CollisionBar
-            className="absolute left-0 top-[8px] w-6 h-0.5"
+          <motion.span
+            className="absolute left-0 top-[8px] w-6 h-0.5 bg-foreground"
             animate={open ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
           />
         </button>
