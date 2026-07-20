@@ -18,7 +18,7 @@ export default function HomePage() {
 
       <div className="relative md:hidden">
         <ItemList items={portfolioItems} widthClassName="w-[72%]" scrollHeightClassName="h-[calc(100vh-176px)]" />
-        <div className="absolute top-[130px] right-0 w-[55%] origin-bottom-right scale-110">
+        <div className="fixed top-[240px] right-6 w-[55%] origin-bottom-right scale-125">
           <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" layoutId="hero-mobile" priority />
         </div>
       </div>

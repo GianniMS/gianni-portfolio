@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useHover } from '@/context/HoverContext'
 import { PORTRAIT_HOVER_SLUG } from '@/components/image/PreviewImage'
 import CollisionText from '@/components/image/CollisionText'
+import CollisionBar from '@/components/image/CollisionBar'
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -19,8 +20,6 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-[6] h-15 bg-background" />
-
       <div className="fixed top-0 left-0 right-0 z-20 h-15 flex items-center justify-between px-6 pointer-events-none">
         <Link
           href="/"
@@ -45,18 +44,16 @@ export default function Navbar() {
           aria-label="Toggle menu"
           className="pointer-events-auto relative w-6 h-2.5"
         >
-          <motion.span
-            className="absolute left-0 top-0 w-6 h-0.5 bg-foreground"
+          <CollisionBar
+            className="absolute left-0 top-0 w-6 h-0.5"
             animate={open ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
           />
-          <motion.span
-            className="absolute left-0 top-[8px] w-6 h-0.5 bg-foreground"
+          <CollisionBar
+            className="absolute left-0 top-[8px] w-6 h-0.5"
             animate={open ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
           />
         </button>
       </div>
-
-      <div className="fixed top-15 left-0 right-0 h-16 z-[6] bg-gradient-to-b from-background to-transparent pointer-events-none" />
 
       <AnimatePresence>
         {open && (
