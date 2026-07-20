@@ -25,9 +25,13 @@ export default function CVPage() {
           <CVPanel data={cvData} />
         </div>
 
-        <div className="md:hidden flex flex-col gap-3 w-full mt-8">
-          <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" layoutId="hero-mobile" />
-          <CVPanel data={cvData} />
+        <div className="md:hidden relative w-full">
+          <div className="fixed top-24 left-6 right-6 z-0">
+            <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" layoutId="hero-mobile" />
+          </div>
+          <div className="mt-[380px]">
+            <CVPanel data={cvData} />
+          </div>
         </div>
       </div>
     </PageShell>

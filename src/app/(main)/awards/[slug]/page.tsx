@@ -43,9 +43,13 @@ export default async function AwardDetailPage({
           </div>
           <ProjectPanel item={item} />
         </div>
-        <div className="md:hidden flex flex-col gap-6 w-full mt-8">
-          <HeroImage src={item.image} alt={item.title} layoutId="hero-mobile" />
-          <ProjectPanel item={item} />
+        <div className="md:hidden relative w-full">
+          <div className="fixed top-24 left-6 right-6 z-0">
+            <HeroImage src={item.image} alt={item.title} layoutId="hero-mobile" />
+          </div>
+          <div className="mt-[380px]">
+            <ProjectPanel item={item} />
+          </div>
         </div>
       </div>
     </PageShell>
