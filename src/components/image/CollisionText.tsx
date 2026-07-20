@@ -3,21 +3,23 @@
 import { useEffect, useRef, useState, ReactNode } from 'react'
 import { useImageBounds } from '@/context/ImageBoundsContext'
 import { useCursor } from '@/context/CursorContext'
-import { Rect, intersect, sampleLuminance, findVisibleImage } from '@/lib/collision'
+import { Rect, intersect, findVisibleImage } from '@/lib/collision'
 
 export default function CollisionText({
   children,
   crossColor,
   underline = false,
   imageCollision = true,
+  listCollision = false,
 }: {
   children: ReactNode
   crossColor?: string
   underline?: boolean
   imageCollision?: boolean
+  listCollision?: boolean
 }) {
   const ref = useRef<HTMLSpanElement>(null)
-  const { heroBounds, previewBounds } = useImageBounds()
+  const { heroBounds, previewBounds, listBounds } = useImageBounds()
   const { cursorRect, cursorImageHit } = useCursor()
   const [overlay, setOverlay] = useState<{ color: string; clipPath: string } | null>(null)
   const [cursorBlueOverlay, setCursorBlueOverlay] = useState<{ color: string; clipPath: string } | null>(null)
@@ -27,7 +29,7 @@ export default function CollisionText({
     const update = () => {
       if (!ref.current) return
 
-      if (!imageCollision) {
+      if (!imageCollision && !listCollision) {
         setOverlay(null)
         return
       }
@@ -35,9 +37,10 @@ export default function CollisionText({
       const r = ref.current.getBoundingClientRect()
       const textRect: Rect = { top: r.top, left: r.left, bottom: r.bottom, right: r.right }
 
-      const heroHit = heroBounds && intersect(textRect, heroBounds)
-      const previewHit = previewBounds && intersect(textRect, previewBounds)
-      const hit = previewHit || heroHit
+      const heroHit = imageCollision && heroBounds && intersect(textRect, heroBounds)
+      const previewHit = imageCollision && previewBounds && intersect(textRect, previewBounds)
+      const listHit = listCollision && listBounds && intersect(textRect, listBounds)
+      const hit = previewHit || heroHit || listHit
 
       if (!hit) {
         setOverlay(null)
@@ -51,7 +54,11 @@ export default function CollisionText({
         return
       }
 
-      const activeBounds = previewHit ? previewBounds! : heroBounds!
+      if (!heroHit && !previewHit) {
+        setOverlay(null)
+        return
+      }
+
       const selector = previewHit ? 'img[data-preview]' : 'img[data-hero]'
       const imgEl = findVisibleImage(selector)
 
@@ -65,10 +72,7 @@ export default function CollisionText({
         return
       }
 
-      const luminance = sampleLuminance(imgEl, hit, activeBounds)
-      const color = luminance > 0.5 ? 'var(--color-blue)' : 'var(--color-background)'
-
-      setOverlay({ color, clipPath })
+      setOverlay({ color: 'var(--color-background)', clipPath })
     }
 
     const onScrollOrResize = () => {
@@ -83,7 +87,7 @@ export default function CollisionText({
       window.removeEventListener('scroll', onScrollOrResize, true)
       window.removeEventListener('resize', onScrollOrResize)
     }
-  }, [heroBounds, previewBounds, crossColor, imageCollision])
+  }, [heroBounds, previewBounds, listBounds, crossColor, imageCollision, listCollision])
 
   useEffect(() => {
     if (!ref.current || !cursorRect) {

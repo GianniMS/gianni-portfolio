@@ -28,8 +28,8 @@ export default function LocationTime({ showBack = false }: { showBack?: boolean 
         </Link>
       )}
       <div className="fixed z-20 bottom-6 text-right text-sm" style={{ right: `${rightPx}px` }}>
-        <p><CollisionText>Rotterdam, The Netherlands</CollisionText></p>
-        <p><CollisionText>{time}</CollisionText></p>
+        <p><CollisionText crossColor="var(--color-background)" listCollision>Rotterdam, The Netherlands</CollisionText></p>
+        <p><CollisionText crossColor="var(--color-background)" listCollision>{time}</CollisionText></p>
       </div>
     </>
   )

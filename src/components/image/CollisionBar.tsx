@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { useImageBounds } from '@/context/ImageBoundsContext'
-import { Rect, intersect, sampleLuminance, findVisibleImage } from '@/lib/collision'
+import { Rect, intersect, findVisibleImage } from '@/lib/collision'
 
 export default function CollisionBar({
   className,
@@ -33,7 +33,6 @@ export default function CollisionBar({
       }
 
       const clipPath = `inset(${hit.top - barRect.top}px ${barRect.right - hit.right}px ${barRect.bottom - hit.bottom}px ${hit.left - barRect.left}px)`
-      const activeBounds = previewHit ? previewBounds! : heroBounds!
       const selector = previewHit ? 'img[data-preview]' : 'img[data-hero]'
       const imgEl = findVisibleImage(selector)
 
@@ -47,10 +46,7 @@ export default function CollisionBar({
         return
       }
 
-      const luminance = sampleLuminance(imgEl, hit, activeBounds)
-      const color = luminance > 0.5 ? 'var(--color-blue)' : 'var(--color-background)'
-
-      setOverlay({ color, clipPath })
+      setOverlay({ color: 'var(--color-background)', clipPath })
     }
 
     const onScrollOrResize = () => {

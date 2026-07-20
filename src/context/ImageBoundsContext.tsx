@@ -7,8 +7,10 @@ type Rect = { top: number; left: number; bottom: number; right: number }
 type ImageBoundsContextType = {
   heroBounds: Rect | null
   previewBounds: Rect | null
+  listBounds: Rect | null
   setHeroBounds: (bounds: Rect | null) => void
   setPreviewBounds: (bounds: Rect | null) => void
+  setListBounds: (bounds: Rect | null) => void
 }
 
 const ImageBoundsContext = createContext<ImageBoundsContextType | null>(null)
@@ -16,9 +18,12 @@ const ImageBoundsContext = createContext<ImageBoundsContextType | null>(null)
 export function ImageBoundsProvider({ children }: { children: ReactNode }) {
   const [heroBounds, setHeroBounds] = useState<Rect | null>(null)
   const [previewBounds, setPreviewBounds] = useState<Rect | null>(null)
+  const [listBounds, setListBounds] = useState<Rect | null>(null)
 
   return (
-    <ImageBoundsContext.Provider value={{ heroBounds, previewBounds, setHeroBounds, setPreviewBounds }}>
+    <ImageBoundsContext.Provider
+      value={{ heroBounds, previewBounds, listBounds, setHeroBounds, setPreviewBounds, setListBounds }}
+    >
       {children}
     </ImageBoundsContext.Provider>
   )
