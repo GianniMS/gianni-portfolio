@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import PageShell from '@/components/layout/PageShell'
 import ItemList from '@/components/list/ItemList'
 import HeroImage from '@/components/image/HeroImage'
@@ -5,6 +6,8 @@ import PreviewImage from '@/components/image/PreviewImage'
 import CVPanel from '@/components/panels/CVPanel'
 import { portfolioItems } from '@/data/items'
 import { cvData } from '@/data/cv'
+
+export const metadata: Metadata = { title: 'CV' }
 
 export default function CVPage() {
   return (

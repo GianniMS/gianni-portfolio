@@ -1,8 +1,11 @@
+import type { Metadata } from 'next'
 import PageShell from '@/components/layout/PageShell'
 import ItemList from '@/components/list/ItemList'
 import HeroImage from '@/components/image/HeroImage'
 import PreviewImage from '@/components/image/PreviewImage'
 import { portfolioItems } from '@/data/items'
+
+export const metadata: Metadata = { title: 'Home' }
 
 export default function HomePage() {
   return (

@@ -7,7 +7,7 @@ import CustomCursor from '@/components/layout/CustomCursor'
 import { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Gianni',
+  title: { default: 'GianniMS', template: '%s | GianniMS' },
   description: 'Portfolio of Gianni Mendonça Semedo',
 }
 

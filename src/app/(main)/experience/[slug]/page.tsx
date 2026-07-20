@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import PageShell from '@/components/layout/PageShell'
 import ItemList from '@/components/list/ItemList'
@@ -6,6 +7,8 @@ import PreviewImage from '@/components/image/PreviewImage'
 import ProjectPanel from '@/components/panels/ProjectPanel'
 import { portfolioItems } from '@/data/items'
 import { PortfolioItem } from '@/types'
+
+export const metadata: Metadata = { title: 'Experience' }
 
 export function generateStaticParams() {
   return portfolioItems
