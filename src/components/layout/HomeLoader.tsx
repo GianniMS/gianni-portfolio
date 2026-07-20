@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useImageBounds } from '@/context/ImageBoundsContext'
 
 const HOLD_DURATION = 0.2
-const BOX_DURATION = 0.18
+const BOX_DURATION = 0.9
 const BLUE_HOLD_DURATION = 0.45
 const IMAGE_DURATION = 0.9
 const FADE_DURATION = 0.4

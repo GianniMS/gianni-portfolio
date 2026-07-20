@@ -66,8 +66,8 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-background z-40 flex flex-col items-center justify-center gap-8 text-lg md:hidden"
           >
-            <Link href="/" onClick={close}><CollisionText underline={isActive('/')}>Home</CollisionText></Link>
-            <Link href="/cv" onClick={close}><CollisionText underline={isActive('/cv')}>CV</CollisionText></Link>
+            <Link href="/" onClick={close}><CollisionText underline={isActive('/')} imageCollision={false}>Home</CollisionText></Link>
+            <Link href="/cv" onClick={close}><CollisionText underline={isActive('/cv')} imageCollision={false}>CV</CollisionText></Link>
           </motion.div>
         )}
       </AnimatePresence>

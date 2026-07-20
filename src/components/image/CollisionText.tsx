@@ -57,10 +57,12 @@ export default function CollisionText({
   children,
   crossColor,
   underline = false,
+  imageCollision = true,
 }: {
   children: ReactNode
   crossColor?: string
   underline?: boolean
+  imageCollision?: boolean
 }) {
   const ref = useRef<HTMLSpanElement>(null)
   const { heroBounds, previewBounds } = useImageBounds()
@@ -72,6 +74,11 @@ export default function CollisionText({
   useEffect(() => {
     const update = () => {
       if (!ref.current) return
+
+      if (!imageCollision) {
+        setOverlay(null)
+        return
+      }
 
       const r = ref.current.getBoundingClientRect()
       const textRect: Rect = { top: r.top, left: r.left, bottom: r.bottom, right: r.right }
@@ -126,7 +133,7 @@ export default function CollisionText({
       window.removeEventListener('scroll', onScrollOrResize, true)
       window.removeEventListener('resize', onScrollOrResize)
     }
-  }, [heroBounds, previewBounds, crossColor])
+  }, [heroBounds, previewBounds, crossColor, imageCollision])
 
   useEffect(() => {
     if (!ref.current || !cursorRect) {
@@ -185,6 +192,7 @@ export default function CollisionText({
           style={{
             position: 'absolute',
             inset: 0,
+            zIndex: 9,
             color: cursorBlueOverlay.color,
             clipPath: cursorBlueOverlay.clipPath,
             pointerEvents: 'none',
@@ -200,6 +208,7 @@ export default function CollisionText({
           style={{
             position: 'absolute',
             inset: 0,
+            zIndex: 9,
             color: cursorImageOverlay.color,
             clipPath: cursorImageOverlay.clipPath,
             pointerEvents: 'none',
