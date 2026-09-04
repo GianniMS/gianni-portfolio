@@ -31,13 +31,15 @@ export async function saveItems(items: PortfolioItem[]): Promise<void> {
 }
 
 export async function getCV(): Promise<CVData | null> {
-  const raw = await readJson<Partial<CVData> & { bio?: string[] }>(CV_PATH)
+  const raw = await readJson<Partial<CVData> & { bio?: string[]; clients?: string[] }>(CV_PATH)
   if (!raw) return null
   return {
     name: raw.name ?? '',
     // `bio` is the pre-About-Me field name; still in the stored document until the next save
     about: raw.about ?? raw.bio ?? [],
-    involvedWith: raw.involvedWith ?? [],
+    // `clients` is the pre-Involved-With field name, kept so a document written by an
+    // older build is still read rather than silently coming back empty
+    involvedWith: raw.involvedWith ?? raw.clients ?? [],
     cvPdfPath: raw.cvPdfPath ?? '',
     email: raw.email ?? '',
     socials: {
