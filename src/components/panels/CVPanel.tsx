@@ -23,15 +23,15 @@ export default function CVPanel({ data }: { data: CVData }) {
         ))}
       </section>
 
-      {data.clients.length > 0 && (
+      {data.involvedWith.length > 0 && (
         <section className="flex flex-col gap-2 mb-8">
           <h2 className="text-blue font-bold text-lg leading-tight">
-            <CollisionText>Clients</CollisionText>
+            <CollisionText>Involved With</CollisionText>
           </h2>
           <ul className="flex flex-col gap-1">
-            {data.clients.map((client) => (
-              <li key={client} className="text-sm leading-relaxed">
-                <CollisionText>{client}</CollisionText>
+            {data.involvedWith.map((entry) => (
+              <li key={entry} className="text-sm leading-relaxed">
+                <CollisionText>{entry}</CollisionText>
               </li>
             ))}
           </ul>

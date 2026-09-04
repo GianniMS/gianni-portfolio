@@ -37,7 +37,7 @@ export async function getCV(): Promise<CVData | null> {
     name: raw.name ?? '',
     // `bio` is the pre-About-Me field name; still in the stored document until the next save
     about: raw.about ?? raw.bio ?? [],
-    clients: raw.clients ?? [],
+    involvedWith: raw.involvedWith ?? [],
     cvPdfPath: raw.cvPdfPath ?? '',
     email: raw.email ?? '',
     socials: {

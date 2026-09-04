@@ -1,6 +1,7 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getItems } from '@/lib/content'
-import { CATEGORIES } from '@/data/categories'
+import { CATEGORIES, CATEGORY_LABELS } from '@/data/categories'
 import { PortfolioItem } from '@/types'
 import { updateItem } from '@/app/dashboard/actions'
 import ItemForm from '@/components/dashboard/ItemForm'
@@ -22,8 +23,16 @@ export default async function EditItemPage({
   if (!item) notFound()
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-lg font-bold">Edit {item.title}</h1>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-1">
+        <Link
+          href={`/dashboard/items/${category}`}
+          className="text-sm font-bold text-blue opacity-60 transition-opacity hover:opacity-100"
+        >
+          ← {CATEGORY_LABELS[category]}
+        </Link>
+        <h1 className="text-2xl font-bold tracking-tight">{item.title}</h1>
+      </div>
       <ItemForm category={category} item={item} action={updateItem.bind(null, id)} />
     </div>
   )

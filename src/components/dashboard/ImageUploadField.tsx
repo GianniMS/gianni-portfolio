@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { upload } from '@vercel/blob/client'
+import { buttonSecondary, hintClass }  from './styles'
 
 export default function ImageUploadField({
   name,
@@ -34,14 +35,26 @@ export default function ImageUploadField({
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-3">
       <input type="hidden" name={name} value={url} />
-      <input type="file" accept="image/*" onChange={handleChange} className="text-sm" />
-      {uploading && <p className="text-sm text-foreground/60">Uploading…</p>}
-      {error && <p className="text-sm text-red-600">{error}</p>}
-      {url && (
+
+      <label className={`${buttonSecondary} w-fit cursor-pointer`}>
+        {url ? 'Replace image' : 'Choose image'}
+        <input type="file" accept="image/*" onChange={handleChange} className="hidden" />
+      </label>
+
+      {uploading && <p className={hintClass}>Uploading…</p>}
+      {error && <p className="border-l-2 border-blue bg-foreground/5 px-3 py-2 text-sm">{error}</p>}
+
+      {url ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={url} alt="Preview" className="h-32 w-auto object-cover rounded" />
+        <img
+          src={url}
+          alt="Preview"
+          className="h-40 w-auto rounded border border-foreground/10 object-cover"
+        />
+      ) : (
+        <p className={hintClass}>No image yet</p>
       )}
     </div>
   )

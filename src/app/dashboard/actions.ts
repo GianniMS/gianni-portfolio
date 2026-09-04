@@ -139,7 +139,7 @@ export async function saveCVAction(formData: FormData) {
   const data: CVData = {
     name: String(formData.get('name') ?? ''),
     about: lines('about'),
-    clients: lines('clients'),
+    involvedWith: lines('involvedWith'),
     cvPdfPath: String(formData.get('cvPdfPath') ?? ''),
     email: String(formData.get('email') ?? ''),
     socials: {

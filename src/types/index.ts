@@ -28,7 +28,7 @@ export type SocialLinks = {
 export type CVData = {
   name: string
   about: string[]
-  clients: string[]
+  involvedWith: string[]
   cvPdfPath: string
   email: string
   socials: SocialLinks
