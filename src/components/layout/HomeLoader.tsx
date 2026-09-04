@@ -9,8 +9,6 @@ const HOLD_DURATION = 0.2
 const BOX_DURATION = 0.9
 const BLUE_HOLD_DURATION = 0.45
 const IMAGE_DURATION = 0.9
-// the image waits out the blue square's fade instead of cross-fading with it
-const IMAGE_DELAY = IMAGE_DURATION
 const FADE_DURATION = 0.4
 
 type Rect = { top: number; left: number; bottom: number; right: number }
@@ -83,10 +81,7 @@ export default function HomeLoader() {
   useEffect(() => {
     if (phase !== 'image' || !fontsReady) return
     if (needsImage && !imageLoaded) return
-    const t = setTimeout(
-      () => setPhase('done'),
-      needsImage ? (IMAGE_DELAY + IMAGE_DURATION) * 1000 : 0
-    )
+    const t = setTimeout(() => setPhase('done'), needsImage ? IMAGE_DURATION * 1000 : 0)
     return () => clearTimeout(t)
   }, [phase, fontsReady, imageLoaded, needsImage])
 
@@ -107,15 +102,15 @@ export default function HomeLoader() {
               <motion.div
                 className="absolute inset-0 bg-blue"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: showImage ? 0 : 1 }}
-                transition={{ duration: showImage ? IMAGE_DURATION : BOX_DURATION, ease: 'easeInOut' }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: BOX_DURATION, ease: 'easeInOut' }}
               />
               {phase === 'image' && (
                 <motion.div
                   className="absolute inset-0"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: showImage ? 1 : 0 }}
-                  transition={{ duration: IMAGE_DURATION, delay: IMAGE_DELAY, ease: 'easeInOut' }}
+                  transition={{ duration: IMAGE_DURATION, ease: 'easeInOut' }}
                 >
                   <Image
                     src="/images/portrait.jpg"
