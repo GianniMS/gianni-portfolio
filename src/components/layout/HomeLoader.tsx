@@ -9,7 +9,7 @@ const HOLD_DURATION = 0.2
 const BOX_DURATION = 0.9
 const BLUE_HOLD_DURATION = 0.45
 const IMAGE_DURATION = 0.9
-const FADE_DURATION = 0.4
+const FADE_DURATION = IMAGE_DURATION
 
 type Rect = { top: number; left: number; bottom: number; right: number }
 
