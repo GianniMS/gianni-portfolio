@@ -33,10 +33,6 @@ export default function CVPanel({ data }: { data: CVData }) {
           </p>
         </section>
       )}
-
-      <a href={`mailto:${data.email}`} className="text-blue font-bold text-sm w-fit">
-        <CollisionText crossColor="var(--color-foreground)" underline>{data.email}</CollisionText>
-      </a>
     </div>
   )
 }
