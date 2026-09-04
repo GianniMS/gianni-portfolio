@@ -17,10 +17,16 @@ export type PortfolioItem = {
     } & DateInfo)
 )
 
+export type SocialLinks = {
+  linkedin: string
+  instagram: string
+}
+
 export type CVData = {
   name: string
-  dob: string
-  bio: string[]
+  about: string[]
+  clients: string[]
   cvPdfPath: string
   email: string
+  socials: SocialLinks
 }

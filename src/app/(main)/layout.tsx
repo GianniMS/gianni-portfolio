@@ -1,17 +1,18 @@
-'use client'
-
-import { usePathname } from 'next/navigation'
-import Navbar from '@/components/layout/Navbar'
-import HomeLoader from '@/components/layout/HomeLoader'
 import { ReactNode } from 'react'
+import Navbar from '@/components/layout/Navbar'
+import HomeLoaderGate from '@/components/layout/HomeLoaderGate'
+import { getCV } from '@/lib/content'
 
-export default function MainLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
+export default async function MainLayout({ children }: { children: ReactNode }) {
+  const cv = await getCV()
 
   return (
     <>
-      <Navbar />
-      {pathname === '/' && <HomeLoader />}
+      <Navbar
+        email={cv?.email ?? ''}
+        socials={cv?.socials ?? { linkedin: '', instagram: '' }}
+      />
+      <HomeLoaderGate />
       {children}
     </>
   )

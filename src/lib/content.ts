@@ -31,7 +31,20 @@ export async function saveItems(items: PortfolioItem[]): Promise<void> {
 }
 
 export async function getCV(): Promise<CVData | null> {
-  return readJson<CVData>(CV_PATH)
+  const raw = await readJson<Partial<CVData> & { bio?: string[] }>(CV_PATH)
+  if (!raw) return null
+  return {
+    name: raw.name ?? '',
+    // `bio` is the pre-About-Me field name; still in the stored document until the next save
+    about: raw.about ?? raw.bio ?? [],
+    clients: raw.clients ?? [],
+    cvPdfPath: raw.cvPdfPath ?? '',
+    email: raw.email ?? '',
+    socials: {
+      linkedin: raw.socials?.linkedin ?? '',
+      instagram: raw.socials?.instagram ?? '',
+    },
+  }
 }
 
 export async function saveCV(data: CVData): Promise<void> {

@@ -7,8 +7,9 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useHover } from '@/context/HoverContext'
 import { PORTRAIT_HOVER_SLUG } from '@/components/image/PreviewImage'
 import CollisionText from '@/components/image/CollisionText'
+import { SocialLinks } from '@/types'
 
-export default function Navbar() {
+export default function Navbar({ email, socials }: { email: string; socials: SocialLinks }) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const { setHoveredSlug } = useHover()
@@ -17,17 +18,23 @@ export default function Navbar() {
 
   const close = () => setOpen(false)
 
+  const socialLinks = [
+    { label: 'Mail', href: email ? `mailto:${email}` : '' },
+    { label: 'LinkedIn', href: socials.linkedin },
+    { label: 'Instagram', href: socials.instagram },
+  ].filter((link) => link.href)
+
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-20 h-15 flex items-center justify-between px-6 pointer-events-none">
         <Link
           href="/"
-          className="pointer-events-auto font-title font-black text-blue text-2xl md:text-4xl tracking-tight"
+          className="pointer-events-auto font-title font-bold text-blue text-lg md:text-3xl tracking-tight"
           onClick={close}
           onMouseEnter={() => setHoveredSlug(PORTRAIT_HOVER_SLUG)}
           onMouseLeave={() => setHoveredSlug(null)}
         >
-          <CollisionText imageCollision={false}>GIANNI</CollisionText>
+          <CollisionText imageCollision={false}>Gianni Mendonca Semedo</CollisionText>
         </Link>
 
         <nav className="pointer-events-auto hidden md:flex gap-2 text-sm">
@@ -60,10 +67,30 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-background z-40 flex flex-col items-center justify-center gap-8 text-lg md:hidden"
+            className="fixed inset-0 bg-background z-40 flex flex-col px-6 pt-24 pb-12 md:hidden"
           >
-            <Link href="/" onClick={close}><CollisionText underline={isActive('/')} imageCollision={false}>Home</CollisionText></Link>
-            <Link href="/cv" onClick={close}><CollisionText underline={isActive('/cv')} imageCollision={false}>CV</CollisionText></Link>
+            <div className="flex flex-col items-start gap-6">
+              <Link href="/" onClick={close} className="text-3xl font-bold leading-none">
+                <CollisionText underline={isActive('/')} imageCollision={false}>Home</CollisionText>
+              </Link>
+              <Link href="/cv" onClick={close} className="text-3xl font-bold leading-none">
+                <CollisionText underline={isActive('/cv')} imageCollision={false}>CV</CollisionText>
+              </Link>
+            </div>
+
+            <div className="mt-auto flex flex-col items-start gap-3 text-sm font-bold">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target={link.href.startsWith('mailto:') ? undefined : '_blank'}
+                  rel={link.href.startsWith('mailto:') ? undefined : 'noreferrer'}
+                  onClick={close}
+                >
+                  <CollisionText imageCollision={false}>{link.label}</CollisionText>
+                </a>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

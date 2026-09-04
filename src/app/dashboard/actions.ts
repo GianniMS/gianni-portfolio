@@ -125,15 +125,22 @@ export async function deleteItem(id: string, category: string) {
 
 export async function saveCVAction(formData: FormData) {
   await requireAuth()
-  const data: CVData = {
-    name: String(formData.get('name') ?? ''),
-    dob: String(formData.get('dob') ?? ''),
-    bio: String(formData.get('bio') ?? '')
+  const lines = (field: string) =>
+    String(formData.get(field) ?? '')
       .split('\n')
       .map((s) => s.trim())
-      .filter(Boolean),
+      .filter(Boolean)
+
+  const data: CVData = {
+    name: String(formData.get('name') ?? ''),
+    about: lines('about'),
+    clients: lines('clients'),
     cvPdfPath: String(formData.get('cvPdfPath') ?? ''),
     email: String(formData.get('email') ?? ''),
+    socials: {
+      linkedin: String(formData.get('linkedin') ?? ''),
+      instagram: String(formData.get('instagram') ?? ''),
+    },
   }
   await saveCV(data)
   redirect('/dashboard/cv')
