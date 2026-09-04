@@ -7,24 +7,19 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useHover } from '@/context/HoverContext'
 import { PORTRAIT_HOVER_SLUG } from '@/components/image/PreviewImage'
 import CollisionText from '@/components/image/CollisionText'
-import { SocialLinks } from '@/types'
+import { useSocials } from '@/context/SocialsContext'
 
-export default function Navbar({ email, socials }: { email: string; socials: SocialLinks }) {
+export default function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const { setHoveredSlug } = useHover()
+  const socialLinks = useSocials()
 
   const isActive = (href: string) => pathname === href
 
   const activeOpacity = (href: string) => (isActive(href) ? 'opacity-100' : 'opacity-60')
 
   const close = () => setOpen(false)
-
-  const socialLinks = [
-    { label: 'Mail', href: email ? `mailto:${email}` : '' },
-    { label: 'LinkedIn', href: socials.linkedin },
-    { label: 'Instagram', href: socials.instagram },
-  ].filter((link) => link.href)
 
   return (
     <>
@@ -91,13 +86,13 @@ export default function Navbar({ email, socials }: { email: string; socials: Soc
               </Link>
             </div>
 
-            <div className="mt-auto flex flex-col items-start gap-3 text-sm font-bold">
+            <div className="mt-auto flex flex-col items-start gap-3 text-3xl font-bold leading-none">
               {socialLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  target={link.href.startsWith('mailto:') ? undefined : '_blank'}
-                  rel={link.href.startsWith('mailto:') ? undefined : 'noreferrer'}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
                   onClick={close}
                 >
                   <CollisionText imageCollision={false}>{link.label}</CollisionText>
