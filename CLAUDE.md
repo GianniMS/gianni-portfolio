@@ -21,8 +21,11 @@ Yarn (classic v1), not npm. Use `yarn add`/`yarn install`; don't reintroduce `pa
 | Blue (headings, links, accents) | `#0E3AFF` |
 
 Fonts:
-- `font-title` → AKIRA (self-hosted, `/public/fonts/AKIRA.woff2`) — logo only
-- `font-body` → Helvetica Neue system stack — everything else
+- `font-title` → SF Pro Display system stack — GIANNI wordmark and display headings
+- `font-body` → SF Pro Text system stack — everything else
+
+SF Pro is never self-hosted (Apple licenses it for Apple platforms only). Both tokens
+resolve to real SF Pro on Apple devices and fall back to Segoe UI / Roboto elsewhere.
 
 ## Styling rules
 - Tailwind utility classes only. No CSS modules, no styled-components.
@@ -41,7 +44,6 @@ src/
   data/          # items.ts, cv.ts
   types/         # index.ts (PortfolioItem + shared types)
 public/
-  fonts/         # AKIRA.woff2
   images/        # portrait.jpg, projects/, press/, awards/
 ```
 

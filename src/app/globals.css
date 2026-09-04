@@ -1,19 +1,12 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: "AKIRA";
-  src: url("/fonts/Akira Expanded Demo.otf") format("opentype");
-  font-weight: normal;
-  font-display: swap;
-}
-
 @theme {
   --color-background: #fefffd;
   --color-foreground: #1a1a1a;
   --color-blue: #0e3aff;
 
-  --font-title: "AKIRA", sans-serif;
-  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-title: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 @layer base {

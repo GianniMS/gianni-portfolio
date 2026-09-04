@@ -22,7 +22,7 @@ export default function Navbar() {
       <div className="fixed top-0 left-0 right-0 z-20 h-15 flex items-center justify-between px-6 pointer-events-none">
         <Link
           href="/"
-          className="pointer-events-auto font-title text-blue text-2xl md:text-4xl tracking-wide"
+          className="pointer-events-auto font-title font-black text-blue text-2xl md:text-4xl tracking-tight"
           onClick={close}
           onMouseEnter={() => setHoveredSlug(PORTRAIT_HOVER_SLUG)}
           onMouseLeave={() => setHoveredSlug(null)}

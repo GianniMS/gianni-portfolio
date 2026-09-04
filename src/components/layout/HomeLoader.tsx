@@ -40,7 +40,7 @@ export default function HomeLoader() {
   useEffect(() => {
     if (skip) return
     let cancelled = false
-    Promise.all([document.fonts.load('1em AKIRA'), document.fonts.ready]).then(() => {
+    Promise.all([document.fonts.load('900 1em "SF Pro Display"'), document.fonts.ready]).then(() => {
       if (!cancelled) setFontsReady(true)
     })
     return () => {
