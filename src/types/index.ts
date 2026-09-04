@@ -1,3 +1,5 @@
+export type ImageTone = 'light' | 'dark'
+
 export type DateInfo =
   | { dateType: 'single'; date: string }
   | { dateType: 'range'; dateStart: string; dateEnd: string }
@@ -14,6 +16,7 @@ export type PortfolioItem = {
       description: string[]
       skills: string[]
       image: string
+      imageTone?: ImageTone
     } & DateInfo)
 )
 

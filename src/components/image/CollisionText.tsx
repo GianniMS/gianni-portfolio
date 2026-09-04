@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, ReactNode } from 'react'
 import { useImageBounds } from '@/context/ImageBoundsContext'
 import { useCursor } from '@/context/CursorContext'
-import { Rect, intersect, sampleLuminance, findVisibleImage } from '@/lib/collision'
+import { Rect, intersect, imageIsLight, findVisibleImage } from '@/lib/collision'
 
 export default function CollisionText({
   children,
@@ -65,8 +65,9 @@ export default function CollisionText({
         return
       }
 
-      const luminance = sampleLuminance(imgEl, hit, activeBounds)
-      const color = luminance > 0.5 ? 'var(--color-blue)' : 'var(--color-background)'
+      const color = imageIsLight(imgEl, hit, activeBounds)
+        ? 'var(--color-blue)'
+        : 'var(--color-background)'
 
       setOverlay({ color, clipPath })
     }

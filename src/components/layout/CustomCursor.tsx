@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { motion } from 'framer-motion'
 import { useImageBounds } from '@/context/ImageBoundsContext'
 import { useCursor } from '@/context/CursorContext'
-import { Rect, intersect, sampleLuminance, findVisibleImage } from '@/lib/collision'
+import { Rect, intersect, imageIsLight, findVisibleImage } from '@/lib/collision'
 
 const SIZE = 16
 const EASE = 0.15
@@ -96,8 +96,7 @@ export default function CustomCursor() {
           setOverlay(null)
           setCursorState(cursorRect, null)
         } else {
-          const luminance = sampleLuminance(imgEl, hit, activeBounds)
-          const isLight = luminance > 0.5
+          const isLight = imageIsLight(imgEl, hit, activeBounds)
           const color = isLight ? 'var(--color-foreground)' : 'var(--color-background)'
           const w = cursorRect.right - cursorRect.left
           const h = cursorRect.bottom - cursorRect.top

@@ -40,13 +40,13 @@ export default async function AwardDetailPage({
         </div>
         <div className="hidden md:flex flex-1 gap-8">
           <div className="relative flex-1">
-            <HeroImage src={item.image} alt={item.title} />
+            <HeroImage src={item.image} alt={item.title} tone={item.imageTone} />
             <PreviewImage items={portfolioItems} />
           </div>
           <ProjectPanel item={item} />
         </div>
         <div className="md:hidden flex flex-col gap-6 w-full mt-8">
-          <HeroImage src={item.image} alt={item.title} layoutId="hero-mobile" />
+          <HeroImage src={item.image} alt={item.title} layoutId="hero-mobile" tone={item.imageTone} />
           <ProjectPanel item={item} />
         </div>
       </div>

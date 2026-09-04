@@ -41,14 +41,14 @@ export default async function ExperienceDetailPage({
 
         <div className="hidden md:flex flex-1 gap-8">
           <div className="relative flex-1 max-w-4xl mt-12 -ml-24">
-            <HeroImage src={item.image} alt={item.title} />
+            <HeroImage src={item.image} alt={item.title} tone={item.imageTone} />
             <PreviewImage items={portfolioItems} />
           </div>
           <ProjectPanel item={item} />
         </div>
 
         <div className="md:hidden flex flex-col gap-3 w-full mt-8">
-          <HeroImage src={item.image} alt={item.title} layoutId="hero-mobile" />
+          <HeroImage src={item.image} alt={item.title} layoutId="hero-mobile" tone={item.imageTone} />
           <ProjectPanel item={item} />
         </div>
       </div>

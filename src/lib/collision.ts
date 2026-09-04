@@ -1,5 +1,12 @@
 export type Rect = { top: number; left: number; bottom: number; right: number }
 
+export function imageIsLight(imgEl: HTMLImageElement, hitRect: Rect, imgRect: Rect): boolean {
+  const tone = imgEl.dataset.tone
+  if (tone === 'light') return true
+  if (tone === 'dark') return false
+  return sampleLuminance(imgEl, hitRect, imgRect) > 0.5
+}
+
 export function intersect(a: Rect, b: Rect): Rect | null {
   const top = Math.max(a.top, b.top)
   const left = Math.max(a.left, b.left)
@@ -9,7 +16,7 @@ export function intersect(a: Rect, b: Rect): Rect | null {
   return { top, left, bottom, right }
 }
 
-export function sampleLuminance(imgEl: HTMLImageElement, hitRect: Rect, imgRect: Rect): number {
+function sampleLuminance(imgEl: HTMLImageElement, hitRect: Rect, imgRect: Rect): number {
   try {
     const canvas = document.createElement('canvas')
     const naturalW = imgEl.naturalWidth

@@ -108,6 +108,18 @@ export default function ItemForm({
             Image
             <ImageUploadField name="image" defaultValue={item?.link === 'internal' ? item.image : undefined} />
           </label>
+          <label className="flex flex-col gap-1 text-sm">
+            Image tone (drives the colour of text crossing this image)
+            <select
+              name="imageTone"
+              defaultValue={item?.link === 'internal' ? item.imageTone ?? '' : ''}
+              className={inputClass}
+            >
+              <option value="">Auto-detect from pixels</option>
+              <option value="light">Light image</option>
+              <option value="dark">Dark image</option>
+            </select>
+          </label>
 
           <fieldset className="flex gap-4 text-sm">
             <legend className="mb-1">Date type</legend>

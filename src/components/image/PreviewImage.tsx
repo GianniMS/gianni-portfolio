@@ -6,13 +6,13 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useRef } from 'react'
 import { useHover } from '@/context/HoverContext'
 import { useImageBounds } from '@/context/ImageBoundsContext'
-import { PortfolioItem } from '@/types'
+import { ImageTone, PortfolioItem } from '@/types'
 import { categoryPath } from '@/data/categoryPaths'
 
 export const PORTRAIT_HOVER_SLUG = '__portrait__'
 const PORTRAIT_SRC = 'images/portrait.jpg'
 
-type PreviewSource = { slug: string; image: string; title: string }
+type PreviewSource = { slug: string; image: string; title: string; imageTone?: ImageTone }
 
 export default function PreviewImage({ items }: { items: PortfolioItem[] }) {
   const { hoveredSlug } = useHover()
@@ -67,6 +67,7 @@ export default function PreviewImage({ items }: { items: PortfolioItem[] }) {
               sizes="(max-width: 768px) 80vw, 900px"
               className="object-cover"
               data-preview=""
+              data-tone={hovered.imageTone}
             />
           </motion.div>
         )}

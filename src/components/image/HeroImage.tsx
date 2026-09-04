@@ -4,17 +4,20 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 import { useImageBounds } from '@/context/ImageBoundsContext'
+import { ImageTone } from '@/types'
 
 export default function HeroImage({
   src,
   alt,
   layoutId = 'hero',
   priority = false,
+  tone,
 }: {
   src: string
   alt: string
   layoutId?: string
   priority?: boolean
+  tone?: ImageTone
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const { setHeroBounds } = useImageBounds()
@@ -52,6 +55,7 @@ export default function HeroImage({
         priority={priority}
         className="object-cover"
         data-hero=""
+        data-tone={tone}
       />
     </motion.div>
   )

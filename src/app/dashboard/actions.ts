@@ -11,7 +11,7 @@ import {
   verifySessionToken,
 } from '@/lib/auth'
 import { getItems, saveItems, saveCV } from '@/lib/content'
-import { CVData, PortfolioItem } from '@/types'
+import { CVData, ImageTone, PortfolioItem } from '@/types'
 
 export type LoginState = { error?: string } | undefined
 
@@ -72,6 +72,10 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
     .map((s) => s.trim())
     .filter(Boolean)
 
+  const tone = String(formData.get('imageTone') ?? '')
+  const imageTone: ImageTone | undefined =
+    tone === 'light' || tone === 'dark' ? tone : undefined
+
   const base = {
     id,
     title,
@@ -81,6 +85,7 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
     description,
     skills,
     image: String(formData.get('image') ?? ''),
+    ...(imageTone ? { imageTone } : {}),
   }
 
   const dateType = formData.get('dateType') as 'single' | 'range'
