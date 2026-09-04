@@ -3,6 +3,7 @@ export type DateInfo =
   | { dateType: 'range'; dateStart: string; dateEnd: string }
 
 export type PortfolioItem = {
+  id: string
   title: string
   category: 'project' | 'experience' | 'certificate' | 'press' | 'award'
 } & (

@@ -105,6 +105,11 @@ export default function CollisionText({
     const clipPath = `inset(${hit.top - textRect.top}px ${textRect.right - hit.right}px ${textRect.bottom - hit.bottom}px ${hit.left - textRect.left}px)`
     setCursorBlueOverlay({ color: 'var(--color-background)', clipPath })
 
+    if (!imageCollision) {
+      setCursorImageOverlay(null)
+      return
+    }
+
     const imageHit = cursorImageHit && intersect(textRect, cursorImageHit.rect)
     if (!imageHit) {
       setCursorImageOverlay(null)
@@ -114,7 +119,7 @@ export default function CollisionText({
     const imageClipPath = `inset(${imageHit.top - textRect.top}px ${textRect.right - imageHit.right}px ${textRect.bottom - imageHit.bottom}px ${imageHit.left - textRect.left}px)`
     const imageColor = cursorImageHit.color === 'white' ? 'var(--color-foreground)' : 'var(--color-background)'
     setCursorImageOverlay({ color: imageColor, clipPath: imageClipPath })
-  }, [cursorRect, cursorImageHit])
+  }, [cursorRect, cursorImageHit, imageCollision])
 
   const textDecoration = underline ? 'underline' : undefined
 

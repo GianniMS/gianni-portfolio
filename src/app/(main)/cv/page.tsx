@@ -1,15 +1,18 @@
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import PageShell from '@/components/layout/PageShell'
 import ItemList from '@/components/list/ItemList'
 import HeroImage from '@/components/image/HeroImage'
 import PreviewImage from '@/components/image/PreviewImage'
 import CVPanel from '@/components/panels/CVPanel'
-import { portfolioItems } from '@/data/items'
-import { cvData } from '@/data/cv'
+import { getItems, getCV } from '@/lib/content'
 
 export const metadata: Metadata = { title: 'CV' }
 
-export default function CVPage() {
+export default async function CVPage() {
+  const [portfolioItems, cvData] = await Promise.all([getItems(), getCV()])
+  if (!cvData) notFound()
+
   return (
     <PageShell showBack>
       <div className="relative flex gap-8">
@@ -25,13 +28,9 @@ export default function CVPage() {
           <CVPanel data={cvData} />
         </div>
 
-        <div className="md:hidden relative w-full">
-          <div className="fixed top-24 left-6 right-6 z-0">
-            <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" layoutId="hero-mobile" />
-          </div>
-          <div className="mt-[380px]">
-            <CVPanel data={cvData} />
-          </div>
+        <div className="md:hidden flex flex-col gap-3 w-full mt-8">
+          <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" layoutId="hero-mobile" />
+          <CVPanel data={cvData} />
         </div>
       </div>
     </PageShell>

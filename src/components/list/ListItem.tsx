@@ -16,8 +16,8 @@ export default function ListItem({ item }: { item: PortfolioItem }) {
   if (item.link === 'external') {
     return (
       <a href={item.href} target="_blank" rel="noopener noreferrer" className={rowClass}>
-        <CollisionText crossColor="var(--color-background)">{item.title}</CollisionText>
-        <CollisionText crossColor="var(--color-background)">{year}</CollisionText>
+        <CollisionText>{item.title}</CollisionText>
+        <CollisionText>{year}</CollisionText>
       </a>
     )
   }
@@ -31,8 +31,8 @@ export default function ListItem({ item }: { item: PortfolioItem }) {
       onMouseEnter={() => setHoveredSlug(item.slug)}
       onMouseLeave={() => setHoveredSlug(null)}
     >
-      <CollisionText crossColor="var(--color-background)">{item.title}</CollisionText>
-      <CollisionText crossColor="var(--color-background)">{year}</CollisionText>
+      <CollisionText>{item.title}</CollisionText>
+      <CollisionText>{year}</CollisionText>
     </Link>
   )
 }

@@ -45,7 +45,7 @@ export default function HeroImage({
       className="relative w-full aspect-[966/669] shrink-0 bg-blue"
     >
       <Image
-        src={`/${src}`}
+        src={src.startsWith('http') ? src : `/${src}`}
         alt={alt}
         fill
         sizes="(max-width: 768px) 80vw, 900px"

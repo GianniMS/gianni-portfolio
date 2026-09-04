@@ -6,8 +6,11 @@
 ## After every change
 Run ESLint before reporting work as done:
 ```bash
-npx eslint src --ext .ts,.tsx
+yarn eslint src --ext .ts,.tsx
 ```
+
+## Package manager
+Yarn (classic v1), not npm. Use `yarn add`/`yarn install`; don't reintroduce `package-lock.json`.
 
 ## Theme — never deviate from these values
 

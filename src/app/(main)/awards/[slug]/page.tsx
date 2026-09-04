@@ -5,12 +5,13 @@ import ItemList from '@/components/list/ItemList'
 import HeroImage from '@/components/image/HeroImage'
 import PreviewImage from '@/components/image/PreviewImage'
 import ProjectPanel from '@/components/panels/ProjectPanel'
-import { portfolioItems } from '@/data/items'
+import { getItems } from '@/lib/content'
 import { PortfolioItem } from '@/types'
 
 export const metadata: Metadata = { title: 'Awards' }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const portfolioItems = await getItems()
   return portfolioItems
     .filter((i): i is Extract<PortfolioItem, { link: 'internal' }> =>
       i.link === 'internal' && i.category === 'award'
@@ -24,6 +25,7 @@ export default async function AwardDetailPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
+  const portfolioItems = await getItems()
   const item = portfolioItems.find(
     (i): i is Extract<PortfolioItem, { link: 'internal' }> =>
       i.link === 'internal' && i.slug === slug
@@ -43,13 +45,9 @@ export default async function AwardDetailPage({
           </div>
           <ProjectPanel item={item} />
         </div>
-        <div className="md:hidden relative w-full">
-          <div className="fixed top-24 left-6 right-6 z-0">
-            <HeroImage src={item.image} alt={item.title} layoutId="hero-mobile" />
-          </div>
-          <div className="mt-[380px]">
-            <ProjectPanel item={item} />
-          </div>
+        <div className="md:hidden flex flex-col gap-6 w-full mt-8">
+          <HeroImage src={item.image} alt={item.title} layoutId="hero-mobile" />
+          <ProjectPanel item={item} />
         </div>
       </div>
     </PageShell>

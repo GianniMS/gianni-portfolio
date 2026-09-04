@@ -1,14 +1,7 @@
 import { PortfolioItem } from '@/types'
+import { CATEGORY_LABELS } from '@/data/categories'
 import ListItem from './ListItem'
 import CollisionText from '@/components/image/CollisionText'
-
-const LABELS: Record<PortfolioItem['category'], string> = {
-  project: 'Projects',
-  experience: 'Experience',
-  certificate: 'Certificates',
-  press: 'Press',
-  award: 'Awards',
-}
 
 export default function ListSection({
   category,
@@ -20,10 +13,10 @@ export default function ListSection({
   return (
     <div className="mb-2">
       <p className="text-blue font-bold text-sm mb-1">
-        <CollisionText crossColor="var(--color-background)">{LABELS[category]}</CollisionText>
+        <CollisionText>{CATEGORY_LABELS[category]}</CollisionText>
       </p>
       {items.map((item) => (
-        <ListItem key={item.title} item={item} />
+        <ListItem key={item.id} item={item} />
       ))}
     </div>
   )

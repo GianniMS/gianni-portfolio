@@ -61,7 +61,7 @@ export default function PreviewImage({ items }: { items: PortfolioItem[] }) {
             className="absolute top-[4%] left-[12%] w-full aspect-[966/669] z-[5]"
           >
             <Image
-              src={`/${hovered.image}`}
+              src={hovered.image.startsWith('http') ? hovered.image : `/${hovered.image}`}
               alt={hovered.title}
               fill
               sizes="(max-width: 768px) 80vw, 900px"
