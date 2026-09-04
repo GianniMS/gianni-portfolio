@@ -16,6 +16,8 @@ export default function Navbar({ email, socials }: { email: string; socials: Soc
 
   const isActive = (href: string) => pathname === href
 
+  const activeOpacity = (href: string) => (isActive(href) ? 'opacity-100' : 'opacity-60')
+
   const close = () => setOpen(false)
 
   const socialLinks = [
@@ -37,10 +39,13 @@ export default function Navbar({ email, socials }: { email: string; socials: Soc
           <CollisionText imageCollision={false}>Gianni Mendonca Semedo</CollisionText>
         </Link>
 
-        <nav className="pointer-events-auto hidden md:flex gap-2 text-sm">
-          <Link href="/"><CollisionText underline={isActive('/')} imageCollision={false}>Home</CollisionText></Link>
-          <CollisionText imageCollision={false}>|</CollisionText>
-          <Link href="/cv"><CollisionText underline={isActive('/cv')} imageCollision={false}>CV</CollisionText></Link>
+        <nav className="pointer-events-auto hidden md:flex gap-4 text-sm font-bold">
+          <Link href="/" className={activeOpacity('/')}>
+            <CollisionText imageCollision={false}>Home</CollisionText>
+          </Link>
+          <Link href="/cv" className={activeOpacity('/cv')}>
+            <CollisionText imageCollision={false}>CV</CollisionText>
+          </Link>
         </nav>
       </div>
 
@@ -70,11 +75,19 @@ export default function Navbar({ email, socials }: { email: string; socials: Soc
             className="fixed inset-0 bg-background z-40 flex flex-col px-6 pt-24 pb-12 md:hidden"
           >
             <div className="flex flex-col items-start gap-6">
-              <Link href="/" onClick={close} className="text-3xl font-bold leading-none">
-                <CollisionText underline={isActive('/')} imageCollision={false}>Home</CollisionText>
+              <Link
+                href="/"
+                onClick={close}
+                className={`text-3xl font-bold leading-none ${activeOpacity('/')}`}
+              >
+                <CollisionText imageCollision={false}>Home</CollisionText>
               </Link>
-              <Link href="/cv" onClick={close} className="text-3xl font-bold leading-none">
-                <CollisionText underline={isActive('/cv')} imageCollision={false}>CV</CollisionText>
+              <Link
+                href="/cv"
+                onClick={close}
+                className={`text-3xl font-bold leading-none ${activeOpacity('/cv')}`}
+              >
+                <CollisionText imageCollision={false}>CV</CollisionText>
               </Link>
             </div>
 
