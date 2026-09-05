@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import CollisionText from '@/components/image/CollisionText'
 import { CVData } from '@/types'
 
@@ -14,7 +17,12 @@ function contactLinks(data: CVData) {
 
 export function ContactModal({ data }: { data: CVData }) {
   return (
-    <div className="absolute top-8 right-0 z-30 w-80 bg-blue text-background p-6">
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      className="fixed bottom-6 right-6 z-30 w-80 bg-blue text-background p-6"
+    >
       <Link href="/" aria-label="Close contact" className="block w-fit text-xl leading-none mb-6">
         ×
       </Link>
@@ -37,7 +45,7 @@ export function ContactModal({ data }: { data: CVData }) {
           </li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   )
 }
 

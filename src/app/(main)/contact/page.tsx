@@ -24,8 +24,8 @@ export default async function ContactPage() {
           <div className="relative flex-1 max-w-4xl mt-12 -ml-24">
             <HeroImage src="images/portrait.jpg" alt={cvData.name} />
             <PreviewImage items={portfolioItems} />
-            <ContactModal data={cvData} />
           </div>
+          <ContactModal data={cvData} />
         </div>
 
         <div className="md:hidden flex flex-col gap-3 w-full mt-8">
