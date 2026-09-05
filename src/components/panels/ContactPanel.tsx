@@ -77,7 +77,7 @@ export function ContactModal({ data, onClose }: { data: CVData; onClose: () => v
         type="button"
         onClick={onClose}
         aria-label="Close contact"
-        className="block w-fit text-xl leading-none mb-6"
+        className="block w-fit cursor-pointer text-xl leading-none mb-6"
       >
         <CollisionText imageCollision={false} cursorColor="var(--color-foreground)">
           ×

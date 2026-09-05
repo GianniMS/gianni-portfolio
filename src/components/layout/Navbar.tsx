@@ -24,6 +24,13 @@ export default function Navbar() {
 
   const close = () => setOpen(false)
 
+  // nav links must close the overlay even when they point at the current route,
+  // where the pathname never changes for ContactOverlay to react to
+  const leaveContact = () => {
+    close()
+    setContactOpen(false)
+  }
+
   return (
     <>
       <div className="fixed top-0 left-0 right-0 z-20 h-15 flex items-center justify-between px-6 pointer-events-none">
@@ -32,7 +39,7 @@ export default function Navbar() {
           className={`pointer-events-auto font-title font-bold text-lg md:text-3xl tracking-tight ${
             onContactPage ? 'text-background md:text-blue' : 'text-blue'
           }`}
-          onClick={close}
+          onClick={leaveContact}
           onMouseEnter={() => setHoveredSlug(PORTRAIT_HOVER_SLUG)}
           onMouseLeave={() => setHoveredSlug(null)}
         >
@@ -40,16 +47,18 @@ export default function Navbar() {
         </Link>
 
         <nav className="pointer-events-auto hidden md:flex gap-4 text-sm font-bold">
-          <Link href="/" className={activeOpacity('/')}>
+          <Link href="/" onClick={leaveContact} className={activeOpacity('/')}>
             <CollisionText imageCollision={false}>Home</CollisionText>
           </Link>
-          <Link href="/cv" className={activeOpacity('/cv')}>
+          <Link href="/cv" onClick={leaveContact} className={activeOpacity('/cv')}>
             <CollisionText imageCollision={false}>CV</CollisionText>
           </Link>
           <button
             type="button"
             onClick={() => setContactOpen(!contactOpen)}
-            className={contactOpen || onContactPage ? 'opacity-100' : 'opacity-60'}
+            className={`cursor-pointer ${
+              contactOpen || onContactPage ? 'opacity-100' : 'opacity-60'
+            }`}
           >
             <CollisionText imageCollision={false}>Contact</CollisionText>
           </button>
@@ -88,14 +97,14 @@ export default function Navbar() {
             <div className="flex flex-col items-start gap-6">
               <Link
                 href="/"
-                onClick={close}
+                onClick={leaveContact}
                 className={`text-3xl font-bold leading-none ${activeOpacity('/')}`}
               >
                 <CollisionText imageCollision={false}>Home</CollisionText>
               </Link>
               <Link
                 href="/cv"
-                onClick={close}
+                onClick={leaveContact}
                 className={`text-3xl font-bold leading-none ${activeOpacity('/cv')}`}
               >
                 <CollisionText imageCollision={false}>CV</CollisionText>
