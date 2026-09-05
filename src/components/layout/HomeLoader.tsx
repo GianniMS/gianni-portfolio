@@ -6,9 +6,9 @@ import Image from 'next/image'
 import { useImageBounds } from '@/context/ImageBoundsContext'
 import { BEAT } from '@/lib/motion'
 
+// the two pauses either side of the blue square are equal
 const HOLD_DURATION = 0.2
 const BOX_DURATION = BEAT
-const BLUE_HOLD_DURATION = 0.45
 const IMAGE_DURATION = BEAT
 const FADE_DURATION = BEAT
 
@@ -67,7 +67,7 @@ export default function HomeLoader() {
 
   useEffect(() => {
     if (phase !== 'blue') return
-    const t = setTimeout(() => setPhase('image'), (BOX_DURATION + BLUE_HOLD_DURATION) * 1000)
+    const t = setTimeout(() => setPhase('image'), (BOX_DURATION + HOLD_DURATION) * 1000)
     return () => clearTimeout(t)
   }, [phase])
 
