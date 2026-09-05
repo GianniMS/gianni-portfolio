@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import PageShell from '@/components/layout/PageShell'
+import SetPanel from '@/components/layout/SetPanel'
 import ItemList from '@/components/list/ItemList'
 import HeroImage from '@/components/image/HeroImage'
 import PreviewImage from '@/components/image/PreviewImage'
@@ -34,6 +35,7 @@ export default async function ProjectDetailPage({
 
   return (
     <PageShell showBack>
+      <SetPanel panel={null} />
       <div className="relative flex gap-8">
         <div className="hidden md:block">
           <ItemList items={portfolioItems} />

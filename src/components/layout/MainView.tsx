@@ -5,23 +5,17 @@ import HeroImage from '@/components/image/HeroImage'
 import PreviewImage from '@/components/image/PreviewImage'
 import CVPanel from '@/components/panels/CVPanel'
 import FadeIn from '@/components/layout/FadeIn'
+import { usePanel } from '@/context/PanelContext'
 import { CVData, PortfolioItem } from '@/types'
 
 const PORTRAIT = 'images/portrait.jpg'
 
-// Home and /cv render this same tree so React reconciles across the navigation
-// instead of tearing down the list and image and rebuilding them.
-export default function MainView({
-  items,
-  cv,
-  showCV = false,
-}: {
-  items: PortfolioItem[]
-  cv: CVData | null
-  showCV?: boolean
-}) {
+// The desktop tree never changes between home and CV: the panel is an overlay,
+// so nothing here remounts and the list and image stay put.
+export default function MainView({ items, cv }: { items: PortfolioItem[]; cv: CVData | null }) {
+  const { panel } = usePanel()
   const alt = cv?.name || 'Gianni Mendonça Semedo'
-  const withPanel = showCV && cv
+  const cvOnMobile = panel === 'cv' && cv
 
   return (
     <>
@@ -32,15 +26,9 @@ export default function MainView({
           <HeroImage src={PORTRAIT} alt={alt} priority />
           <PreviewImage items={items} />
         </div>
-
-        {withPanel && (
-          <FadeIn>
-            <CVPanel data={cv} />
-          </FadeIn>
-        )}
       </div>
 
-      {withPanel ? (
+      {cvOnMobile ? (
         <div className="md:hidden flex flex-col gap-3 w-full mt-8">
           <HeroImage src={PORTRAIT} alt={alt} layoutId="hero-mobile" />
           <FadeIn>

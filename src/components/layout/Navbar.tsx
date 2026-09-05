@@ -8,30 +8,32 @@ import { useHover } from '@/context/HoverContext'
 import { PORTRAIT_HOVER_SLUG } from '@/components/image/PreviewImage'
 import CollisionText from '@/components/image/CollisionText'
 import { useSocials } from '@/context/SocialsContext'
-import { useContact } from '@/context/ContactContext'
+import { usePanel } from '@/context/PanelContext'
 
 export default function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const { setHoveredSlug } = useHover()
   const socialLinks = useSocials()
-  const { open: contactOpen, setOpen: setContactOpen } = useContact()
+  const { panel, setPanel } = usePanel()
   const onContactPage = pathname === '/contact'
 
-  const isActive = (href: string) => pathname === href
+  // the desktop overlays leave the pathname alone, so active state follows the
+  // panel first and only falls back to the route
+  const isCVActive = panel === 'cv' || pathname === '/cv'
+  const isContactActive = panel === 'contact' || onContactPage
+  const isHomeActive = !panel && pathname === '/'
 
-  // the desktop overlay leaves the pathname alone, so Home/CV would stay active
-  const activeOpacity = (href: string) =>
-    !contactOpen && isActive(href) ? 'opacity-100' : 'opacity-60'
+  const opacity = (active: boolean) => (active ? 'opacity-100' : 'opacity-60')
 
 
   const close = () => setOpen(false)
 
-  // nav links must close the overlay even when they point at the current route,
-  // where the pathname never changes for ContactOverlay to react to
-  const leaveContact = () => {
+  // nav links must clear the overlay even when they point at the current route,
+  // where nothing remounts to reset it
+  const goHome = () => {
     close()
-    setContactOpen(false)
+    setPanel(null)
   }
 
   return (
@@ -42,7 +44,7 @@ export default function Navbar() {
           className={`pointer-events-auto font-title font-bold text-lg md:text-3xl tracking-tight ${
             onContactPage ? 'text-background md:text-blue' : 'text-blue'
           }`}
-          onClick={leaveContact}
+          onClick={goHome}
           onMouseEnter={() => setHoveredSlug(PORTRAIT_HOVER_SLUG)}
           onMouseLeave={() => setHoveredSlug(null)}
         >
@@ -50,18 +52,20 @@ export default function Navbar() {
         </Link>
 
         <nav className="pointer-events-auto hidden md:flex gap-4 text-sm font-bold">
-          <Link href="/" onClick={leaveContact} className={activeOpacity('/')}>
+          <Link href="/" onClick={goHome} className={opacity(isHomeActive)}>
             <CollisionText imageCollision={false}>Home</CollisionText>
-          </Link>
-          <Link href="/cv" onClick={leaveContact} className={activeOpacity('/cv')}>
-            <CollisionText imageCollision={false}>CV</CollisionText>
           </Link>
           <button
             type="button"
-            onClick={() => setContactOpen(!contactOpen)}
-            className={`cursor-pointer ${
-              contactOpen || onContactPage ? 'opacity-100' : 'opacity-60'
-            }`}
+            onClick={() => setPanel(panel === 'cv' ? null : 'cv')}
+            className={`cursor-pointer ${opacity(isCVActive)}`}
+          >
+            <CollisionText imageCollision={false}>CV</CollisionText>
+          </button>
+          <button
+            type="button"
+            onClick={() => setPanel(panel === 'contact' ? null : 'contact')}
+            className={`cursor-pointer ${opacity(isContactActive)}`}
           >
             <CollisionText imageCollision={false}>Contact</CollisionText>
           </button>
@@ -100,22 +104,22 @@ export default function Navbar() {
             <div className="flex flex-col items-start gap-6">
               <Link
                 href="/"
-                onClick={leaveContact}
-                className={`text-3xl font-bold leading-none ${activeOpacity('/')}`}
+                onClick={goHome}
+                className={`text-3xl font-bold leading-none ${opacity(isHomeActive)}`}
               >
                 <CollisionText imageCollision={false}>Home</CollisionText>
               </Link>
               <Link
                 href="/cv"
-                onClick={leaveContact}
-                className={`text-3xl font-bold leading-none ${activeOpacity('/cv')}`}
+                onClick={close}
+                className={`text-3xl font-bold leading-none ${opacity(isCVActive)}`}
               >
                 <CollisionText imageCollision={false}>CV</CollisionText>
               </Link>
               <Link
                 href="/contact"
                 onClick={close}
-                className={`text-3xl font-bold leading-none ${activeOpacity('/contact')}`}
+                className={`text-3xl font-bold leading-none ${opacity(isContactActive)}`}
               >
                 <CollisionText imageCollision={false}>Contact</CollisionText>
               </Link>

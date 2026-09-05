@@ -3,7 +3,7 @@ import { CVData } from '@/types'
 
 export default function CVPanel({ data }: { data: CVData }) {
   return (
-    <div className="relative z-20 flex flex-col max-w-xs md:mt-12">
+    <div className="relative z-20 flex flex-col max-w-xs">
       <a
         href={data.cvPdfPath}
         download

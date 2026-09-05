@@ -4,7 +4,7 @@ import PageShell from '@/components/layout/PageShell'
 import ItemList from '@/components/list/ItemList'
 import HeroImage from '@/components/image/HeroImage'
 import PreviewImage from '@/components/image/PreviewImage'
-import OpenContactOnMount from '@/components/layout/OpenContactOnMount'
+import SetPanel from '@/components/layout/SetPanel'
 import ContactPanel from '@/components/panels/ContactPanel'
 import { getItems, getCV } from '@/lib/content'
 
@@ -16,7 +16,7 @@ export default async function ContactPage() {
 
   return (
     <PageShell showBack variant="contact">
-      <OpenContactOnMount />
+      <SetPanel panel="contact" />
 
       <div className="relative hidden md:flex gap-8">
         <ItemList items={portfolioItems} />

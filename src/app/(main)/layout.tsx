@@ -2,8 +2,9 @@ import { ReactNode } from 'react'
 import Navbar from '@/components/layout/Navbar'
 import HomeLoaderGate from '@/components/layout/HomeLoaderGate'
 import ContactOverlay from '@/components/layout/ContactOverlay'
+import CVOverlay from '@/components/layout/CVOverlay'
 import { SocialsProvider } from '@/context/SocialsContext'
-import { ContactProvider } from '@/context/ContactContext'
+import { PanelProvider } from '@/context/PanelContext'
 import { getCV } from '@/lib/content'
 
 const EMPTY_CV = {
@@ -23,12 +24,13 @@ export default async function MainLayout({ children }: { children: ReactNode }) 
       email={cv?.email ?? ''}
       socials={cv?.socials ?? { linkedin: '', instagram: '' }}
     >
-      <ContactProvider>
+      <PanelProvider>
         <Navbar />
         <HomeLoaderGate />
         {children}
+        <CVOverlay data={cv} />
         <ContactOverlay data={cv ?? EMPTY_CV} />
-      </ContactProvider>
+      </PanelProvider>
     </SocialsProvider>
   )
 }
