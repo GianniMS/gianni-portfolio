@@ -1,32 +1,16 @@
 import type { Metadata } from 'next'
 import PageShell from '@/components/layout/PageShell'
-import ItemList from '@/components/list/ItemList'
-import HeroImage from '@/components/image/HeroImage'
-import PreviewImage from '@/components/image/PreviewImage'
-import { getItems } from '@/lib/content'
+import MainView from '@/components/layout/MainView'
+import { getItems, getCV } from '@/lib/content'
 
 export const metadata: Metadata = { title: 'Home' }
 
 export default async function HomePage() {
-  const portfolioItems = await getItems()
+  const [portfolioItems, cvData] = await Promise.all([getItems(), getCV()])
 
   return (
     <PageShell lockHeight>
-      <div className="relative hidden md:flex gap-8">
-        <ItemList items={portfolioItems} />
-
-        <div className="relative flex-1 max-w-4xl mt-12 -ml-24">
-          <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" priority />
-          <PreviewImage items={portfolioItems} />
-        </div>
-      </div>
-
-      <div className="relative md:hidden">
-        <ItemList items={portfolioItems} widthClassName="w-[72%]" scrollHeightClassName="h-[calc(100vh-176px)]" />
-        <div className="absolute top-[130px] right-0 w-[55%]">
-          <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" layoutId="hero-mobile" priority />
-        </div>
-      </div>
+      <MainView items={portfolioItems} cv={cvData} />
     </PageShell>
   )
 }
