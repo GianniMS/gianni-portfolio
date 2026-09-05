@@ -3,12 +3,10 @@ import { ReactNode } from 'react'
 
 export default function PageShell({
   children,
-  showBack = false,
   lockHeight = false,
   variant = 'default',
 }: {
   children: ReactNode
-  showBack?: boolean
   lockHeight?: boolean
   variant?: 'default' | 'contact'
 }) {
@@ -21,7 +19,7 @@ export default function PageShell({
   return (
     <div className={`relative ${heightClass} ${surfaceClass} font-body px-6 pt-24 md:pt-35 pb-20`}>
       {children}
-      <LocationTime showBack={showBack} />
+      <LocationTime />
     </div>
   )
 }

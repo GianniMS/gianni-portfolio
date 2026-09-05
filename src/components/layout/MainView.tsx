@@ -1,21 +1,25 @@
 'use client'
 
+import { ReactNode } from 'react'
 import ItemList from '@/components/list/ItemList'
 import HeroImage from '@/components/image/HeroImage'
 import PreviewImage from '@/components/image/PreviewImage'
-import CVPanel from '@/components/panels/CVPanel'
-import FadeIn from '@/components/layout/FadeIn'
-import { usePanel } from '@/context/PanelContext'
 import { CVData, PortfolioItem } from '@/types'
 
 const PORTRAIT = 'images/portrait.jpg'
 
-// The desktop tree never changes between home and CV: the panel is an overlay,
-// so nothing here remounts and the list and image stay put.
-export default function MainView({ items, cv }: { items: PortfolioItem[]; cv: CVData | null }) {
-  const { panel } = usePanel()
+// Every route renders this same desktop stage so nothing remounts when a panel
+// opens; only the mobile half differs, where each route really is its own page.
+export default function MainView({
+  items,
+  cv,
+  mobile,
+}: {
+  items: PortfolioItem[]
+  cv: CVData | null
+  mobile?: ReactNode
+}) {
   const alt = cv?.name || 'Gianni Mendonça Semedo'
-  const cvOnMobile = panel === 'cv' && cv
 
   return (
     <>
@@ -28,14 +32,7 @@ export default function MainView({ items, cv }: { items: PortfolioItem[]; cv: CV
         </div>
       </div>
 
-      {cvOnMobile ? (
-        <div className="md:hidden flex flex-col gap-3 w-full mt-8">
-          <HeroImage src={PORTRAIT} alt={alt} layoutId="hero-mobile" />
-          <FadeIn>
-            <CVPanel data={cv} />
-          </FadeIn>
-        </div>
-      ) : (
+      {mobile ?? (
         <div className="relative md:hidden">
           <ItemList
             items={items}

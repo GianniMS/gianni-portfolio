@@ -1,34 +1,25 @@
 'use client'
 
-import { AnimatePresence, motion } from 'framer-motion'
+import { usePathname, useRouter } from 'next/navigation'
+import { AnimatePresence } from 'framer-motion'
 import { usePanel } from '@/context/PanelContext'
-import { useImageBounds } from '@/context/ImageBoundsContext'
-import CVPanel from '@/components/panels/CVPanel'
-import { BEAT } from '@/lib/motion'
+import { CVModal } from '@/components/panels/CVPanel'
 import { CVData } from '@/types'
 
-const GAP = 32
-
 export default function CVOverlay({ data }: { data: CVData | null }) {
-  const { panel } = usePanel()
-  const { heroBounds } = useImageBounds()
-  const show = panel === 'cv' && data && heroBounds
+  const { panel, setPanel } = usePanel()
+  const pathname = usePathname()
+  const router = useRouter()
+
+  // on /cv the modal is the page itself, so closing it leaves the route
+  const close = () => {
+    setPanel(null)
+    if (pathname === '/cv') router.push('/')
+  }
 
   return (
     <AnimatePresence>
-      {show && (
-        <motion.div
-          key="cv"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: BEAT, ease: 'easeInOut' }}
-          className="hidden md:block fixed z-30"
-          style={{ left: heroBounds.right + GAP, top: heroBounds.top }}
-        >
-          <CVPanel data={data} />
-        </motion.div>
-      )}
+      {panel === 'cv' && data && <CVModal key="cv" data={data} onClose={close} />}
     </AnimatePresence>
   )
 }

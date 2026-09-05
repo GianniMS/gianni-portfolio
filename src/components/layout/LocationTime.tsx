@@ -1,11 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import { useImageBounds } from '@/context/ImageBoundsContext'
 import CollisionText from '@/components/image/CollisionText'
 
-export default function LocationTime({ showBack = false }: { showBack?: boolean }) {
+export default function LocationTime() {
   const [time, setTime] = useState('')
   const { heroBounds } = useImageBounds()
 
@@ -22,11 +21,6 @@ export default function LocationTime({ showBack = false }: { showBack?: boolean 
 
   return (
     <>
-      {showBack && (
-        <Link href="/" className="fixed z-20 bottom-[30px] left-6 text-foreground text-2xl leading-none md:hidden">
-          <CollisionText>←</CollisionText>
-        </Link>
-      )}
       <div className="fixed z-20 bottom-6 text-right text-sm" style={{ right: `${rightPx}px` }}>
         <p><CollisionText>Rotterdam, The Netherlands</CollisionText></p>
         <p><CollisionText>{time}</CollisionText></p>

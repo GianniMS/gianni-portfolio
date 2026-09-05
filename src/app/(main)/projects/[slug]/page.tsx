@@ -34,7 +34,7 @@ export default async function ProjectDetailPage({
   if (!item) notFound()
 
   return (
-    <PageShell showBack>
+    <PageShell>
       <SetPanel panel={null} />
       <div className="relative flex gap-8">
         <div className="hidden md:block">
