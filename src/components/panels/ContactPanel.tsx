@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import CollisionText from '@/components/image/CollisionText'
 import { useCursor } from '@/context/CursorContext'
 import { Rect, intersect } from '@/lib/collision'
+import { BEAT } from '@/lib/motion'
 import { CVData } from '@/types'
 
 const INTRO = 'For project inquiries, collaborations or anything else, reach me here.'
@@ -63,7 +64,7 @@ export function ContactModal({ data, onClose }: { data: CVData; onClose: () => v
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 12 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+      transition={{ duration: BEAT, ease: 'easeInOut' }}
       onAnimationComplete={() => {
         if (!ref.current) return
         const r = ref.current.getBoundingClientRect()

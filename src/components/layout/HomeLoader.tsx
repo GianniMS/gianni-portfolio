@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import { useImageBounds } from '@/context/ImageBoundsContext'
+import { BEAT } from '@/lib/motion'
 
 const HOLD_DURATION = 0.2
-const BOX_DURATION = 0.9
+const BOX_DURATION = BEAT
 const BLUE_HOLD_DURATION = 0.45
-const IMAGE_DURATION = 0.9
-const FADE_DURATION = IMAGE_DURATION
+const IMAGE_DURATION = BEAT
+const FADE_DURATION = BEAT
 
 type Rect = { top: number; left: number; bottom: number; right: number }
 
