@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { AnimatePresence } from 'framer-motion'
 import { useContact } from '@/context/ContactContext'
@@ -10,6 +11,10 @@ export default function ContactOverlay({ data }: { data: CVData }) {
   const { open, setOpen } = useContact()
   const pathname = usePathname()
   const router = useRouter()
+
+  useEffect(() => {
+    if (pathname !== '/contact') setOpen(false)
+  }, [pathname, setOpen])
 
   // on /contact the modal is the page itself, so closing it leaves the route
   const close = () => {
