@@ -1,7 +1,6 @@
 import { PortfolioItem } from '@/types'
 import { getItemTimestamp } from '@/data/itemDates'
 import ListSection from './ListSection'
-import SocialsSection from './SocialsSection'
 
 export default function ItemList({
   items,
@@ -24,7 +23,6 @@ export default function ItemList({
       <ListSection category="certificate" items={byCategory('certificate')} />
       <ListSection category="press" items={byCategory('press')} />
       <ListSection category="award" items={byCategory('award')} />
-      <SocialsSection />
     </div>
   )
 }

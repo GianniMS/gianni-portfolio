@@ -41,6 +41,9 @@ export default function Navbar() {
           <Link href="/cv" className={activeOpacity('/cv')}>
             <CollisionText imageCollision={false}>CV</CollisionText>
           </Link>
+          <Link href="/contact" className={activeOpacity('/contact')}>
+            <CollisionText imageCollision={false}>Contact</CollisionText>
+          </Link>
         </nav>
       </div>
 
@@ -83,6 +86,13 @@ export default function Navbar() {
                 className={`text-3xl font-bold leading-none ${activeOpacity('/cv')}`}
               >
                 <CollisionText imageCollision={false}>CV</CollisionText>
+              </Link>
+              <Link
+                href="/contact"
+                onClick={close}
+                className={`text-3xl font-bold leading-none ${activeOpacity('/contact')}`}
+              >
+                <CollisionText imageCollision={false}>Contact</CollisionText>
               </Link>
             </div>
 
