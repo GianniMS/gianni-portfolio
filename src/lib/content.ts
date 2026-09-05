@@ -1,8 +1,11 @@
 import { put, head } from '@vercel/blob'
+import { unstable_cache, updateTag } from 'next/cache'
 import { PortfolioItem, CVData } from '@/types'
 
 const ITEMS_PATH = 'data/items.json'
 const CV_PATH = 'data/cv.json'
+const ITEMS_TAG = 'items'
+const CV_TAG = 'cv'
 
 async function readJson<T>(pathname: string): Promise<T | null> {
   const blob = await head(pathname).catch(() => null)
@@ -11,6 +14,18 @@ async function readJson<T>(pathname: string): Promise<T | null> {
   if (!res.ok) return null
   return res.json() as Promise<T>
 }
+
+// Reading a document costs two round trips to the blob store, so every render
+// paid ~600ms before this. Cached until a save invalidates the tag.
+const readItems = unstable_cache(
+  () => readJson<PortfolioItem[]>(ITEMS_PATH),
+  ['blob-items'],
+  { tags: [ITEMS_TAG] }
+)
+
+type StoredCV = Partial<CVData> & { bio?: string[]; clients?: string[] }
+
+const readCV = unstable_cache(() => readJson<StoredCV>(CV_PATH), ['blob-cv'], { tags: [CV_TAG] })
 
 async function writeJson(pathname: string, data: unknown): Promise<void> {
   await put(pathname, JSON.stringify(data), {
@@ -23,15 +38,16 @@ async function writeJson(pathname: string, data: unknown): Promise<void> {
 }
 
 export async function getItems(): Promise<PortfolioItem[]> {
-  return (await readJson<PortfolioItem[]>(ITEMS_PATH)) ?? []
+  return (await readItems()) ?? []
 }
 
 export async function saveItems(items: PortfolioItem[]): Promise<void> {
   await writeJson(ITEMS_PATH, items)
+  updateTag(ITEMS_TAG)
 }
 
 export async function getCV(): Promise<CVData | null> {
-  const raw = await readJson<Partial<CVData> & { bio?: string[]; clients?: string[] }>(CV_PATH)
+  const raw = await readCV()
   if (!raw) return null
   return {
     name: raw.name ?? '',
@@ -51,4 +67,5 @@ export async function getCV(): Promise<CVData | null> {
 
 export async function saveCV(data: CVData): Promise<void> {
   await writeJson(CV_PATH, data)
+  updateTag(CV_TAG)
 }
