@@ -31,7 +31,11 @@ export default function Navbar() {
           onMouseEnter={() => setHoveredSlug(PORTRAIT_HOVER_SLUG)}
           onMouseLeave={() => setHoveredSlug(null)}
         >
-          <CollisionText imageCollision={false}>Gianni Mendonca Semedo</CollisionText>
+          <CollisionText imageCollision={false}>
+            GIANN
+            <span className="bg-blue text-background px-[0.08em]">I&rsquo;M</span>
+            ENDONCA SEMEDO
+          </CollisionText>
         </Link>
 
         <nav className="pointer-events-auto hidden md:flex gap-4 text-sm font-bold">
