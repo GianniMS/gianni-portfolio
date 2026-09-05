@@ -20,7 +20,10 @@ export default function Navbar() {
 
   const isActive = (href: string) => pathname === href
 
-  const activeOpacity = (href: string) => (isActive(href) ? 'opacity-100' : 'opacity-60')
+  // the desktop overlay leaves the pathname alone, so Home/CV would stay active
+  const activeOpacity = (href: string) =>
+    !contactOpen && isActive(href) ? 'opacity-100' : 'opacity-60'
+
 
   const close = () => setOpen(false)
 

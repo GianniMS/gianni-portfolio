@@ -5,6 +5,7 @@ import ItemList from '@/components/list/ItemList'
 import HeroImage from '@/components/image/HeroImage'
 import PreviewImage from '@/components/image/PreviewImage'
 import CVPanel from '@/components/panels/CVPanel'
+import FadeIn from '@/components/layout/FadeIn'
 import { getItems, getCV } from '@/lib/content'
 
 export const metadata: Metadata = { title: 'CV' }
@@ -25,12 +26,16 @@ export default async function CVPage() {
             <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" />
             <PreviewImage items={portfolioItems} />
           </div>
-          <CVPanel data={cvData} />
+          <FadeIn>
+            <CVPanel data={cvData} />
+          </FadeIn>
         </div>
 
         <div className="md:hidden flex flex-col gap-3 w-full mt-8">
           <HeroImage src="images/portrait.jpg" alt="Gianni Mendonça Semedo" layoutId="hero-mobile" />
-          <CVPanel data={cvData} />
+          <FadeIn>
+            <CVPanel data={cvData} />
+          </FadeIn>
         </div>
       </div>
     </PageShell>
