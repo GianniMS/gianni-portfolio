@@ -20,11 +20,9 @@ export default function LocationTime() {
   const rightPx = heroBounds && typeof window !== 'undefined' ? window.innerWidth - heroBounds.right : 24
 
   return (
-    <>
-      <div className="fixed z-20 bottom-6 text-right text-sm" style={{ right: `${rightPx}px` }}>
-        <p><CollisionText>Rotterdam, The Netherlands</CollisionText></p>
-        <p><CollisionText>{time}</CollisionText></p>
-      </div>
-    </>
+    <div className="absolute z-20 bottom-6 text-right text-sm" style={{ right: `${rightPx}px` }}>
+      <p><CollisionText>Rotterdam, The Netherlands</CollisionText></p>
+      <p><CollisionText>{time}</CollisionText></p>
+    </div>
   )
 }

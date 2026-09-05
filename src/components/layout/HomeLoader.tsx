@@ -14,16 +14,18 @@ const FADE_DURATION = BEAT
 
 type Rect = { top: number; left: number; bottom: number; right: number }
 
-declare global {
-  interface Window {
-    __homeLoaderPlayed?: boolean
-  }
-}
+const PLAYED_KEY = 'homeLoaderPlayed'
 
+// Session-scoped rather than a window global, so the intro plays once per visit
+// and not again after a reload or when home is reached from another route.
 function consumeShouldSkip() {
   if (typeof window === 'undefined') return false
-  if (window.__homeLoaderPlayed) return true
-  window.__homeLoaderPlayed = true
+  try {
+    if (sessionStorage.getItem(PLAYED_KEY)) return true
+    sessionStorage.setItem(PLAYED_KEY, '1')
+  } catch {
+    // private mode or blocked storage: fall back to playing it
+  }
   return false
 }
 
