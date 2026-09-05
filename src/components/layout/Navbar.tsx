@@ -8,12 +8,15 @@ import { useHover } from '@/context/HoverContext'
 import { PORTRAIT_HOVER_SLUG } from '@/components/image/PreviewImage'
 import CollisionText from '@/components/image/CollisionText'
 import { useSocials } from '@/context/SocialsContext'
+import { useContact } from '@/context/ContactContext'
 
 export default function Navbar() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const { setHoveredSlug } = useHover()
   const socialLinks = useSocials()
+  const { open: contactOpen, setOpen: setContactOpen } = useContact()
+  const onContactPage = pathname === '/contact'
 
   const isActive = (href: string) => pathname === href
 
@@ -26,7 +29,9 @@ export default function Navbar() {
       <div className="fixed top-0 left-0 right-0 z-20 h-15 flex items-center justify-between px-6 pointer-events-none">
         <Link
           href="/"
-          className="pointer-events-auto font-title font-bold text-blue text-lg md:text-3xl tracking-tight"
+          className={`pointer-events-auto font-title font-bold text-lg md:text-3xl tracking-tight ${
+            onContactPage ? 'text-background md:text-blue' : 'text-blue'
+          }`}
           onClick={close}
           onMouseEnter={() => setHoveredSlug(PORTRAIT_HOVER_SLUG)}
           onMouseLeave={() => setHoveredSlug(null)}
@@ -41,9 +46,13 @@ export default function Navbar() {
           <Link href="/cv" className={activeOpacity('/cv')}>
             <CollisionText imageCollision={false}>CV</CollisionText>
           </Link>
-          <Link href="/contact" className={activeOpacity('/contact')}>
+          <button
+            type="button"
+            onClick={() => setContactOpen(!contactOpen)}
+            className={contactOpen || onContactPage ? 'opacity-100' : 'opacity-60'}
+          >
             <CollisionText imageCollision={false}>Contact</CollisionText>
-          </Link>
+          </button>
         </nav>
       </div>
 
@@ -54,11 +63,15 @@ export default function Navbar() {
           className="pointer-events-auto relative w-6 h-2.5"
         >
           <motion.span
-            className="absolute left-0 top-0 w-6 h-0.5 bg-foreground"
+            className={`absolute left-0 top-0 w-6 h-0.5 ${
+              onContactPage && !open ? 'bg-background' : 'bg-foreground'
+            }`}
             animate={open ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
           />
           <motion.span
-            className="absolute left-0 top-[8px] w-6 h-0.5 bg-foreground"
+            className={`absolute left-0 top-[8px] w-6 h-0.5 ${
+              onContactPage && !open ? 'bg-background' : 'bg-foreground'
+            }`}
             animate={open ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
           />
         </button>

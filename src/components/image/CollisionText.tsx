@@ -8,11 +8,13 @@ import { Rect, intersect, imageIsLight, findVisibleImage } from '@/lib/collision
 export default function CollisionText({
   children,
   crossColor,
+  cursorColor = 'var(--color-background)',
   underline = false,
   imageCollision = true,
 }: {
   children: ReactNode
   crossColor?: string
+  cursorColor?: string
   underline?: boolean
   imageCollision?: boolean
 }) {
@@ -104,7 +106,7 @@ export default function CollisionText({
     }
 
     const clipPath = `inset(${hit.top - textRect.top}px ${textRect.right - hit.right}px ${textRect.bottom - hit.bottom}px ${hit.left - textRect.left}px)`
-    setCursorBlueOverlay({ color: 'var(--color-background)', clipPath })
+    setCursorBlueOverlay({ color: cursorColor, clipPath })
 
     if (!imageCollision) {
       setCursorImageOverlay(null)
@@ -120,7 +122,7 @@ export default function CollisionText({
     const imageClipPath = `inset(${imageHit.top - textRect.top}px ${textRect.right - imageHit.right}px ${textRect.bottom - imageHit.bottom}px ${imageHit.left - textRect.left}px)`
     const imageColor = cursorImageHit.color === 'white' ? 'var(--color-foreground)' : 'var(--color-background)'
     setCursorImageOverlay({ color: imageColor, clipPath: imageClipPath })
-  }, [cursorRect, cursorImageHit, imageCollision])
+  }, [cursorRect, cursorImageHit, imageCollision, cursorColor])
 
   const textDecoration = underline ? 'underline' : undefined
 

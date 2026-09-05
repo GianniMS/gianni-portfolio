@@ -4,7 +4,8 @@ import PageShell from '@/components/layout/PageShell'
 import ItemList from '@/components/list/ItemList'
 import HeroImage from '@/components/image/HeroImage'
 import PreviewImage from '@/components/image/PreviewImage'
-import ContactPanel, { ContactModal } from '@/components/panels/ContactPanel'
+import OpenContactOnMount from '@/components/layout/OpenContactOnMount'
+import ContactPanel from '@/components/panels/ContactPanel'
 import { getItems, getCV } from '@/lib/content'
 
 export const metadata: Metadata = { title: 'Contact' }
@@ -14,24 +15,20 @@ export default async function ContactPage() {
   if (!cvData) notFound()
 
   return (
-    <PageShell showBack>
-      <div className="relative flex gap-8">
-        <div className="hidden md:block">
-          <ItemList items={portfolioItems} />
-        </div>
+    <PageShell showBack variant="contact">
+      <OpenContactOnMount />
 
-        <div className="hidden md:flex flex-1 gap-8">
-          <div className="relative flex-1 max-w-4xl mt-12 -ml-24">
-            <HeroImage src="images/portrait.jpg" alt={cvData.name} />
-            <PreviewImage items={portfolioItems} />
-          </div>
-          <ContactModal data={cvData} />
-        </div>
+      <div className="relative hidden md:flex gap-8">
+        <ItemList items={portfolioItems} />
 
-        <div className="md:hidden flex flex-col gap-3 w-full mt-8">
-          <HeroImage src="images/portrait.jpg" alt={cvData.name} layoutId="hero-mobile" />
-          <ContactPanel data={cvData} />
+        <div className="relative flex-1 max-w-4xl mt-12 -ml-24">
+          <HeroImage src="images/portrait.jpg" alt={cvData.name} />
+          <PreviewImage items={portfolioItems} />
         </div>
+      </div>
+
+      <div className="md:hidden mt-8">
+        <ContactPanel data={cvData} />
       </div>
     </PageShell>
   )
