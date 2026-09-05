@@ -9,7 +9,34 @@ import ProjectPanel from '@/components/panels/ProjectPanel'
 import { getItems } from '@/lib/content'
 import { PortfolioItem } from '@/types'
 
-export const metadata: Metadata = { title: 'Experience' }
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const item = (await getItems()).find(
+    (i): i is Extract<PortfolioItem, { link: 'internal' }> =>
+      i.link === 'internal' && i.slug === slug
+  )
+  if (!item) return { title: 'Experience' }
+
+  const description = item.description[0] ?? `Experience by Gianni Mendonça Semedo.`
+  const url = `/experience/${item.slug}`
+
+  return {
+    title: item.title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: item.title,
+      description,
+      url,
+      type: 'article',
+      images: item.image ? [item.image.startsWith('http') ? item.image : `/${item.image}`] : undefined,
+    },
+  }
+}
 
 export async function generateStaticParams() {
   const portfolioItems = await getItems()

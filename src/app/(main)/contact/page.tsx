@@ -6,7 +6,12 @@ import SetPanel from '@/components/layout/SetPanel'
 import ContactPanel from '@/components/panels/ContactPanel'
 import { getItems, getCV } from '@/lib/content'
 
-export const metadata: Metadata = { title: 'Contact' }
+export const metadata: Metadata = {
+  title: 'Contact',
+  description:
+    'Get in touch with Gianni Mendonça Semedo for project inquiries, collaborations or anything else.',
+  alternates: { canonical: '/contact' },
+}
 
 export default async function ContactPage() {
   const [portfolioItems, cvData] = await Promise.all([getItems(), getCV()])

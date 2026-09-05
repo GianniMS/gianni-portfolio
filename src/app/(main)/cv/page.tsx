@@ -6,7 +6,12 @@ import SetPanel from '@/components/layout/SetPanel'
 import CVPanel from '@/components/panels/CVPanel'
 import { getItems, getCV } from '@/lib/content'
 
-export const metadata: Metadata = { title: 'CV' }
+export const metadata: Metadata = {
+  title: 'CV',
+  description:
+    'About Gianni Mendonça Semedo, the companies and projects he has been involved with, and a downloadable CV.',
+  alternates: { canonical: '/cv' },
+}
 
 export default async function CVPage() {
   const [portfolioItems, cvData] = await Promise.all([getItems(), getCV()])
