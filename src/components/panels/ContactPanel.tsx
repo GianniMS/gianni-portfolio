@@ -70,7 +70,7 @@ export function ContactModal({ data, onClose }: { data: CVData; onClose: () => v
         const r = ref.current.getBoundingClientRect()
         setPanel({ top: r.top, left: r.left, bottom: r.bottom, right: r.right })
       }}
-      className="hidden md:block fixed bottom-6 right-6 z-40 w-80 overflow-hidden bg-blue text-background p-6"
+      className="hidden md:block fixed bottom-6 right-6 z-40 h-[38rem] max-h-[calc(100vh-3rem)] w-80 overflow-hidden bg-blue text-background p-6"
     >
       <CursorSquare panel={panel} />
 
