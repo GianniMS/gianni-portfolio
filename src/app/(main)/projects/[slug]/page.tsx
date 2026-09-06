@@ -7,6 +7,7 @@ import HeroImage from '@/components/image/HeroImage'
 import PreviewImage from '@/components/image/PreviewImage'
 import ProjectPanel from '@/components/panels/ProjectPanel'
 import { getItems } from '@/lib/content'
+import { imageSrc } from '@/lib/images'
 import { PortfolioItem } from '@/types'
 
 export async function generateMetadata({
@@ -33,7 +34,7 @@ export async function generateMetadata({
       description,
       url,
       type: 'article',
-      images: item.image ? [item.image.startsWith('http') ? item.image : `/${item.image}`] : undefined,
+      images: item.image ? [imageSrc(item.image)] : undefined,
     },
   }
 }

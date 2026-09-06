@@ -8,6 +8,7 @@ import { useHover } from '@/context/HoverContext'
 import { useImageBounds } from '@/context/ImageBoundsContext'
 import { ImageTone, PortfolioItem } from '@/types'
 import { categoryPath } from '@/data/categoryPaths'
+import { imageSrc } from '@/lib/images'
 
 export const PORTRAIT_HOVER_SLUG = '__portrait__'
 const PORTRAIT_SRC = 'images/portrait.jpg'
@@ -61,7 +62,7 @@ export default function PreviewImage({ items }: { items: PortfolioItem[] }) {
             className="absolute top-[4%] left-[12%] w-full aspect-[966/669] z-[5]"
           >
             <Image
-              src={hovered.image.startsWith('http') ? hovered.image : `/${hovered.image}`}
+              src={imageSrc(hovered.image)}
               alt={hovered.title}
               fill
               sizes="(max-width: 768px) 80vw, 900px"

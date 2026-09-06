@@ -7,12 +7,13 @@ import CustomCursor from '@/components/layout/CustomCursor'
 import { ReactNode } from 'react'
 
 const NAME = 'Gianni Mendonça Semedo'
+const HEADLINE = `${NAME} | Full Stack Developer`
 const DESCRIPTION =
   'Portfolio of Gianni Mendonça Semedo, full stack developer in Rotterdam, The Netherlands. Projects, experience, certificates, press and awards.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.giannims.com'),
-  title: { default: `${NAME} — Full Stack Developer`, template: '%s | GianniMS' },
+  title: { default: HEADLINE, template: '%s | GianniMS' },
   description: DESCRIPTION,
   applicationName: 'GianniMS',
   authors: [{ name: NAME, url: 'https://www.giannims.com' }],
@@ -21,14 +22,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'GianniMS',
-    title: `${NAME} — Full Stack Developer`,
+    title: HEADLINE,
     description: DESCRIPTION,
     url: '/',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${NAME} — Full Stack Developer`,
+    title: HEADLINE,
     description: DESCRIPTION,
   },
   robots: {

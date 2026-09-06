@@ -20,6 +20,7 @@ export default function Navbar() {
 
   // the desktop overlays leave the pathname alone, so active state follows the
   // panel first and only falls back to the route
+  const isAboutActive = panel === 'about' || pathname === '/about'
   const isCVActive = panel === 'cv' || pathname === '/cv'
   const isContactActive = panel === 'contact' || onContactPage
   const isHomeActive = !panel && pathname === '/'
@@ -55,6 +56,13 @@ export default function Navbar() {
           <Link href="/" onClick={goHome} className={opacity(isHomeActive)}>
             <CollisionText imageCollision={false}>Home</CollisionText>
           </Link>
+          <button
+            type="button"
+            onClick={() => setPanel(panel === 'about' ? null : 'about')}
+            className={`cursor-pointer ${opacity(isAboutActive)}`}
+          >
+            <CollisionText imageCollision={false}>About Me</CollisionText>
+          </button>
           <button
             type="button"
             onClick={() => setPanel(panel === 'cv' ? null : 'cv')}
@@ -108,6 +116,13 @@ export default function Navbar() {
                 className={`text-3xl font-bold leading-none ${opacity(isHomeActive)}`}
               >
                 <CollisionText imageCollision={false}>Home</CollisionText>
+              </Link>
+              <Link
+                href="/about"
+                onClick={close}
+                className={`text-3xl font-bold leading-none ${opacity(isAboutActive)}`}
+              >
+                <CollisionText imageCollision={false}>About Me</CollisionText>
               </Link>
               <Link
                 href="/cv"

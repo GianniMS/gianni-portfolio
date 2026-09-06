@@ -4,7 +4,7 @@ import CollisionText from '@/components/image/CollisionText'
 import PanelModal, { ModalText } from '@/components/panels/PanelModal'
 import { CVData } from '@/types'
 
-const INTRO = 'For project inquiries, collaborations or anything else, reach me here.'
+const INTRO = 'For project inquiries, collaborations or anything else, reach me here:'
 
 function contactLinks(data: CVData) {
   return [
@@ -21,10 +21,6 @@ export function ContactModal({ data, onClose }: { data: CVData; onClose: () => v
         <ModalText>{INTRO}</ModalText>
       </p>
 
-      <p className="font-bold text-lg leading-tight mb-5">
-        <ModalText>{data.name}</ModalText>
-      </p>
-
       <ul className="flex flex-col gap-2">
         {contactLinks(data).map((link) => (
           <li key={link.label}>
@@ -32,9 +28,9 @@ export function ContactModal({ data, onClose }: { data: CVData; onClose: () => v
               href={link.href}
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noopener noreferrer' : undefined}
-              className="text-sm underline"
+              className="text-sm"
             >
-              <ModalText>{link.label}</ModalText>
+              <ModalText underline>{link.label}</ModalText>
             </a>
           </li>
         ))}
@@ -52,12 +48,6 @@ export default function ContactPanel({ data }: { data: CVData }) {
         </CollisionText>
       </p>
 
-      <p className="font-bold text-2xl leading-tight mb-6">
-        <CollisionText imageCollision={false} cursorColor="var(--color-blue)">
-          {data.name}
-        </CollisionText>
-      </p>
-
       <ul className="flex flex-col gap-3">
         {contactLinks(data).map((link) => (
           <li key={link.label}>
@@ -65,9 +55,9 @@ export default function ContactPanel({ data }: { data: CVData }) {
               href={link.href}
               target={link.external ? '_blank' : undefined}
               rel={link.external ? 'noopener noreferrer' : undefined}
-              className="text-lg font-bold underline w-fit"
+              className="text-lg font-bold w-fit"
             >
-              <CollisionText imageCollision={false} cursorColor="var(--color-blue)">
+              <CollisionText imageCollision={false} cursorColor="var(--color-blue)" underline>
                 {link.label}
               </CollisionText>
             </a>

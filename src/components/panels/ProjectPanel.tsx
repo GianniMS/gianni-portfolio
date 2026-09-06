@@ -26,7 +26,7 @@ export default function ProjectPanel({ item }: { item: InternalItem }) {
       </p>
       <div className="flex flex-col gap-4">
         {item.description.map((paragraph, i) => (
-          <p key={i} className="text-sm leading-relaxed">
+          <p key={i} className="text-sm leading-relaxed whitespace-pre-line">
             <CollisionText>{paragraph}</CollisionText>
           </p>
         ))}

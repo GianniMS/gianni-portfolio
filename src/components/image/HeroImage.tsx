@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 import { useImageBounds } from '@/context/ImageBoundsContext'
 import { ImageTone } from '@/types'
+import { imageSrc } from '@/lib/images'
 
 export default function HeroImage({
   src,
@@ -48,7 +49,7 @@ export default function HeroImage({
       className="relative w-full aspect-[966/669] shrink-0 bg-blue"
     >
       <Image
-        src={src.startsWith('http') ? src : `/${src}`}
+        src={imageSrc(src)}
         alt={alt}
         fill
         sizes="(max-width: 768px) 80vw, 900px"

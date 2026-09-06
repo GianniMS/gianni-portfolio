@@ -1,20 +1,10 @@
 import { ReactNode } from 'react'
 import Navbar from '@/components/layout/Navbar'
 import HomeLoaderGate from '@/components/layout/HomeLoaderGate'
-import ContactOverlay from '@/components/layout/ContactOverlay'
-import CVOverlay from '@/components/layout/CVOverlay'
+import PanelOverlays from '@/components/layout/PanelOverlays'
 import { SocialsProvider } from '@/context/SocialsContext'
 import { PanelProvider } from '@/context/PanelContext'
 import { getCV } from '@/lib/content'
-
-const EMPTY_CV = {
-  name: '',
-  about: [],
-  involvedWith: [],
-  cvPdfPath: '',
-  email: '',
-  socials: { linkedin: '', instagram: '' },
-}
 
 export default async function MainLayout({ children }: { children: ReactNode }) {
   const cv = await getCV()
@@ -28,8 +18,7 @@ export default async function MainLayout({ children }: { children: ReactNode }) 
         <Navbar />
         <HomeLoaderGate />
         {children}
-        <CVOverlay data={cv} />
-        <ContactOverlay data={cv ?? EMPTY_CV} />
+        <PanelOverlays data={cv} />
       </PanelProvider>
     </SocialsProvider>
   )

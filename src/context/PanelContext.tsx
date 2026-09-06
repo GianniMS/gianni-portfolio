@@ -3,16 +3,21 @@
 import { createContext, useContext, useState, ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 
-export type Panel = 'cv' | 'contact' | null
+export type Panel = 'about' | 'cv' | 'contact' | null
 
 type PanelState = { panel: Panel; setPanel: (panel: Panel) => void }
 
 const PanelContext = createContext<PanelState>({ panel: null, setPanel: () => {} })
 
+export const PANEL_ROUTES: Record<Exclude<Panel, null>, string> = {
+  about: '/about',
+  cv: '/cv',
+  contact: '/contact',
+}
+
 function panelForPath(pathname: string): Panel {
-  if (pathname === '/cv') return 'cv'
-  if (pathname === '/contact') return 'contact'
-  return null
+  const match = Object.entries(PANEL_ROUTES).find(([, route]) => route === pathname)
+  return match ? (match[0] as Panel) : null
 }
 
 export function PanelProvider({ children }: { children: ReactNode }) {

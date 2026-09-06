@@ -9,9 +9,19 @@ import { BEAT } from '@/lib/motion'
 
 // Text on the blue surface: the cursor's second layer has to redraw in the
 // foreground colour, since the default background colour is the text colour here.
-export function ModalText({ children }: { children: ReactNode }) {
+export function ModalText({
+  children,
+  underline = false,
+}: {
+  children: ReactNode
+  underline?: boolean
+}) {
   return (
-    <CollisionText imageCollision={false} cursorColor="var(--color-foreground)">
+    <CollisionText
+      imageCollision={false}
+      cursorColor="var(--color-foreground)"
+      underline={underline}
+    >
       {children}
     </CollisionText>
   )

@@ -1,5 +1,6 @@
 import { getCV } from '@/lib/content'
 import { saveCVAction } from '@/app/dashboard/actions'
+import { fromParagraphs } from '@/lib/text'
 import {
   buttonPrimary,
   hintClass,
@@ -35,11 +36,13 @@ export default async function CVEditPage() {
           <p className={panelTitle}>About Me</p>
           <label className={labelClass}>
             Paragraphs
-            <span className={hintClass}>One paragraph per line</span>
+            <span className={hintClass}>
+              Enters are kept as line breaks; a blank line starts a new paragraph
+            </span>
             <textarea
               name="about"
               rows={7}
-              defaultValue={cv?.about.join('\n')}
+              defaultValue={cv ? fromParagraphs(cv.about) : ''}
               required
               className={inputClass}
             />

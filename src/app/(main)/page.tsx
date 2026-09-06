@@ -6,7 +6,7 @@ import StructuredData from '@/components/layout/StructuredData'
 import { getItems, getCV } from '@/lib/content'
 
 export const metadata: Metadata = {
-  title: 'Gianni Mendonça Semedo — Full Stack Developer',
+  title: { absolute: 'Gianni Mendonça Semedo | Full Stack Developer' },
   description:
     'Selected projects, experience, certificates, press and awards by Gianni Mendonça Semedo, full stack developer in Rotterdam, The Netherlands.',
   alternates: { canonical: '/' },

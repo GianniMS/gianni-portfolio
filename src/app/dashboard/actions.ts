@@ -12,6 +12,7 @@ import {
 } from '@/lib/auth'
 import { getItems, saveItems, saveCV } from '@/lib/content'
 import { CVData, ImageTone, PortfolioItem } from '@/types'
+import { toLines, toParagraphs } from '@/lib/text'
 
 export type LoginState = { error?: string } | undefined
 
@@ -67,10 +68,7 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean)
-  const description = String(formData.get('description') ?? '')
-    .split('\n')
-    .map((s) => s.trim())
-    .filter(Boolean)
+  const description = toParagraphs(String(formData.get('description') ?? ''))
 
   const tone = String(formData.get('imageTone') ?? '')
   const imageTone: ImageTone | undefined =
@@ -130,16 +128,10 @@ export async function deleteItem(id: string, category: string) {
 
 export async function saveCVAction(formData: FormData) {
   await requireAuth()
-  const lines = (field: string) =>
-    String(formData.get(field) ?? '')
-      .split('\n')
-      .map((s) => s.trim())
-      .filter(Boolean)
-
   const data: CVData = {
     name: String(formData.get('name') ?? ''),
-    about: lines('about'),
-    involvedWith: lines('involvedWith'),
+    about: toParagraphs(String(formData.get('about') ?? '')),
+    involvedWith: toLines(String(formData.get('involvedWith') ?? '')),
     cvPdfPath: String(formData.get('cvPdfPath') ?? ''),
     email: String(formData.get('email') ?? ''),
     socials: {

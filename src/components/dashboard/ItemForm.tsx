@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import ImageUploadField from './ImageUploadField'
 import { PortfolioItem } from '@/types'
+import { fromParagraphs } from '@/lib/text'
 import {
   buttonPrimary,
   buttonSecondary,
@@ -107,11 +108,13 @@ export default function ItemForm({
             </label>
             <label className={labelClass}>
               Description
-              <span className={hintClass}>One paragraph per line</span>
+              <span className={hintClass}>
+                Enters are kept as line breaks; a blank line starts a new paragraph
+              </span>
               <textarea
                 name="description"
                 rows={5}
-                defaultValue={item?.link === 'internal' ? item.description.join('\n') : ''}
+                defaultValue={item?.link === 'internal' ? fromParagraphs(item.description) : ''}
                 className={inputClass}
               />
             </label>
