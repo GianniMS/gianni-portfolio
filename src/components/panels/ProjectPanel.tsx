@@ -3,16 +3,16 @@ import { PortfolioItem } from '@/types'
 
 type InternalItem = Extract<PortfolioItem, { link: 'internal' }>
 
-function formatDate(iso: string) {
-  if (iso === 'Today') return iso
-  const [year, month, day] = iso.split('-')
-  return `${day}-${month}-${year}`
+// Anything that is not an ISO date passes through, so "Today" survives
+function yearOf(value: string) {
+  return /^\d{4}/.test(value) ? value.slice(0, 4) : value
 }
 
 function formatItemDate(item: InternalItem) {
-  return item.dateType === 'single'
-    ? formatDate(item.date)
-    : `${formatDate(item.dateStart)} - ${formatDate(item.dateEnd)}`
+  if (item.dateType === 'single') return yearOf(item.date)
+  const start = yearOf(item.dateStart)
+  const end = yearOf(item.dateEnd)
+  return start === end ? start : `${start} - ${end}`
 }
 
 export default function ProjectPanel({ item }: { item: InternalItem }) {
@@ -31,9 +31,11 @@ export default function ProjectPanel({ item }: { item: InternalItem }) {
           </p>
         ))}
       </div>
-      <p className="text-sm mt-4">
-        <CollisionText>{`[${item.skills.join(', ')}]`}</CollisionText>
-      </p>
+      {item.skills.length > 0 && (
+        <p className="text-sm mt-4">
+          <CollisionText>{item.skills.join(', ')}</CollisionText>
+        </p>
+      )}
     </div>
   )
 }
