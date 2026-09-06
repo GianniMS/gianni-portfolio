@@ -1,5 +1,5 @@
 import { put, head } from '@vercel/blob'
-import { unstable_cache, updateTag } from 'next/cache'
+import { unstable_cache, revalidatePath, revalidateTag } from 'next/cache'
 import { PortfolioItem, CVData } from '@/types'
 
 const ITEMS_PATH = 'data/items.json'
@@ -20,12 +20,15 @@ async function readJson<T>(pathname: string): Promise<T | null> {
 const readItems = unstable_cache(
   () => readJson<PortfolioItem[]>(ITEMS_PATH),
   ['blob-items'],
-  { tags: [ITEMS_TAG] }
+  { tags: [ITEMS_TAG], revalidate: 300 }
 )
 
 type StoredCV = Partial<CVData> & { bio?: string[]; clients?: string[] }
 
-const readCV = unstable_cache(() => readJson<StoredCV>(CV_PATH), ['blob-cv'], { tags: [CV_TAG] })
+const readCV = unstable_cache(() => readJson<StoredCV>(CV_PATH), ['blob-cv'], {
+  tags: [CV_TAG],
+  revalidate: 300,
+})
 
 async function writeJson(pathname: string, data: unknown): Promise<void> {
   await put(pathname, JSON.stringify(data), {
@@ -37,13 +40,20 @@ async function writeJson(pathname: string, data: unknown): Promise<void> {
   })
 }
 
+// updateTag only gives the writer read-your-own-writes; revalidateTag is what
+// purges the shared cache every visitor reads from.
+function purge(tag: string) {
+  revalidateTag(tag, 'max')
+  revalidatePath('/', 'layout')
+}
+
 export async function getItems(): Promise<PortfolioItem[]> {
   return (await readItems()) ?? []
 }
 
 export async function saveItems(items: PortfolioItem[]): Promise<void> {
   await writeJson(ITEMS_PATH, items)
-  updateTag(ITEMS_TAG)
+  purge(ITEMS_TAG)
 }
 
 export async function getCV(): Promise<CVData | null> {
@@ -67,5 +77,5 @@ export async function getCV(): Promise<CVData | null> {
 
 export async function saveCV(data: CVData): Promise<void> {
   await writeJson(CV_PATH, data)
-  updateTag(CV_TAG)
+  purge(CV_TAG)
 }

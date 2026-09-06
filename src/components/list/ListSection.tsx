@@ -10,6 +10,8 @@ export default function ListSection({
   category: PortfolioItem['category']
   items: PortfolioItem[]
 }) {
+  if (items.length === 0) return null
+
   return (
     <div className="mb-2">
       <p className="text-blue font-bold text-sm mb-1">
