@@ -15,7 +15,7 @@ export default function DashboardNav() {
       href: `/dashboard/items/${category}`,
       label: CATEGORY_LABELS[category],
     })),
-    { href: '/dashboard/cv', label: 'CV page' },
+    { href: '/dashboard/cv', label: 'Pages' },
   ]
 
   return (

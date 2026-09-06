@@ -51,8 +51,8 @@ export default async function DashboardHomePage() {
               )
             })}
             <tr className="transition-colors hover:bg-foreground/[0.03]">
-              <td className={`${tdClass} font-bold`}>CV page</td>
-              <td className={`${tdClass} text-foreground/60`}>About Me, Involved With, socials</td>
+              <td className={`${tdClass} font-bold`}>Pages</td>
+              <td className={`${tdClass} text-foreground/60`}>About Me, CV, Contact</td>
               <td className={tdClass}>
                 <div className="flex justify-end gap-2">
                   <Link href="/dashboard/cv" className={`${buttonSecondary} ${buttonCompact}`}>

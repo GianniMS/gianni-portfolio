@@ -10,28 +10,19 @@ import {
   panelTitle,
 } from '@/components/dashboard/styles'
 
-export default async function CVEditPage() {
+export default async function PagesEditPage() {
   const cv = await getCV()
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold tracking-tight">CV page</h1>
+        <h1 className="text-2xl font-bold tracking-tight">Pages</h1>
         <p className="text-sm text-foreground/60">
-          Drives the Download CV button, About Me, Involved With and your social links
+          Text for the About Me, CV and Contact panels
         </p>
       </div>
 
       <form action={saveCVAction} className="flex max-w-2xl flex-col gap-5">
-        <div className={panelClass}>
-          <p className={panelTitle}>Download CV</p>
-          <label className={labelClass}>
-            PDF path
-            <span className={hintClass}>What the Download CV button links to</span>
-            <input name="cvPdfPath" defaultValue={cv?.cvPdfPath} required className={inputClass} />
-          </label>
-        </div>
-
         <div className={panelClass}>
           <p className={panelTitle}>About Me</p>
           <label className={labelClass}>
@@ -41,7 +32,7 @@ export default async function CVEditPage() {
             </span>
             <textarea
               name="about"
-              rows={7}
+              rows={8}
               defaultValue={cv ? fromParagraphs(cv.about) : ''}
               required
               className={inputClass}
@@ -50,16 +41,20 @@ export default async function CVEditPage() {
         </div>
 
         <div className={panelClass}>
-          <p className={panelTitle}>Involved With</p>
+          <p className={panelTitle}>CV</p>
           <label className={labelClass}>
-            Entries
+            Download CV — PDF path
+            <span className={hintClass}>What the Download CV link points at</span>
+            <input name="cvPdfPath" defaultValue={cv?.cvPdfPath} required className={inputClass} />
+          </label>
+          <label className={labelClass}>
+            Involved With
             <span className={hintClass}>
-              One per line; your own work as well as companies you worked for, with or contributed
-              to. The section hides when empty
+              One per line; shown as one comma-separated line. Hidden when empty
             </span>
             <textarea
               name="involvedWith"
-              rows={7}
+              rows={8}
               defaultValue={cv?.involvedWith.join('\n')}
               className={inputClass}
             />
@@ -67,9 +62,9 @@ export default async function CVEditPage() {
         </div>
 
         <div className={panelClass}>
-          <p className={panelTitle}>Socials</p>
+          <p className={panelTitle}>Contact</p>
           <span className={hintClass}>
-            Shown in the mobile menu and the Socials list section; blank links are left out
+            Also used for the links at the bottom of the mobile menu; blank links are left out
           </span>
           <label className={labelClass}>
             Email
@@ -89,7 +84,7 @@ export default async function CVEditPage() {
           <p className={panelTitle}>Metadata</p>
           <label className={labelClass}>
             Name
-            <span className={hintClass}>Used for image alt text, not shown on the page</span>
+            <span className={hintClass}>Used for image alt text, not shown on any panel</span>
             <input name="name" defaultValue={cv?.name} required className={inputClass} />
           </label>
         </div>
