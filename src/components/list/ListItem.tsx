@@ -13,12 +13,14 @@ export default function ListItem({ item }: { item: PortfolioItem }) {
   const rowClass = 'flex justify-between gap-3 text-sm py-0.5 w-full'
   const year = getItemYear(item)
 
+  // A certificate is neither, but it keeps the empty column so the years of
+  // every section still line up
+  const status = item.category === 'certificate' ? null : item.isPrivate ? 'Private' : 'Public'
+
   // Fixed columns on the right so the years stay aligned however the title wraps
   const meta = (
     <span className="flex shrink-0 gap-3">
-      <span className="w-14 text-right">
-        <CollisionText>{item.isPrivate ? 'Private' : 'Public'}</CollisionText>
-      </span>
+      <span className="w-14 text-right">{status && <CollisionText>{status}</CollisionText>}</span>
       <span className="w-10 text-right">
         <CollisionText>{year}</CollisionText>
       </span>
