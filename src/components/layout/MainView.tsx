@@ -36,7 +36,7 @@ export default function MainView({
         <div className="relative md:hidden">
           <ItemList
             items={items}
-            widthClassName="w-[82%]"
+            widthClassName="w-[86%]"
             scrollHeightClassName="h-[calc(100dvh-176px)]"
           />
           <div className="absolute top-[130px] right-0 w-[55%]">
