@@ -4,7 +4,7 @@ import ListSection from './ListSection'
 
 export default function ItemList({
   items,
-  widthClassName = 'w-64 md:w-[26rem]',
+  widthClassName = 'w-72 md:w-[28rem]',
   scrollHeightClassName = 'md:h-[calc(100dvh-220px)]',
 }: {
   items: PortfolioItem[]
