@@ -10,17 +10,28 @@ import { getItemYear } from '@/data/itemDates'
 export default function ListItem({ item }: { item: PortfolioItem }) {
   const { setHoveredSlug } = useHover()
 
-  const rowClass = 'flex justify-between text-sm py-0.5 w-full'
+  const rowClass = 'flex justify-between gap-3 text-sm py-0.5 w-full'
   const year = getItemYear(item)
+
+  // Fixed columns on the right so the years stay aligned however the title wraps
+  const meta = (
+    <span className="flex shrink-0 gap-3">
+      <span className="w-14 text-right">
+        <CollisionText>{item.isPrivate ? 'Private' : 'Public'}</CollisionText>
+      </span>
+      <span className="w-10 text-right">
+        <CollisionText>{year}</CollisionText>
+      </span>
+    </span>
+  )
 
   if (item.link === 'external') {
     return (
       <a href={item.href} target="_blank" rel="noopener noreferrer" className={rowClass}>
-        <CollisionText>{item.title}</CollisionText>
-        <span className="flex gap-3">
-          {item.isPrivate && <CollisionText>Private</CollisionText>}
-          <CollisionText>{year}</CollisionText>
+        <span className="min-w-0">
+          <CollisionText>{item.title}</CollisionText>
         </span>
+        {meta}
       </a>
     )
   }
@@ -34,11 +45,10 @@ export default function ListItem({ item }: { item: PortfolioItem }) {
       onMouseEnter={() => setHoveredSlug(item.slug)}
       onMouseLeave={() => setHoveredSlug(null)}
     >
-      <CollisionText>{item.title}</CollisionText>
-      <span className="flex gap-3">
-        {item.isPrivate && <CollisionText>Private</CollisionText>}
-        <CollisionText>{year}</CollisionText>
+      <span className="min-w-0">
+        <CollisionText>{item.title}</CollisionText>
       </span>
+      {meta}
     </Link>
   )
 }
