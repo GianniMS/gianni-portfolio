@@ -37,7 +37,7 @@ export default function MainView({
           <ItemList
             items={items}
             widthClassName="w-[72%]"
-            scrollHeightClassName="h-[calc(100vh-176px)]"
+            scrollHeightClassName="h-[calc(100dvh-176px)]"
           />
           <div className="absolute top-[130px] right-0 w-[55%]">
             <HeroImage src={PORTRAIT} alt={alt} layoutId="hero-mobile" priority />

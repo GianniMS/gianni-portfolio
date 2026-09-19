@@ -5,7 +5,7 @@ import ListSection from './ListSection'
 export default function ItemList({
   items,
   widthClassName = 'w-48 md:w-72',
-  scrollHeightClassName = 'md:h-[calc(100vh-220px)]',
+  scrollHeightClassName = 'md:h-[calc(100dvh-220px)]',
 }: {
   items: PortfolioItem[]
   widthClassName?: string
@@ -16,7 +16,7 @@ export default function ItemList({
 
   return (
     <div
-      className={`relative z-10 ${widthClassName} shrink-0 overflow-y-auto ${scrollHeightClassName}`}
+      className={`relative z-10 ${widthClassName} shrink-0 overflow-y-auto overscroll-contain ${scrollHeightClassName}`}
     >
       <ListSection category="project" items={byCategory('project')} />
       <ListSection category="experience" items={byCategory('experience')} />

@@ -79,8 +79,8 @@ function constantTimeEqual(a: string, b: string): boolean {
 
 export async function credentialsMatch(username: string, password: string): Promise<boolean> {
   const [uHash, uExpected, pHash, pExpected] = await Promise.all([
-    sha256Hex(username),
-    sha256Hex(process.env.ADMIN_USERNAME ?? ''),
+    sha256Hex(username.toLowerCase()),
+    sha256Hex((process.env.ADMIN_USERNAME ?? '').toLowerCase()),
     sha256Hex(password),
     sha256Hex(process.env.ADMIN_PASSWORD ?? ''),
   ])

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getItems } from '@/lib/content'
+import { getItemsFresh } from '@/lib/content'
 import { CATEGORIES, CATEGORY_LABELS } from '@/data/categories'
 import { getItemTimestamp } from '@/data/itemDates'
 import { PortfolioItem } from '@/types'
@@ -31,7 +31,7 @@ export default async function CategoryItemsPage({
   const { category } = await params
   if (!isCategory(category)) notFound()
 
-  const items = (await getItems())
+  const items = (await getItemsFresh())
     .filter((i) => i.category === category)
     .sort((a, b) => getItemTimestamp(b) - getItemTimestamp(a))
 
@@ -83,6 +83,9 @@ export default async function CategoryItemsPage({
                   </td>
                   <td className={tdClass}>
                     {item.link === 'internal' ? 'Detail page' : 'External link'}
+                    {item.isPrivate && (
+                      <span className="block text-xs text-foreground/50">Private</span>
+                    )}
                   </td>
                   <td className={`${tdClass} whitespace-nowrap`}>{whenLabel(item)}</td>
                   <td className={`${tdClass} text-foreground/60`}>

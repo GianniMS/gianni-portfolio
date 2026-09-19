@@ -43,6 +43,11 @@ export default function ItemForm({
           <input name="title" defaultValue={item?.title} required className={inputClass} />
         </label>
 
+        <label className={radioLabel}>
+          <input type="checkbox" name="isPrivate" defaultChecked={item?.isPrivate ?? false} />
+          Private
+        </label>
+
         <fieldset className="flex flex-col gap-2">
           <legend className="text-sm font-bold">Link type</legend>
           <label className={radioLabel}>

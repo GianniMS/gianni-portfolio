@@ -17,7 +17,10 @@ export default function ListItem({ item }: { item: PortfolioItem }) {
     return (
       <a href={item.href} target="_blank" rel="noopener noreferrer" className={rowClass}>
         <CollisionText>{item.title}</CollisionText>
-        <CollisionText>{year}</CollisionText>
+        <span className="flex gap-3">
+          {item.isPrivate && <CollisionText>Private</CollisionText>}
+          <CollisionText>{year}</CollisionText>
+        </span>
       </a>
     )
   }
@@ -32,7 +35,10 @@ export default function ListItem({ item }: { item: PortfolioItem }) {
       onMouseLeave={() => setHoveredSlug(null)}
     >
       <CollisionText>{item.title}</CollisionText>
-      <CollisionText>{year}</CollisionText>
+      <span className="flex gap-3">
+        {item.isPrivate && <CollisionText>Private</CollisionText>}
+        <CollisionText>{year}</CollisionText>
+      </span>
     </Link>
   )
 }

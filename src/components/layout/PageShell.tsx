@@ -10,7 +10,9 @@ export default function PageShell({
   lockHeight?: boolean
   variant?: 'default' | 'contact'
 }) {
-  const heightClass = lockHeight ? 'h-screen overflow-hidden' : 'min-h-screen md:h-screen md:overflow-hidden'
+  const heightClass = lockHeight
+    ? 'h-dvh overflow-hidden'
+    : 'min-h-dvh md:h-dvh md:overflow-hidden'
   const surfaceClass =
     variant === 'contact'
       ? 'bg-blue text-background md:bg-background md:text-foreground'

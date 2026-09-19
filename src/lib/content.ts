@@ -10,7 +10,9 @@ const CV_TAG = 'cv'
 async function readJson<T>(pathname: string): Promise<T | null> {
   const blob = await head(pathname).catch(() => null)
   if (!blob) return null
-  const res = await fetch(`${blob.url}?v=${blob.uploadedAt.getTime()}`, { cache: 'no-store' })
+  // uploadedAt lags the write, so it is not a reliable cache buster: a unique
+  // query per read is what keeps the blob CDN from serving the pre-save body.
+  const res = await fetch(`${blob.url}?v=${Date.now()}`, { cache: 'no-store' })
   if (!res.ok) return null
   return res.json() as Promise<T>
 }
@@ -56,8 +58,22 @@ export async function saveItems(items: PortfolioItem[]): Promise<void> {
   purge(ITEMS_TAG)
 }
 
+// The dashboard never reads through unstable_cache: it can serve a stale entry
+// while revalidating in the background, and a read-modify-write on that snapshot
+// both shows old values in the form and writes the previous save back out.
+export async function getItemsFresh(): Promise<PortfolioItem[]> {
+  return (await readJson<PortfolioItem[]>(ITEMS_PATH)) ?? []
+}
+
+export async function getCVFresh(): Promise<CVData | null> {
+  return normalizeCV(await readJson<StoredCV>(CV_PATH))
+}
+
 export async function getCV(): Promise<CVData | null> {
-  const raw = await readCV()
+  return normalizeCV(await readCV())
+}
+
+function normalizeCV(raw: StoredCV | null): CVData | null {
   if (!raw) return null
   return {
     name: raw.name ?? '',

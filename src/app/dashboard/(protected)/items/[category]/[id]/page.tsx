@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getItems } from '@/lib/content'
+import { getItemsFresh } from '@/lib/content'
 import { CATEGORIES, CATEGORY_LABELS } from '@/data/categories'
 import { PortfolioItem } from '@/types'
 import { updateItem } from '@/app/dashboard/actions'
@@ -18,7 +18,7 @@ export default async function EditItemPage({
   const { category, id } = await params
   if (!isCategory(category)) notFound()
 
-  const items = await getItems()
+  const items = await getItemsFresh()
   const item = items.find((i) => i.id === id && i.category === category)
   if (!item) notFound()
 

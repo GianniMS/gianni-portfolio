@@ -21,7 +21,8 @@ export default function ProjectPanel({ item }: { item: InternalItem }) {
       <h1 className="text-blue font-bold text-lg leading-tight">
         <CollisionText>{item.title}</CollisionText>
       </h1>
-      <p className="text-sm mb-3">
+      <p className="text-sm mb-3 flex gap-3">
+        {item.isPrivate && <CollisionText>Private</CollisionText>}
         <CollisionText>{formatItemDate(item)}</CollisionText>
       </p>
       <div className="flex flex-col gap-4">

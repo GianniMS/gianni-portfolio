@@ -140,7 +140,7 @@ export default function Navbar() {
               </Link>
             </div>
 
-            <div className="mt-auto flex flex-col items-start gap-3 text-3xl font-bold leading-none">
+            <div className="mt-auto flex flex-col items-start gap-3 text-sm font-bold">
               {socialLinks.map((link) => (
                 <a
                   key={link.label}

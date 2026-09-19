@@ -10,7 +10,7 @@ import {
   credentialsMatch,
   verifySessionToken,
 } from '@/lib/auth'
-import { getItems, saveItems, saveCV } from '@/lib/content'
+import { getItemsFresh, saveItems, saveCV } from '@/lib/content'
 import { CVData, ImageTone, PortfolioItem } from '@/types'
 import { toLines, toParagraphs } from '@/lib/text'
 
@@ -52,12 +52,14 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
   const title = String(formData.get('title') ?? '')
   const category = formData.get('category') as PortfolioItem['category']
   const linkType = formData.get('linkType') as 'internal' | 'external'
+  const isPrivate = formData.get('isPrivate') !== null
 
   if (linkType === 'external') {
     return {
       id,
       title,
       category,
+      ...(isPrivate ? { isPrivate } : {}),
       link: 'external',
       href: String(formData.get('href') ?? ''),
       year: Number(formData.get('year') ?? new Date().getFullYear()),
@@ -78,6 +80,7 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
     id,
     title,
     category,
+    ...(isPrivate ? { isPrivate } : {}),
     link: 'internal' as const,
     slug: String(formData.get('slug') ?? ''),
     description,
@@ -101,7 +104,7 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
 export async function createItem(formData: FormData) {
   await requireAuth()
   const item = itemFromFormData(formData, crypto.randomUUID())
-  const items = await getItems()
+  const items = await getItemsFresh()
   items.push(item)
   await saveItems(items)
   redirect(`/dashboard/items/${item.category}`)
@@ -109,7 +112,7 @@ export async function createItem(formData: FormData) {
 
 export async function updateItem(id: string, formData: FormData) {
   await requireAuth()
-  const items = await getItems()
+  const items = await getItemsFresh()
   const index = items.findIndex((i) => i.id === id)
   if (index === -1) redirect('/dashboard')
 
@@ -121,7 +124,7 @@ export async function updateItem(id: string, formData: FormData) {
 
 export async function deleteItem(id: string, category: string) {
   await requireAuth()
-  const items = await getItems()
+  const items = await getItemsFresh()
   await saveItems(items.filter((i) => i.id !== id))
   revalidatePath(`/dashboard/items/${category}`)
 }

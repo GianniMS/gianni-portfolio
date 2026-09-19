@@ -1,4 +1,4 @@
-import { getCV } from '@/lib/content'
+import { getCVFresh } from '@/lib/content'
 import { saveCVAction } from '@/app/dashboard/actions'
 import { fromParagraphs } from '@/lib/text'
 import {
@@ -11,7 +11,7 @@ import {
 } from '@/components/dashboard/styles'
 
 export default async function PagesEditPage() {
-  const cv = await getCV()
+  const cv = await getCVFresh()
 
   return (
     <div className="flex flex-col gap-6">

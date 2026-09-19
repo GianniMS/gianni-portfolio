@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { CATEGORIES, CATEGORY_LABELS } from '@/data/categories'
-import { getItems } from '@/lib/content'
+import { getItemsFresh } from '@/lib/content'
 import { buttonCompact, buttonPrimary, buttonSecondary, tdClass, thClass } from '@/components/dashboard/styles'
 
 export default async function DashboardHomePage() {
-  const items = await getItems()
+  const items = await getItemsFresh()
 
   return (
     <div className="flex flex-col gap-6">

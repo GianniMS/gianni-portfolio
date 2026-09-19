@@ -84,7 +84,7 @@ export default function PanelModal({
       exit={{ opacity: 0, y: 12 }}
       transition={{ duration: BEAT, ease: 'easeInOut' }}
       onAnimationComplete={measure}
-      className="hidden md:flex flex-col fixed bottom-6 right-6 z-40 h-[38rem] max-h-[calc(100vh-3rem)] w-80 overflow-hidden bg-blue text-background p-6"
+      className="hidden md:flex flex-col fixed bottom-6 right-6 z-40 h-[38rem] max-h-[calc(100dvh-3rem)] w-80 overflow-hidden bg-blue text-background p-6"
     >
       <CursorSquare panel={panel} />
 
