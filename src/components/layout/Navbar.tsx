@@ -10,7 +10,7 @@ const LINKS = [
 
 export default function Navbar() {
   return (
-    <header className="flex flex-col gap-1 px-5 pt-5 text-base md:flex-row md:justify-between md:text-2xl">
+    <header className="flex flex-col gap-1 px-5 pt-5 text-2xl md:flex-row md:justify-between">
       <Link href="/">Gianni Mendonça Semedo</Link>
       <nav>
         {LINKS.map((link, i) => (
