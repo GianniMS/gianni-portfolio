@@ -28,10 +28,10 @@ export default function MobileMenu({ links, cvPath }: { links: NavLink[]; cvPath
         className="relative z-50 flex h-6 w-[50px] flex-col justify-center gap-[5px]"
       >
         <span
-          className={`h-0.5 w-full bg-foreground transition-transform duration-300 ${open ? 'translate-y-[3.5px] rotate-[8deg]' : ''}`}
+          className={`h-0.5 w-full bg-foreground transition-transform duration-300 ${open ? 'translate-y-[3.5px] rotate-45 scale-x-[0.6]' : ''}`}
         />
         <span
-          className={`h-0.5 w-full bg-foreground transition-transform duration-300 ${open ? '-translate-y-[3.5px] -rotate-[8deg]' : ''}`}
+          className={`h-0.5 w-full bg-foreground transition-transform duration-300 ${open ? '-translate-y-[3.5px] -rotate-45 scale-x-[0.6]' : ''}`}
         />
       </button>
       <nav
