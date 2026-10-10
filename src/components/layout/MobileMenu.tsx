@@ -28,15 +28,15 @@ export default function MobileMenu({ links, cvPath }: { links: NavLink[]; cvPath
         className="relative z-50 flex h-6 w-[50px] flex-col justify-center gap-[5px]"
       >
         <span
-          className={`h-0.5 w-full bg-foreground transition-transform duration-300 ${open ? 'translate-y-[3.5px] rotate-45 scale-x-[0.6]' : ''}`}
+          className={`h-0.5 w-full bg-foreground transition-transform duration-800 ${open ? 'translate-y-[3.5px] rotate-45 scale-x-[0.6]' : ''}`}
         />
         <span
-          className={`h-0.5 w-full bg-foreground transition-transform duration-300 ${open ? '-translate-y-[3.5px] -rotate-45 scale-x-[0.6]' : ''}`}
+          className={`h-0.5 w-full bg-foreground transition-transform duration-800 ${open ? '-translate-y-[3.5px] -rotate-45 scale-x-[0.6]' : ''}`}
         />
       </button>
       <nav
         id="mobile-menu"
-        className={`fixed inset-0 z-40 flex flex-col items-end gap-2 bg-background px-3.5 pt-20 text-right transition-opacity duration-300 ${open ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+        className={`fixed inset-0 z-40 flex flex-col items-end gap-2 bg-background px-3.5 pt-20 text-right transition-opacity duration-800 ${open ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
         inert={!open}
       >
         {links.map((link) => (
