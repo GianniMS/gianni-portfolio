@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!project) return { title: 'Project' }
 
   const description = project.description[0] ?? 'Project by Gianni Mendonça Semedo.'
-  const url = `/portfolio/${project.slug}`
+  const url = `/experience/${project.slug}`
 
   return {
     title: project.title,

@@ -31,7 +31,7 @@ Font: `font-sans` → Helvetica Neue (system font, never self-hosted), falling b
 ```
 src/
   app/
-    (site)/      # public: /, products, products/[slug]/{support,privacy,terms}, portfolio, portfolio/[slug], about, contact
+    (site)/      # public: /, products, products/[slug]/{support,privacy,terms}, experience, experience/[slug], about, contact
     dashboard/   # protected CMS
   components/
     layout/      # Navbar

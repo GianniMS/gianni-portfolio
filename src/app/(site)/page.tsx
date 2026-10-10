@@ -5,7 +5,7 @@ import { getProjects, InternalProject } from '@/lib/content'
 export const metadata: Metadata = {
   title: { absolute: 'Gianni Mendonça Semedo | Full Stack Developer' },
   description:
-    'Gianni Mendonça Semedo, full stack developer in Rotterdam, The Netherlands. Products, portfolio and contact.',
+    'Gianni Mendonça Semedo, full stack developer in Rotterdam, The Netherlands. Products, experience and contact.',
   alternates: { canonical: '/' },
 }
 

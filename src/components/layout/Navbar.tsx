@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 
 const LINKS = [
   { href: '/products', label: 'Products' },
-  { href: '/portfolio', label: 'Portfolio' },
+  { href: '/experience', label: 'Experience' },
   { href: '/about', label: 'About Me' },
   { href: '/contact', label: 'Contact' },
 ]

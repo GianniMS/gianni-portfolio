@@ -4,22 +4,22 @@ import { getProjects } from '@/lib/content'
 import { formatItemYear } from '@/data/itemDates'
 
 export const metadata: Metadata = {
-  title: 'Portfolio',
+  title: 'Experience',
   description: 'Selected projects by Gianni Mendonça Semedo.',
-  alternates: { canonical: '/portfolio' },
+  alternates: { canonical: '/experience' },
 }
 
-export default async function PortfolioPage() {
+export default async function ExperiencePage() {
   const projects = await getProjects()
 
   return (
     <>
-      <h1>Portfolio</h1>
+      <h1>Experience</h1>
       <ul>
         {projects.map((project) => (
           <li key={project.id}>
             {project.link === 'internal' ? (
-              <Link href={`/portfolio/${project.slug}`}>{project.title}</Link>
+              <Link href={`/experience/${project.slug}`}>{project.title}</Link>
             ) : (
               <a href={project.href} target="_blank" rel="noopener noreferrer">
                 {project.title}

@@ -14,7 +14,9 @@ const nextConfig: NextConfig = {
     return [
       { source: "/tabcraft", destination: "/products/tabcraft", permanent: true },
       { source: "/tabcraft/:doc(privacy|terms)", destination: "/products/tabcraft/:doc", permanent: true },
-      { source: "/projects/:slug", destination: "/portfolio/:slug", permanent: true },
+      { source: "/projects/:slug", destination: "/experience/:slug", permanent: true },
+      { source: "/portfolio", destination: "/experience", permanent: true },
+      { source: "/portfolio/:slug", destination: "/experience/:slug", permanent: true },
       { source: "/cv", destination: "/about", permanent: true },
     ];
   },

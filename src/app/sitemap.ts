@@ -7,7 +7,7 @@ const BASE = 'https://www.giannims.com'
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projects = (await getProjects()).flatMap((p) =>
     p.link === 'internal'
-      ? [{ url: `${BASE}/portfolio/${p.slug}`, changeFrequency: 'monthly' as const, priority: 0.6 }]
+      ? [{ url: `${BASE}/experience/${p.slug}`, changeFrequency: 'monthly' as const, priority: 0.6 }]
       : []
   )
 
@@ -25,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     { url: BASE, changeFrequency: 'monthly', priority: 1 },
     { url: `${BASE}/products`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/portfolio`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/experience`, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/about`, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/contact`, changeFrequency: 'yearly', priority: 0.5 },
     ...productPages,

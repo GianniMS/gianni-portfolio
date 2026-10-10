@@ -9,7 +9,7 @@ export default function ProjectStrip({ projects }: { projects: InternalProject[]
       {projects.map((project, i) => (
         <li key={project.id} className="w-[72vw] shrink-0 snap-start md:w-auto md:flex-1 md:basis-0">
           <Link
-            href={`/portfolio/${project.slug}`}
+            href={`/experience/${project.slug}`}
             className="group relative block aspect-[346/450] overflow-hidden"
           >
             <Image
