@@ -14,7 +14,7 @@ export default function TileStrip({ tiles }: { tiles: Tile[] }) {
   return (
     <ul className="grid grid-cols-2 md:flex">
       {tiles.map((tile, i) => (
-        <li key={tile.key} className="md:flex-1 md:basis-0">
+        <li key={tile.key} className="md:w-1/5">
           <Link href={tile.href} className="group relative block aspect-[346/450] overflow-hidden">
             <Image
               src={imageSrc(tile.image)}
