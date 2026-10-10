@@ -7,7 +7,8 @@ const GMS_CONTACT: ProductDoc['sections'][number] = {
   ],
 }
 
-export const products: Product[] = [
+// Seeds the dashboard until the first products save writes data/products.json
+export const defaultProducts: Product[] = [
   {
     slug: 'tabcraft',
     name: 'TabCraft',
@@ -165,7 +166,3 @@ export const products: Product[] = [
     },
   },
 ]
-
-export function getProduct(slug: string): Product | undefined {
-  return products.find((p) => p.slug === slug)
-}

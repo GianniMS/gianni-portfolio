@@ -1,69 +1,62 @@
 import Link from 'next/link'
 import { CATEGORIES, CATEGORY_LABELS } from '@/data/categories'
-import { getItemsFresh } from '@/lib/content'
-import { buttonCompact, buttonPrimary, buttonSecondary, tdClass, thClass } from '@/components/dashboard/styles'
+import { getHomeFresh, getItemsFresh, getProductsFresh } from '@/lib/content'
+import PageHeader from '@/components/dashboard/PageHeader'
+import { linkClass, tdClass, thClass } from '@/components/dashboard/styles'
 
 export default async function DashboardHomePage() {
-  const items = await getItemsFresh()
+  const [items, products, home] = await Promise.all([
+    getItemsFresh(),
+    getProductsFresh(),
+    getHomeFresh(),
+  ])
+
+  const groups = [
+    { label: 'Home', count: `About tile + ${home?.tiles.length ?? 0} picked`, href: '/dashboard/home' },
+    { label: 'Products', count: String(products.length), href: '/dashboard/products', add: '/dashboard/products/new' },
+    ...CATEGORIES.map((category) => ({
+      label: CATEGORY_LABELS[category],
+      count: String(items.filter((i) => i.category === category).length),
+      href: `/dashboard/items/${category}`,
+      add: `/dashboard/items/${category}/new`,
+    })),
+    { label: 'Pages', count: 'About Me, CV, Contact', href: '/dashboard/cv' },
+  ]
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h1 className="text-2xl font-bold tracking-tight">Content overview</h1>
-        <p className="text-sm text-foreground/60">
-          {items.length} item{items.length === 1 ? '' : 's'} published
-        </p>
-      </div>
-
-      <div className="overflow-x-auto rounded border border-foreground/10">
-        <table className="w-full text-sm">
+    <>
+      <PageHeader title="Content" />
+      <div className="overflow-x-auto">
+        <table className="w-full">
           <thead>
             <tr>
-              <th className={thClass}>Category</th>
-              <th className={thClass}>Items</th>
+              <th className={thClass}>Group</th>
+              <th className={thClass}>Contents</th>
               <th className={`${thClass} text-right`}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {CATEGORIES.map((category) => {
-              const count = items.filter((i) => i.category === category).length
-              return (
-                <tr key={category} className="transition-colors hover:bg-foreground/[0.03]">
-                  <td className={`${tdClass} font-bold`}>{CATEGORY_LABELS[category]}</td>
-                  <td className={tdClass}>{count}</td>
-                  <td className={tdClass}>
-                    <div className="flex justify-end gap-2">
-                      <Link
-                        href={`/dashboard/items/${category}`}
-                        className={`${buttonSecondary} ${buttonCompact}`}
-                      >
-                        Manage
-                      </Link>
-                      <Link
-                        href={`/dashboard/items/${category}/new`}
-                        className={`${buttonPrimary} ${buttonCompact}`}
-                      >
+            {groups.map((group) => (
+              <tr key={group.label}>
+                <td className={tdClass}>{group.label}</td>
+                <td className={`${tdClass} text-foreground/50`}>{group.count}</td>
+                <td className={tdClass}>
+                  <div className="flex justify-end gap-4">
+                    <Link href={group.href} className={linkClass}>
+                      Manage
+                    </Link>
+                    {'add' in group && group.add && (
+                      <Link href={group.add} className={linkClass}>
                         Add new
                       </Link>
-                    </div>
-                  </td>
-                </tr>
-              )
-            })}
-            <tr className="transition-colors hover:bg-foreground/[0.03]">
-              <td className={`${tdClass} font-bold`}>Pages</td>
-              <td className={`${tdClass} text-foreground/60`}>About Me, CV, Contact</td>
-              <td className={tdClass}>
-                <div className="flex justify-end gap-2">
-                  <Link href="/dashboard/cv" className={`${buttonSecondary} ${buttonCompact}`}>
-                    Edit
-                  </Link>
-                </div>
-              </td>
-            </tr>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   )
 }

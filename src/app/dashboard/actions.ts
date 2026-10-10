@@ -10,8 +10,17 @@ import {
   credentialsMatch,
   verifySessionToken,
 } from '@/lib/auth'
-import { getItemsFresh, saveItems, saveCV } from '@/lib/content'
-import { CVData, ImageTone, PortfolioItem } from '@/types'
+import {
+  getHomeFresh,
+  getItemsFresh,
+  getProductsFresh,
+  saveCV,
+  saveHome,
+  saveItems,
+  saveProducts,
+} from '@/lib/content'
+import { HOME_TILE_COUNT, decodeTileRef } from '@/lib/home'
+import { CVData, HomeConfig, PortfolioItem, Product } from '@/types'
 import { toLines, toParagraphs } from '@/lib/text'
 
 export type LoginState = { error?: string } | undefined
@@ -72,10 +81,6 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
     .filter(Boolean)
   const description = toParagraphs(String(formData.get('description') ?? ''))
 
-  const tone = String(formData.get('imageTone') ?? '')
-  const imageTone: ImageTone | undefined =
-    tone === 'light' || tone === 'dark' ? tone : undefined
-
   const base = {
     id,
     title,
@@ -86,7 +91,6 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
     description,
     skills,
     image: String(formData.get('image') ?? ''),
-    ...(imageTone ? { imageTone } : {}),
   }
 
   const dateType = formData.get('dateType') as 'single' | 'range'
@@ -144,4 +148,88 @@ export async function saveCVAction(formData: FormData) {
   }
   await saveCV(data)
   redirect('/dashboard/cv')
+}
+
+function productFromFormData(formData: FormData, existing?: Product): Product {
+  const image = String(formData.get('image') ?? '')
+  return {
+    // Support, privacy and terms are not edited here yet, so an update keeps them
+    ...existing,
+    slug: String(formData.get('slug') ?? '').trim(),
+    name: String(formData.get('name') ?? ''),
+    description: String(formData.get('description') ?? ''),
+    link: String(formData.get('link') ?? ''),
+    image: image || undefined,
+  }
+}
+
+function assertFreeSlug(products: Product[], slug: string) {
+  if (products.some((p) => p.slug === slug)) {
+    throw new Error(`A product with the slug "${slug}" already exists.`)
+  }
+}
+
+export async function createProduct(formData: FormData) {
+  await requireAuth()
+  const products = await getProductsFresh()
+  const product = productFromFormData(formData)
+  assertFreeSlug(products, product.slug)
+  products.push(product)
+  await saveProducts(products)
+  redirect('/dashboard/products')
+}
+
+export async function updateProduct(slug: string, formData: FormData) {
+  await requireAuth()
+  const products = await getProductsFresh()
+  const index = products.findIndex((p) => p.slug === slug)
+  if (index === -1) redirect('/dashboard/products')
+
+  const updated = productFromFormData(formData, products[index])
+  if (updated.slug !== slug) assertFreeSlug(products, updated.slug)
+  products[index] = updated
+  await saveProducts(products)
+
+  // Home tiles point at products by slug, so a rename must carry them along
+  const home = await getHomeFresh()
+  if (home && updated.slug !== slug) {
+    await saveHome({
+      ...home,
+      tiles: home.tiles.map((tile) =>
+        tile.ref.kind === 'product' && tile.ref.slug === slug
+          ? { ...tile, ref: { kind: 'product', slug: updated.slug } }
+          : tile
+      ),
+    })
+  }
+  redirect('/dashboard/products')
+}
+
+export async function deleteProduct(slug: string) {
+  await requireAuth()
+  const products = await getProductsFresh()
+  await saveProducts(products.filter((p) => p.slug !== slug))
+  revalidatePath('/dashboard/products')
+}
+
+export async function saveHomeAction(formData: FormData) {
+  await requireAuth()
+  const text = (key: string) => String(formData.get(key) ?? '').trim()
+
+  const tiles = Array.from({ length: HOME_TILE_COUNT }, (_, i) => i).flatMap((i) => {
+    const ref = decodeTileRef(text(`tile${i}`))
+    if (!ref) return []
+    return [{ ref, title: text(`tile${i}Title`), description: text(`tile${i}Description`) }]
+  })
+
+  const home: HomeConfig = {
+    about: {
+      image: text('aboutImage'),
+      title: text('aboutTitle'),
+      description: text('aboutDescription'),
+    },
+    tiles,
+  }
+  await saveHome(home)
+  redirect('/dashboard/home')
 }

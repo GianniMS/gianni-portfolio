@@ -2,52 +2,53 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { Fragment } from 'react'
 import { CATEGORIES, CATEGORY_LABELS } from '@/data/categories'
 import { logout } from '@/app/dashboard/actions'
-import { buttonCompact, buttonSecondary } from './styles'
+import { linkClass } from './styles'
+
+const LINKS = [
+  { href: '/dashboard/home', label: 'Home' },
+  { href: '/dashboard/products', label: 'Products' },
+  ...CATEGORIES.map((category) => ({
+    href: `/dashboard/items/${category}`,
+    label: CATEGORY_LABELS[category],
+  })),
+  { href: '/dashboard/cv', label: 'Pages' },
+]
 
 export default function DashboardNav() {
   const pathname = usePathname()
 
-  const links = [
-    { href: '/dashboard', label: 'Overview' },
-    ...CATEGORIES.map((category) => ({
-      href: `/dashboard/items/${category}`,
-      label: CATEGORY_LABELS[category],
-    })),
-    { href: '/dashboard/cv', label: 'Pages' },
-  ]
-
   return (
-    <header className="border-b border-foreground/10">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-3 px-6 py-4">
-        <Link href="/dashboard" className="text-blue text-lg font-bold tracking-tight">
-          Dashboard
-        </Link>
-
-        <nav className="flex flex-wrap items-center gap-4 text-sm font-bold">
-          {links.map((link) => (
+    <header className="flex flex-col gap-2 px-2.5 pt-2.5 md:flex-row md:justify-between md:px-5 md:pt-5">
+      <Link href="/dashboard" className={linkClass}>
+        Dashboard
+      </Link>
+      <nav>
+        {LINKS.map((link, i) => (
+          <Fragment key={link.href}>
+            {i > 0 && ' | '}
             <Link
-              key={link.href}
               href={link.href}
-              className={pathname === link.href ? 'opacity-100' : 'opacity-60'}
+              aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
+              className={`${linkClass} aria-[current=page]:decoration-current`}
             >
               {link.label}
             </Link>
-          ))}
-        </nav>
-
-        <div className="ml-auto flex items-center gap-3">
-          <Link href="/" className={`${buttonSecondary} ${buttonCompact}`}>
-            View site
-          </Link>
-          <form action={logout}>
-            <button type="submit" className={`${buttonSecondary} ${buttonCompact}`}>
-              Log out
-            </button>
-          </form>
-        </div>
-      </div>
+          </Fragment>
+        ))}
+        {' | '}
+        <Link href="/" className={linkClass}>
+          View site
+        </Link>
+        {' | '}
+        <form action={logout} className="inline">
+          <button type="submit" className={linkClass}>
+            Log out
+          </button>
+        </form>
+      </nav>
     </header>
   )
 }

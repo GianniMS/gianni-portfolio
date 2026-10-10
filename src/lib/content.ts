@@ -1,12 +1,17 @@
 import { put, head } from '@vercel/blob'
 import { unstable_cache, revalidatePath, revalidateTag } from 'next/cache'
-import { PortfolioItem, CVData } from '@/types'
+import { PortfolioItem, CVData, Product, HomeConfig } from '@/types'
 import { getItemTimestamp } from '@/data/itemDates'
+import { defaultProducts } from '@/data/products'
 
 const ITEMS_PATH = 'data/items.json'
 const CV_PATH = 'data/cv.json'
+const PRODUCTS_PATH = 'data/products.json'
+const HOME_PATH = 'data/home.json'
 const ITEMS_TAG = 'items'
 const CV_TAG = 'cv'
+const PRODUCTS_TAG = 'products'
+const HOME_TAG = 'home'
 
 async function readJson<T>(pathname: string): Promise<T | null> {
   const blob = await head(pathname).catch(() => null)
@@ -20,18 +25,20 @@ async function readJson<T>(pathname: string): Promise<T | null> {
 
 // Reading a document costs two round trips to the blob store, so every render
 // paid ~600ms before this. Cached until a save invalidates the tag.
-const readItems = unstable_cache(
-  () => readJson<PortfolioItem[]>(ITEMS_PATH),
-  ['blob-items'],
-  { tags: [ITEMS_TAG], revalidate: 300 }
-)
+function cachedRead<T>(pathname: string, tag: string) {
+  return unstable_cache(() => readJson<T>(pathname), [`blob-${tag}`], {
+    tags: [tag],
+    revalidate: 300,
+  })
+}
+
+const readItems = cachedRead<PortfolioItem[]>(ITEMS_PATH, ITEMS_TAG)
 
 type StoredCV = Partial<CVData> & { bio?: string[]; clients?: string[] }
 
-const readCV = unstable_cache(() => readJson<StoredCV>(CV_PATH), ['blob-cv'], {
-  tags: [CV_TAG],
-  revalidate: 300,
-})
+const readCV = cachedRead<StoredCV>(CV_PATH, CV_TAG)
+const readProducts = cachedRead<Product[]>(PRODUCTS_PATH, PRODUCTS_TAG)
+const readHome = cachedRead<HomeConfig>(HOME_PATH, HOME_TAG)
 
 async function writeJson(pathname: string, data: unknown): Promise<void> {
   await put(pathname, JSON.stringify(data), {
@@ -97,8 +104,40 @@ export async function saveCV(data: CVData): Promise<void> {
   purge(CV_TAG)
 }
 
+export async function getProducts(): Promise<Product[]> {
+  return (await readProducts()) ?? defaultProducts
+}
+
+export async function getProductsFresh(): Promise<Product[]> {
+  return (await readJson<Product[]>(PRODUCTS_PATH)) ?? defaultProducts
+}
+
+export async function getProduct(slug: string): Promise<Product | undefined> {
+  return (await getProducts()).find((p) => p.slug === slug)
+}
+
+export async function saveProducts(products: Product[]): Promise<void> {
+  await writeJson(PRODUCTS_PATH, products)
+  purge(PRODUCTS_TAG)
+}
+
+export async function getHome(): Promise<HomeConfig | null> {
+  return readHome()
+}
+
+export async function getHomeFresh(): Promise<HomeConfig | null> {
+  return readJson<HomeConfig>(HOME_PATH)
+}
+
+export async function saveHome(home: HomeConfig): Promise<void> {
+  await writeJson(HOME_PATH, home)
+  purge(HOME_TAG)
+}
+
 export type Project = PortfolioItem & { category: 'project' }
-export type InternalProject = Extract<PortfolioItem, { link: 'internal' }> & { category: 'project' }
+export type DetailItem = Extract<PortfolioItem, { link: 'internal' }>
+
+const DETAIL_CATEGORIES: PortfolioItem['category'][] = ['project', 'experience', 'certificate']
 
 export async function getProjects(): Promise<Project[]> {
   return (await getItems())
@@ -106,8 +145,12 @@ export async function getProjects(): Promise<Project[]> {
     .sort((a, b) => getItemTimestamp(b) - getItemTimestamp(a))
 }
 
-export async function getProject(slug: string): Promise<InternalProject | undefined> {
-  return (await getProjects()).find(
-    (i): i is InternalProject => i.link === 'internal' && i.slug === slug
+export async function getDetailItems(): Promise<DetailItem[]> {
+  return (await getItems()).filter(
+    (i): i is DetailItem => i.link === 'internal' && DETAIL_CATEGORIES.includes(i.category)
   )
+}
+
+export async function getDetailItem(slug: string): Promise<DetailItem | undefined> {
+  return (await getDetailItems()).find((i) => i.slug === slug)
 }

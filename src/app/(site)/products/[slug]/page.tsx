@@ -1,16 +1,16 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getProduct, products } from '@/data/products'
+import { getProduct, getProducts } from '@/lib/content'
 
 type Props = { params: Promise<{ slug: string }> }
 
-export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }))
+export async function generateStaticParams() {
+  return (await getProducts()).map((p) => ({ slug: p.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const product = getProduct((await params).slug)
+  const product = await getProduct((await params).slug)
   if (!product) return {}
   return {
     title: product.name,
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const product = getProduct((await params).slug)
+  const product = await getProduct((await params).slug)
   if (!product) notFound()
 
   const docs = [

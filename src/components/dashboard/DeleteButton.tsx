@@ -1,6 +1,6 @@
 'use client'
 
-import { buttonCompact, buttonDanger } from './styles'
+import { linkClass } from './styles'
 
 export default function DeleteButton({
   action,
@@ -16,7 +16,7 @@ export default function DeleteButton({
         if (!window.confirm(confirmMessage)) e.preventDefault()
       }}
     >
-      <button type="submit" className={`${buttonDanger} ${buttonCompact}`}>
+      <button type="submit" className={`${linkClass} text-foreground/50 hover:text-foreground`}>
         Delete
       </button>
     </form>

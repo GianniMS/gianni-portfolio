@@ -1,6 +1,7 @@
 import { getCVFresh } from '@/lib/content'
 import { saveCVAction } from '@/app/dashboard/actions'
 import { fromParagraphs } from '@/lib/text'
+import PageHeader from '@/components/dashboard/PageHeader'
 import {
   buttonPrimary,
   hintClass,
@@ -14,15 +15,10 @@ export default async function PagesEditPage() {
   const cv = await getCVFresh()
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold tracking-tight">Pages</h1>
-        <p className="text-sm text-foreground/60">
-          Text for the About Me, CV and Contact panels
-        </p>
-      </div>
+    <>
+      <PageHeader title="Pages" meta="About Me, CV and Contact" />
 
-      <form action={saveCVAction} className="flex max-w-2xl flex-col gap-5">
+      <form action={saveCVAction} className="flex max-w-2xl flex-col gap-10">
         <div className={panelClass}>
           <p className={panelTitle}>About Me</p>
           <label className={labelClass}>
@@ -50,7 +46,7 @@ export default async function PagesEditPage() {
           <label className={labelClass}>
             Involved With
             <span className={hintClass}>
-              One per line; shown as one comma-separated line. Hidden when empty
+              One per line, shown on the About Me page. Hidden when empty
             </span>
             <textarea
               name="involvedWith"
@@ -64,7 +60,7 @@ export default async function PagesEditPage() {
         <div className={panelClass}>
           <p className={panelTitle}>Contact</p>
           <span className={hintClass}>
-            Also used for the links at the bottom of the mobile menu; blank links are left out
+            Shown on the Contact page; blank links are left out
           </span>
           <label className={labelClass}>
             Email
@@ -84,15 +80,15 @@ export default async function PagesEditPage() {
           <p className={panelTitle}>Metadata</p>
           <label className={labelClass}>
             Name
-            <span className={hintClass}>Used for image alt text, not shown on any panel</span>
+            <span className={hintClass}>Used for search engines, not shown on any page</span>
             <input name="name" defaultValue={cv?.name} required className={inputClass} />
           </label>
         </div>
 
-        <button type="submit" className={`${buttonPrimary} w-fit`}>
+        <button type="submit" className={buttonPrimary}>
           Save changes
         </button>
       </form>
-    </div>
+    </>
   )
 }

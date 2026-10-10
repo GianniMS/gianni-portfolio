@@ -1,5 +1,3 @@
-export type ImageTone = 'light' | 'dark'
-
 export type DateInfo =
   | { dateType: 'single'; date: string }
   | { dateType: 'range'; dateStart: string; dateEnd: string }
@@ -17,7 +15,6 @@ export type PortfolioItem = {
       description: string[]
       skills: string[]
       image: string
-      imageTone?: ImageTone
     } & DateInfo)
 )
 
@@ -48,7 +45,18 @@ export type Product = {
   name: string
   description: string
   link: string
+  image?: string
   support?: ProductDoc
   privacy?: ProductDoc
   terms?: ProductDoc
+}
+
+export type HoverText = { title: string; description: string }
+
+export type HomeTileRef = { kind: 'product'; slug: string } | { kind: 'item'; id: string }
+
+// The about tile always comes first and links to /about; the picked tiles follow it
+export type HomeConfig = {
+  about: { image: string } & HoverText
+  tiles: ({ ref: HomeTileRef } & HoverText)[]
 }

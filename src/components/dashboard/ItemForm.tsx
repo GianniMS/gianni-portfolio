@@ -15,7 +15,7 @@ import {
   panelTitle,
 } from './styles'
 
-const radioLabel = 'flex items-center gap-2 text-sm font-normal'
+const radioLabel = 'flex items-center gap-2'
 
 export default function ItemForm({
   category,
@@ -32,7 +32,7 @@ export default function ItemForm({
   )
 
   return (
-    <form action={action} className="flex max-w-2xl flex-col gap-5">
+    <form action={action} className="flex max-w-2xl flex-col gap-10">
       <input type="hidden" name="category" value={category} />
 
       <div className={panelClass}>
@@ -51,7 +51,7 @@ export default function ItemForm({
         )}
 
         <fieldset className="flex flex-col gap-2">
-          <legend className="text-sm font-bold">Link type</legend>
+          <legend className="mb-2">Link type</legend>
           <label className={radioLabel}>
             <input
               type="radio"
@@ -142,27 +142,12 @@ export default function ItemForm({
               name="image"
               defaultValue={item?.link === 'internal' ? item.image : undefined}
             />
-            <label className={labelClass}>
-              Image tone
-              <span className={hintClass}>
-                Sets the colour of text crossing this image; auto samples the pixels
-              </span>
-              <select
-                name="imageTone"
-                defaultValue={item?.link === 'internal' ? item.imageTone ?? '' : ''}
-                className={inputClass}
-              >
-                <option value="">Auto-detect from pixels</option>
-                <option value="light">Light image</option>
-                <option value="dark">Dark image</option>
-              </select>
-            </label>
           </div>
 
           <div className={panelClass}>
             <p className={panelTitle}>Dates</p>
             <fieldset className="flex flex-col gap-2">
-              <legend className="text-sm font-bold">Date type</legend>
+              <legend className="mb-2">Date type</legend>
               <label className={radioLabel}>
                 <input
                   type="radio"
@@ -230,7 +215,7 @@ export default function ItemForm({
         </>
       )}
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-6">
         <button type="submit" className={buttonPrimary}>
           {item ? 'Save changes' : 'Add item'}
         </button>

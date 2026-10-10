@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { products } from '@/data/products'
+import { getProducts } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'Products',
@@ -8,7 +8,9 @@ export const metadata: Metadata = {
   alternates: { canonical: '/products' },
 }
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getProducts()
+
   return (
     <>
       <h1>Products</h1>

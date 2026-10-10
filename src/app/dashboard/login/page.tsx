@@ -2,17 +2,17 @@
 
 import { useActionState } from 'react'
 import { login } from '@/app/dashboard/actions'
-import { buttonPrimary, inputClass, labelClass } from '@/components/dashboard/styles'
+import { buttonPrimary, errorClass, inputClass, labelClass } from '@/components/dashboard/styles'
 
 export default function LoginPage() {
   const [state, formAction, pending] = useActionState(login, undefined)
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-6 text-foreground">
+    <div className="flex min-h-dvh items-center justify-center px-5">
       <form action={formAction} className="flex w-full max-w-sm flex-col gap-5">
         <div className="flex flex-col gap-1">
-          <p className="text-blue text-lg font-bold tracking-tight">Dashboard</p>
-          <h1 className="text-sm text-foreground/60">Sign in to manage your content</h1>
+          <h1 className="text-2xl">Dashboard</h1>
+          <p className="text-foreground/50">Sign in to manage your content</p>
         </div>
 
         <label className={labelClass}>
@@ -31,9 +31,7 @@ export default function LoginPage() {
           />
         </label>
 
-        {state?.error && (
-          <p className="border-l-2 border-blue bg-foreground/5 px-3 py-2 text-sm">{state.error}</p>
-        )}
+        {state?.error && <p className={errorClass}>{state.error}</p>}
 
         <button type="submit" disabled={pending} className={buttonPrimary}>
           {pending ? 'Signing in…' : 'Sign in'}

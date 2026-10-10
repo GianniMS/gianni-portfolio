@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import ProjectStrip from '@/components/home/ProjectStrip'
-import { getProjects, InternalProject } from '@/lib/content'
+import TileStrip from '@/components/home/TileStrip'
+import { getCV, getHome, getItems, getProducts } from '@/lib/content'
+import { resolveHomeTiles } from '@/lib/home'
 
 export const metadata: Metadata = {
   title: { absolute: 'Gianni Mendonça Semedo | Full Stack Developer' },
@@ -9,16 +10,12 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 }
 
-const STRIP_SIZE = 5
-
 const INTRO =
   'Research, design, development. From the thought to the realization. From a complex problem, to a structured solution. That’s what I specialize in.'
 
 export default async function HomePage() {
-  const projects = await getProjects()
-  const featured = projects
-    .filter((p): p is InternalProject => p.link === 'internal')
-    .slice(0, STRIP_SIZE)
+  const [home, cv, items, products] = await Promise.all([getHome(), getCV(), getItems(), getProducts()])
+  const tiles = resolveHomeTiles(home, cv, items, products)
 
   return (
     <>
@@ -27,7 +24,7 @@ export default async function HomePage() {
         {INTRO}
       </p>
       <div className="mt-2 md:mt-5">
-        <ProjectStrip projects={featured} />
+        <TileStrip tiles={tiles} />
       </div>
     </>
   )

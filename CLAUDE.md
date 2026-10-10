@@ -18,7 +18,6 @@ Yarn (classic v1), not npm. Use `yarn add`/`yarn install`; don't reintroduce `pa
 |---|---|
 | `background` / inverted text | `#fffefc` |
 | `foreground` text | `#000000` |
-| `blue` (dashboard accents only) | `#0E3AFF` |
 
 Font: `font-sans` → Helvetica Neue (system font, never self-hosted), falling back to Helvetica / Arial.
 
@@ -32,13 +31,14 @@ Font: `font-sans` → Helvetica Neue (system font, never self-hosted), falling b
 src/
   app/
     (site)/      # public: /, products, products/[slug]/{support,privacy,terms}, experience, experience/[slug], about, contact
-    dashboard/   # protected CMS
+    dashboard/   # protected CMS: Home, Products, Projects, Experience, Certificates, Pages
   components/
-    layout/      # Navbar
+    layout/      # Navbar, MobileMenu, BackToTop
+    home/        # TileStrip
     product/     # ProductDocView, productDocs (shared doc-page helpers)
     dashboard/
-  data/          # products.ts, categories.ts, itemDates.ts
-  lib/           # content.ts (blob-backed items + CV), images.ts, text.ts, auth.ts
+  data/          # products.ts (seed until the first save), categories.ts, itemDates.ts
+  lib/           # content.ts (blob-backed items, CV, products, home), home.ts, images.ts, text.ts, auth.ts
   types/         # index.ts (PortfolioItem, Product + shared types)
 public/
   images/        # portrait.jpg, projects/, press/, awards/

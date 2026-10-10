@@ -1,15 +1,16 @@
 import type { MetadataRoute } from 'next'
-import { getProjects } from '@/lib/content'
-import { products } from '@/data/products'
+import { getDetailItems, getProducts } from '@/lib/content'
 
 const BASE = 'https://www.giannims.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const projects = (await getProjects()).flatMap((p) =>
-    p.link === 'internal'
-      ? [{ url: `${BASE}/experience/${p.slug}`, changeFrequency: 'monthly' as const, priority: 0.6 }]
-      : []
-  )
+  const [items, products] = await Promise.all([getDetailItems(), getProducts()])
+
+  const details = items.map((i) => ({
+    url: `${BASE}/experience/${i.slug}`,
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }))
 
   const productPages = products.flatMap((p) => [
     { url: `${BASE}/products/${p.slug}`, changeFrequency: 'monthly' as const, priority: 0.7 },
@@ -29,6 +30,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/about`, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/contact`, changeFrequency: 'yearly', priority: 0.5 },
     ...productPages,
-    ...projects,
+    ...details,
   ]
 }

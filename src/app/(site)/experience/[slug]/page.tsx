@@ -1,20 +1,18 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { getProject, getProjects, InternalProject } from '@/lib/content'
+import { getDetailItem, getDetailItems } from '@/lib/content'
 import { formatItemYear } from '@/data/itemDates'
 import { imageSrc } from '@/lib/images'
 
 type Props = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
-  return (await getProjects())
-    .filter((p): p is InternalProject => p.link === 'internal')
-    .map((p) => ({ slug: p.slug }))
+  return (await getDetailItems()).map((i) => ({ slug: i.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = await getProject((await params).slug)
+  const project = await getDetailItem((await params).slug)
   if (!project) return { title: 'Project' }
 
   const description = project.description[0] ?? 'Project by Gianni Mendonça Semedo.'
@@ -35,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProjectPage({ params }: Props) {
-  const project = await getProject((await params).slug)
+  const project = await getDetailItem((await params).slug)
   if (!project) notFound()
 
   return (
