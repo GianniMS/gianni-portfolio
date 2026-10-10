@@ -22,11 +22,11 @@ export default async function HomePage() {
 
   return (
     <>
+      <h1 className="sr-only">Gianni Mendonça Semedo</h1>
       <p className="ml-auto mt-24 max-w-[616px] px-5 text-right text-base md:mt-[15vw]">{INTRO}</p>
       <div className="mt-5">
         <ProjectStrip projects={featured} />
       </div>
-      <h1 className="px-5 pb-5 pt-12 text-[clamp(4rem,7.4vw,8rem)] leading-normal md:pt-20">GianniMS</h1>
     </>
   )
 }
