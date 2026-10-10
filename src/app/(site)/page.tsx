@@ -23,8 +23,10 @@ export default async function HomePage() {
   return (
     <>
       <h1 className="sr-only">Gianni Mendonça Semedo</h1>
-      <p className="ml-auto mt-24 max-w-[616px] px-5 text-right text-base md:mt-[15vw]">{INTRO}</p>
-      <div className="mt-5">
+      <p className="ml-auto mt-40 max-w-[335px] pr-3.5 text-right md:mt-[15vw] md:max-w-[656px] md:px-5">
+        {INTRO}
+      </p>
+      <div className="mt-2 md:mt-5">
         <ProjectStrip projects={featured} />
       </div>
     </>

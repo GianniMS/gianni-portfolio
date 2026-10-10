@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Fragment } from 'react'
 import { getCV } from '@/lib/content'
+import MobileMenu from '@/components/layout/MobileMenu'
 
 const LINKS = [
   { href: '/products', label: 'Products' },
@@ -16,9 +17,10 @@ export default async function Navbar() {
   const cvPath = (await getCV())?.cvPdfPath
 
   return (
-    <header className="flex flex-col gap-1 px-5 pt-5 text-base md:flex-row md:justify-between">
+    <header className="flex items-center justify-between px-2.5 pt-2.5 text-base md:items-start md:px-5 md:pt-5">
       <Link href="/">Gianni Mendonça Semedo</Link>
-      <nav>
+      <MobileMenu links={LINKS} cvPath={cvPath || undefined} />
+      <nav className="hidden md:block">
         {LINKS.map((link, i) => (
           <Fragment key={link.href}>
             {i > 0 && ' | '}

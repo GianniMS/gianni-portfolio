@@ -5,9 +5,9 @@ import { imageSrc } from '@/lib/images'
 
 export default function ProjectStrip({ projects }: { projects: InternalProject[] }) {
   return (
-    <ul className="flex snap-x snap-mandatory overflow-x-auto md:overflow-visible">
+    <ul className="grid grid-cols-2 md:flex">
       {projects.map((project, i) => (
-        <li key={project.id} className="w-[72vw] shrink-0 snap-start md:w-auto md:flex-1 md:basis-0">
+        <li key={project.id} className="md:flex-1 md:basis-0">
           <Link
             href={`/experience/${project.slug}`}
             className="group relative block aspect-[346/450] overflow-hidden"
@@ -16,7 +16,7 @@ export default function ProjectStrip({ projects }: { projects: InternalProject[]
               src={imageSrc(project.image)}
               alt={project.title}
               fill
-              sizes="(min-width: 768px) 20vw, 72vw"
+              sizes="(min-width: 768px) 20vw, 50vw"
               className="object-cover"
               priority={i < 2}
             />
