@@ -17,7 +17,7 @@ export default async function Navbar() {
   const cvPath = (await getCV())?.cvPdfPath
 
   return (
-    <header className="flex items-center justify-between px-2.5 pt-2.5 text-base md:items-start md:px-5 md:pt-5">
+    <header id="site-header" className="flex items-center justify-between px-2.5 pt-2.5 text-base md:items-start md:px-5 md:pt-5">
       <Link href="/">Gianni Mendonça Semedo</Link>
       <MobileMenu links={LINKS} cvPath={cvPath || undefined} />
       <nav className="hidden md:block">
