@@ -10,13 +10,18 @@ const LINKS = [
 
 export default function Navbar() {
   return (
-    <header className="flex flex-col gap-1 px-5 pt-5 text-2xl md:flex-row md:justify-between">
+    <header className="flex flex-col gap-1 px-5 pt-5 text-base md:flex-row md:justify-between">
       <Link href="/">Gianni Mendonça Semedo</Link>
       <nav>
         {LINKS.map((link, i) => (
           <Fragment key={link.href}>
             {i > 0 && ' | '}
-            <Link href={link.href}>{link.label}</Link>
+            <Link
+              href={link.href}
+              className="underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-800 hover:decoration-current"
+            >
+              {link.label}
+            </Link>
           </Fragment>
         ))}
       </nav>

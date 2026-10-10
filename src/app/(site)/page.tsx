@@ -22,7 +22,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <p className="ml-auto mt-24 max-w-[616px] px-5 text-right text-2xl md:mt-[15vw]">{INTRO}</p>
+      <p className="ml-auto mt-24 max-w-[616px] px-5 text-right text-base md:mt-[15vw]">{INTRO}</p>
       <div className="mt-5">
         <ProjectStrip projects={featured} />
       </div>

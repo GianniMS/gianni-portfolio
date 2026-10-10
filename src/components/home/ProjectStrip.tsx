@@ -20,7 +20,7 @@ export default function ProjectStrip({ projects }: { projects: InternalProject[]
               className="object-cover"
               priority={i < 2}
             />
-            <div className="absolute inset-0 flex flex-col items-end justify-end bg-foreground/70 pb-6 pl-10 pr-3.5 text-right text-background opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+            <div className="absolute inset-0 flex flex-col items-end justify-end bg-foreground/70 pb-6 pl-10 pr-3.5 text-right text-background opacity-0 transition-opacity duration-800 group-hover:opacity-100 group-focus-visible:opacity-100">
               <p>{project.title}</p>
               {project.description[0] && <p className="mt-[1lh] line-clamp-4">{project.description[0]}</p>}
               <p className="mt-[1lh]">See more →</p>
