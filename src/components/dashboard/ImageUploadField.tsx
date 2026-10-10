@@ -11,12 +11,12 @@ const ACCEPTED = ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml']
 
 const RATIO_TOLERANCE = 0.02
 
-function readSize(file: File): Promise<{ width: number; height: number }> {
+function loadImage(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file)
     const img = new Image()
     img.onload = () => {
-      resolve({ width: img.naturalWidth, height: img.naturalHeight })
+      resolve(img)
       URL.revokeObjectURL(url)
     }
     img.onerror = () => {
@@ -27,17 +27,48 @@ function readSize(file: File): Promise<{ width: number; height: number }> {
   })
 }
 
-// An SVG scales without loss, so only its proportions are checked
-async function checkTileFit(file: File): Promise<string | null> {
-  const { width, height } = await readSize(file)
+function canvasToFile(canvas: HTMLCanvasElement, file: File): Promise<File> {
+  return new Promise((resolve, reject) =>
+    canvas.toBlob(
+      (blob) =>
+        blob ? resolve(new File([blob], file.name, { type: file.type })) : reject(new Error('Could not crop the image.')),
+      file.type,
+      0.92
+    )
+  )
+}
+
+// Raster images are centre-cropped to the tile shape so they always fill it.
+// An SVG cannot be cropped this way, so it must already have the right proportions.
+async function fitToTile(file: File): Promise<File> {
+  const img = await loadImage(file)
+  const { naturalWidth: width, naturalHeight: height } = img
   const target = TILE_RATIO.width / TILE_RATIO.height
-  if (!width || !height || Math.abs(width / height - target) / target > RATIO_TOLERANCE) {
-    return `Use a ${TILE_RATIO.width}:${TILE_RATIO.height} portrait image so it fills the home tile. This one is ${width}×${height}.`
+  const ratio = width / height
+
+  if (file.type === 'image/svg+xml') {
+    if (!width || !height || Math.abs(ratio - target) / target > RATIO_TOLERANCE) {
+      throw new Error(`Use an SVG in ${TILE_RATIO.width}:${TILE_RATIO.height} portrait so it fills the home tile.`)
+    }
+    return file
   }
-  if (file.type !== 'image/svg+xml' && width < TILE_MIN_WIDTH) {
-    return `Use an image at least ${TILE_MIN_WIDTH}px wide so it stays sharp. This one is ${width}px.`
+
+  const cropWidth = ratio > target ? Math.round(height * target) : width
+  const cropHeight = ratio > target ? height : Math.round(width / target)
+  if (cropWidth < TILE_MIN_WIDTH) {
+    throw new Error(
+      `This image is too small: after cropping to the tile shape it is ${cropWidth}px wide, and at least ${TILE_MIN_WIDTH}px is needed to stay sharp.`
+    )
   }
-  return null
+  if (Math.abs(ratio - target) / target <= RATIO_TOLERANCE) return file
+
+  const canvas = document.createElement('canvas')
+  canvas.width = cropWidth
+  canvas.height = cropHeight
+  canvas
+    .getContext('2d')
+    ?.drawImage(img, (width - cropWidth) / 2, (height - cropHeight) / 2, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight)
+  return canvasToFile(canvas, file)
 }
 
 export default function ImageUploadField({
@@ -65,12 +96,8 @@ export default function ImageUploadField({
     setUploading(true)
     setError(null)
     try {
-      const misfit = await checkTileFit(file)
-      if (misfit) {
-        setError(misfit)
-        return
-      }
-      const blob = await upload(file.name, file, {
+      const fitted = await fitToTile(file)
+      const blob = await upload(fitted.name, fitted, {
         access: 'public',
         handleUploadUrl: '/api/dashboard/upload',
       })
@@ -97,8 +124,9 @@ export default function ImageUploadField({
       </label>
 
       <p className={hintClass}>
-        PNG, JPEG, WebP or SVG in {TILE_RATIO.width}:{TILE_RATIO.height} portrait, at least{' '}
-        {TILE_MIN_WIDTH}×{(TILE_MIN_WIDTH / TILE_RATIO.width) * TILE_RATIO.height}px
+        PNG, JPEG or WebP at least {TILE_MIN_WIDTH}×{(TILE_MIN_WIDTH / TILE_RATIO.width) * TILE_RATIO.height}px;
+        other shapes are centre-cropped to the {TILE_RATIO.width}:{TILE_RATIO.height} tile. An SVG must
+        already be {TILE_RATIO.width}:{TILE_RATIO.height}.
       </p>
       {uploading && <p className={hintClass}>Uploading…</p>}
       {error && <p className={errorClass}>{error}</p>}
