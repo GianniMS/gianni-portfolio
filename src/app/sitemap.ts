@@ -20,6 +20,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/about`, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/cv`, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/contact`, changeFrequency: 'yearly', priority: 0.5 },
+    { url: `${BASE}/tabcraft`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${BASE}/tabcraft/privacy`, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE}/tabcraft/terms`, changeFrequency: 'yearly', priority: 0.3 },
     ...details,
   ]
 }
