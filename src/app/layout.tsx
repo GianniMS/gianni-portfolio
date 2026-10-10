@@ -1,15 +1,11 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { ImageBoundsProvider } from '@/context/ImageBoundsContext'
-import { HoverProvider } from '@/context/HoverContext'
-import { CursorProvider } from '@/context/CursorContext'
-import CustomCursor from '@/components/layout/CustomCursor'
 import { ReactNode } from 'react'
 
 const NAME = 'Gianni Mendonça Semedo'
 const HEADLINE = `${NAME} | Full Stack Developer`
 const DESCRIPTION =
-  'Portfolio of Gianni Mendonça Semedo, full stack developer in Rotterdam, The Netherlands. Projects, experience, certificates, press and awards.'
+  'Portfolio of Gianni Mendonça Semedo, full stack developer in Rotterdam, The Netherlands. Products, projects and more.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.giannims.com'),
@@ -41,17 +37,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <ImageBoundsProvider>
-          <HoverProvider>
-            <CursorProvider>
-              <CustomCursor />
-              {children}
-            </CursorProvider>
-          </HoverProvider>
-        </ImageBoundsProvider>
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   )
 }

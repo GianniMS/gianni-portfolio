@@ -1,28 +1,34 @@
 import type { MetadataRoute } from 'next'
-import { getItems } from '@/lib/content'
-import { categoryPath } from '@/data/categoryPaths'
+import { getProjects } from '@/lib/content'
+import { products } from '@/data/products'
 
 const BASE = 'https://www.giannims.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const items = await getItems()
+  const projects = (await getProjects()).flatMap((p) =>
+    p.link === 'internal'
+      ? [{ url: `${BASE}/portfolio/${p.slug}`, changeFrequency: 'monthly' as const, priority: 0.6 }]
+      : []
+  )
 
-  const details = items
-    .filter((item) => item.link === 'internal')
-    .map((item) => ({
-      url: `${BASE}/${categoryPath[item.category]}/${item.link === 'internal' ? item.slug : ''}`,
-      changeFrequency: 'monthly' as const,
-      priority: 0.6,
-    }))
+  const productPages = products.flatMap((p) => [
+    { url: `${BASE}/products/${p.slug}`, changeFrequency: 'monthly' as const, priority: 0.7 },
+    ...(['support', 'privacy', 'terms'] as const)
+      .filter((kind) => p[kind])
+      .map((kind) => ({
+        url: `${BASE}/products/${p.slug}/${kind}`,
+        changeFrequency: 'yearly' as const,
+        priority: 0.3,
+      })),
+  ])
 
   return [
     { url: BASE, changeFrequency: 'monthly', priority: 1 },
+    { url: `${BASE}/products`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE}/portfolio`, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/about`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/cv`, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/contact`, changeFrequency: 'yearly', priority: 0.5 },
-    { url: `${BASE}/tabcraft`, changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${BASE}/tabcraft/privacy`, changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${BASE}/tabcraft/terms`, changeFrequency: 'yearly', priority: 0.3 },
-    ...details,
+    ...productPages,
+    ...projects,
   ]
 }

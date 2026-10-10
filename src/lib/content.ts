@@ -1,6 +1,7 @@
 import { put, head } from '@vercel/blob'
 import { unstable_cache, revalidatePath, revalidateTag } from 'next/cache'
 import { PortfolioItem, CVData } from '@/types'
+import { getItemTimestamp } from '@/data/itemDates'
 
 const ITEMS_PATH = 'data/items.json'
 const CV_PATH = 'data/cv.json'
@@ -94,4 +95,19 @@ function normalizeCV(raw: StoredCV | null): CVData | null {
 export async function saveCV(data: CVData): Promise<void> {
   await writeJson(CV_PATH, data)
   purge(CV_TAG)
+}
+
+export type Project = PortfolioItem & { category: 'project' }
+export type InternalProject = Extract<PortfolioItem, { link: 'internal' }> & { category: 'project' }
+
+export async function getProjects(): Promise<Project[]> {
+  return (await getItems())
+    .filter((i): i is Project => i.category === 'project')
+    .sort((a, b) => getItemTimestamp(b) - getItemTimestamp(a))
+}
+
+export async function getProject(slug: string): Promise<InternalProject | undefined> {
+  return (await getProjects()).find(
+    (i): i is InternalProject => i.link === 'internal' && i.slug === slug
+  )
 }

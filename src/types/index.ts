@@ -34,3 +34,21 @@ export type CVData = {
   email: string
   socials: SocialLinks
 }
+
+// A string is a paragraph, a string array is a bulleted list
+export type DocBlock = string | string[]
+
+export type ProductDoc = {
+  updated?: string
+  sections: { heading?: string; blocks: DocBlock[] }[]
+}
+
+export type Product = {
+  slug: string
+  name: string
+  description: string
+  link: string
+  support?: ProductDoc
+  privacy?: ProductDoc
+  terms?: ProductDoc
+}
