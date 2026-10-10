@@ -1,7 +1,7 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import NavLink, { navLinkClass } from '@/components/layout/NavLink'
 
 type NavLink = { href: string; label: string }
 
@@ -40,12 +40,12 @@ export default function MobileMenu({ links, cvPath }: { links: NavLink[]; cvPath
         inert={!open}
       >
         {links.map((link) => (
-          <Link key={link.href} href={link.href} onClick={close}>
+          <NavLink key={link.href} href={link.href} onClick={close}>
             {link.label}
-          </Link>
+          </NavLink>
         ))}
         {cvPath && (
-          <a href={cvPath} download onClick={close}>
+          <a href={cvPath} download onClick={close} className={navLinkClass}>
             Download CV
           </a>
         )}

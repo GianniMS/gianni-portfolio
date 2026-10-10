@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Fragment } from 'react'
 import { getCV } from '@/lib/content'
 import MobileMenu from '@/components/layout/MobileMenu'
+import NavLink, { navLinkClass } from '@/components/layout/NavLink'
 
 const LINKS = [
   { href: '/products', label: 'Products' },
@@ -9,9 +10,6 @@ const LINKS = [
   { href: '/about', label: 'About Me' },
   { href: '/contact', label: 'Contact' },
 ]
-
-const LINK_CLASS =
-  'underline decoration-transparent underline-offset-4 transition-[text-decoration-color] duration-800 hover:decoration-current'
 
 export default async function Navbar() {
   const cvPath = (await getCV())?.cvPdfPath
@@ -24,15 +22,13 @@ export default async function Navbar() {
         {LINKS.map((link, i) => (
           <Fragment key={link.href}>
             {i > 0 && ' | '}
-            <Link href={link.href} className={LINK_CLASS}>
-              {link.label}
-            </Link>
+            <NavLink href={link.href}>{link.label}</NavLink>
           </Fragment>
         ))}
         {cvPath && (
           <>
             {' | '}
-            <a href={cvPath} download className={LINK_CLASS}>
+            <a href={cvPath} download className={navLinkClass}>
               Download CV
             </a>
           </>
