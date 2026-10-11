@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import StageIndex, { IndexSection } from '@/components/stage/StageIndex'
 import { getProducts } from '@/lib/content'
 
 export const metadata: Metadata = {
@@ -11,17 +11,24 @@ export const metadata: Metadata = {
 export default async function ProductsPage() {
   const products = await getProducts()
 
+  const sections: IndexSection[] = [
+    {
+      label: 'Products',
+      rows: products.map((product) => ({
+        id: product.slug,
+        title: product.name,
+        isPrivate: false,
+        href: `/${product.slug}`,
+        external: false,
+        stage: { title: product.name, image: product.image || undefined },
+      })),
+    },
+  ]
+
   return (
-    <>
-      <h1>Products</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.slug}>
-            <Link href={`/${product.slug}`}>{product.name}</Link>
-            <p>{product.description}</p>
-          </li>
-        ))}
-      </ul>
-    </>
+    <div className="px-2.5 pb-20 md:px-5">
+      <h1 className="sr-only">Products</h1>
+      <StageIndex sections={sections} defaultTitle="Products" />
+    </div>
   )
 }

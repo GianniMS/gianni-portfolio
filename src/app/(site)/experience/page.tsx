@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import ExperienceIndex, { IndexRow, IndexSection } from '@/components/experience/ExperienceIndex'
+import StageIndex, { IndexRow, IndexSection } from '@/components/stage/StageIndex'
 import { PortfolioItem } from '@/types'
 import { getItems } from '@/lib/content'
 import {
@@ -66,7 +66,7 @@ export default async function ExperiencePage() {
   return (
     <div className="px-2.5 pb-20 md:px-5">
       <h1 className="sr-only">Experience</h1>
-      <ExperienceIndex sections={sections} />
+      <StageIndex sections={sections} defaultTitle="Experience" />
     </div>
   )
 }

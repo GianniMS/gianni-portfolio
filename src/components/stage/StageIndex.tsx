@@ -9,7 +9,7 @@ export type IndexRow = {
   id: string
   title: string
   isPrivate: boolean
-  year: string
+  year?: string
   href: string
   external: boolean
   // What the stage shows while this row is hovered; rows without one leave the default
@@ -17,8 +17,6 @@ export type IndexRow = {
 }
 
 export type IndexSection = { label: string; rows: IndexRow[] }
-
-const DEFAULT_TITLE = 'Experience'
 
 const rowLine =
   'border-b border-transparent transition-colors duration-800 group-hover:border-foreground group-focus-visible:border-foreground'
@@ -30,11 +28,19 @@ const rowLine =
 const titleClass =
   'pointer-events-none absolute left-[48.5%] top-[67.6%] w-[calc(100cqw-1.75rem-11.98vw)] text-[5.56vw] leading-none transition-opacity duration-800'
 
-function Stage({ sections, active }: { sections: IndexSection[]; active: string | null }) {
+function Stage({
+  sections,
+  active,
+  defaultTitle,
+}: {
+  sections: IndexSection[]
+  active: string | null
+  defaultTitle: string
+}) {
   const staged = sections
     .flatMap((s) => s.rows)
     .flatMap((row) => (row.stage ? [{ id: row.id, ...row.stage }] : []))
-  const titles = [{ id: null, title: DEFAULT_TITLE }, ...staged]
+  const titles = [{ id: null, title: defaultTitle }, ...staged]
 
   const shown = (id: string | null) => (id === active ? 'opacity-100' : 'opacity-0')
 
@@ -75,14 +81,21 @@ function Stage({ sections, active }: { sections: IndexSection[]; active: string 
   )
 }
 
-export default function ExperienceIndex({ sections }: { sections: IndexSection[] }) {
+export default function StageIndex({
+  sections,
+  defaultTitle,
+}: {
+  sections: IndexSection[]
+  // Shown on the stage while nothing with a preview is hovered
+  defaultTitle: string
+}) {
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
     <div className="lg:flex lg:items-start lg:gap-10">
       <div className="@container hidden min-w-0 flex-1 lg:sticky lg:top-[13.4vw] lg:mt-[13.4vw] lg:block">
         <div className="ml-7">
-          <Stage sections={sections} active={hovered} />
+          <Stage sections={sections} active={hovered} defaultTitle={defaultTitle} />
         </div>
       </div>
 
@@ -109,7 +122,7 @@ export default function ExperienceIndex({ sections }: { sections: IndexSection[]
                   {/* The name hugs its text (padding stands in for the column gap) and the
                       year fills its column, so the underline runs from the start of the
                       name to the end of the year without crossing empty column space */}
-                  <span className={`justify-self-start pr-6 lg:justify-self-end ${rowLine}`}>
+                  <span className={`justify-self-start lg:justify-self-end ${row.year ? 'pr-6' : ''} ${rowLine}`}>
                     {row.title}
                     {row.isPrivate && ' (private)'}
                   </span>
