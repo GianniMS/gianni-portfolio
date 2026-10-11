@@ -12,7 +12,11 @@ export default function MobileMenu({ links, cvPath }: { links: NavLink[]; cvPath
     if (!open) return
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
   }, [open])
 
   const close = () => setOpen(false)
@@ -36,16 +40,20 @@ export default function MobileMenu({ links, cvPath }: { links: NavLink[]; cvPath
       </button>
       <nav
         id="mobile-menu"
-        className={`fixed inset-0 z-40 flex flex-col items-end gap-2 bg-background px-3.5 pt-20 text-right transition-opacity duration-800 ${open ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+        className={`fixed inset-0 z-40 flex flex-col items-end justify-end bg-background px-3.5 pb-10 text-right transition-opacity duration-800 ${open ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
         inert={!open}
       >
-        {links.map((link) => (
-          <NavLink key={link.href} href={link.href} onClick={close}>
-            {link.label}
-          </NavLink>
-        ))}
+        <ul className="flex flex-col items-end text-[40px] leading-tight">
+          {links.map((link) => (
+            <li key={link.href}>
+              <NavLink href={link.href} onClick={close}>
+                {link.label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
         {cvPath && (
-          <a href={cvPath} download onClick={close} className={navLinkClass}>
+          <a href={cvPath} download onClick={close} className={`${navLinkClass} mt-8`}>
             Download CV
           </a>
         )}

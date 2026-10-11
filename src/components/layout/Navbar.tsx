@@ -5,8 +5,9 @@ import MobileMenu from '@/components/layout/MobileMenu'
 import NavLink, { navLinkClass } from '@/components/layout/NavLink'
 
 const LINKS = [
-  { href: '/products', label: 'Products' },
+  { href: '/', label: 'Home' },
   { href: '/experience', label: 'Experience' },
+  { href: '/products', label: 'Products' },
   { href: '/about', label: 'About Me' },
   { href: '/contact', label: 'Contact' },
 ]
@@ -16,7 +17,10 @@ export default async function Navbar() {
 
   return (
     <header id="site-header" className="flex items-center justify-between px-2.5 pt-2.5 text-base md:items-start md:px-5 md:pt-5">
-      <Link href="/">Gianni Mendonça Semedo</Link>
+      {/* Above the open mobile menu, which covers the rest of the header */}
+      <Link href="/" className="relative z-50">
+        Gianni Mendonça Semedo
+      </Link>
       <MobileMenu links={LINKS} cvPath={cvPath || undefined} />
       <nav className="hidden md:block">
         {LINKS.map((link, i) => (
