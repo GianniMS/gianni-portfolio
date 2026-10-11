@@ -5,7 +5,15 @@ import { getProduct, getProducts } from '@/lib/content'
 
 export type DocKind = 'support' | 'privacy' | 'terms'
 
-const DOC_TITLES: Record<DocKind, string> = {
+export const DOC_KINDS: DocKind[] = ['support', 'privacy', 'terms']
+
+export const DOC_NAV_LABELS: Record<DocKind, string> = {
+  support: 'Support',
+  privacy: 'Privacy',
+  terms: 'Terms',
+}
+
+export const DOC_TITLES: Record<DocKind, string> = {
   support: 'Support',
   privacy: 'Privacy Policy',
   terms: 'Terms of Use',
@@ -30,5 +38,5 @@ export async function ProductDocPage({ kind, params }: { kind: DocKind } & DocPa
   const product = await getProduct((await params).slug)
   const doc = product?.[kind]
   if (!product || !doc) notFound()
-  return <ProductDocView title={`${product.name} ${DOC_TITLES[kind]}`} doc={doc} />
+  return <ProductDocView title={DOC_TITLES[kind]} doc={doc} />
 }

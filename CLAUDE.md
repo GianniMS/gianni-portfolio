@@ -37,7 +37,7 @@ src/
     layout/      # Navbar, MobileMenu, BackToTop
     home/        # TileStrip
     stage/       # Stage + StageLayout (shared page layout), StageIndex (Experience/Products list)
-    product/     # ProductDocView, productDocs (shared doc-page helpers)
+    product/     # ProductShell (title + reading column), ProductDocView, productDocs
     dashboard/
   data/          # products.ts (seed until the first save), categories.ts, itemDates.ts
   lib/           # content.ts (blob-backed items, CV, products, home), home.ts, images.ts, text.ts, auth.ts

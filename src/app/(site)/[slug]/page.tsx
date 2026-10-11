@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getProduct, getProducts } from '@/lib/content'
+import ProductShell from '@/components/product/ProductShell'
+import { ProductDocSections } from '@/components/product/ProductDocView'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -23,30 +24,27 @@ export default async function ProductPage({ params }: Props) {
   const product = await getProduct((await params).slug)
   if (!product) notFound()
 
-  const docs = [
-    { kind: 'support', label: 'Support' },
-    { kind: 'privacy', label: 'Privacy Policy' },
-    { kind: 'terms', label: 'Terms of Use' },
-  ] as const
-
   return (
-    <>
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
+    <ProductShell title={product.name}>
+      <p className="text-[clamp(1.25rem,1.7vw,1.75rem)] leading-snug">{product.description}</p>
       {product.link && (
-        <a href={product.link} target="_blank" rel="noopener noreferrer">
-          Get {product.name}
-        </a>
+        <p className="mt-10">
+          <a
+            href={product.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-foreground px-5 py-3 text-background transition-opacity duration-800 hover:opacity-70"
+          >
+            Get {product.name} →
+          </a>
+        </p>
       )}
-      <ul>
-        {docs
-          .filter((d) => product[d.kind])
-          .map((d) => (
-            <li key={d.kind}>
-              <Link href={`/${product.slug}/${d.kind}`}>{d.label}</Link>
-            </li>
-          ))}
-      </ul>
-    </>
+      {product.support && (
+        <section className="mt-16 border-t border-foreground pt-4">
+          {/* The support document's sections double as the product's feature copy */}
+          <ProductDocSections doc={product.support} />
+        </section>
+      )}
+    </ProductShell>
   )
 }

@@ -10,14 +10,18 @@ export const navLinkClass =
 export default function NavLink({
   href,
   onClick,
+  exact = false,
   children,
 }: {
   href: string
   onClick?: () => void
+  // Only underline on this exact path, not on pages below it
+  exact?: boolean
   children: ReactNode
 }) {
   const pathname = usePathname()
-  const active = pathname === href || (href !== '/' && pathname.startsWith(`${href}/`))
+  const active =
+    pathname === href || (!exact && href !== '/' && pathname.startsWith(`${href}/`))
 
   return (
     <Link
