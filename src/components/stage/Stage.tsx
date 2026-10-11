@@ -10,15 +10,19 @@ export type StageEntry = {
   typed?: number
 }
 
-// Untyped characters stay in the layout, invisible, so the title never rewraps as it types
+// Every character is laid out from the start and fades in when typed, so the title
+// never rewraps while it types
 function StageTitle({ entry }: { entry: StageEntry }) {
-  if (entry.typed === undefined) return entry.title
-  return (
-    <>
-      {entry.title.slice(0, entry.typed)}
-      <span className="invisible motion-reduce:visible">{entry.title.slice(entry.typed)}</span>
-    </>
-  )
+  const { typed } = entry
+  if (typed === undefined) return entry.title
+  return [...entry.title].map((char, i) => (
+    <span
+      key={i}
+      className={`transition-opacity duration-800 motion-reduce:opacity-100 ${i < typed ? 'opacity-100' : 'opacity-0'}`}
+    >
+      {char}
+    </span>
+  ))
 }
 
 // Positions are taken from the 427×556 stage in the design, so the title keeps
