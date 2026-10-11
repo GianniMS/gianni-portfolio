@@ -20,9 +20,11 @@ export type IndexSection = { label: string; rows: IndexRow[] }
 const DEFAULT_TITLE = 'Experience'
 
 // Positions are taken from the 427×556 stage in the design, so the title keeps
-// crossing the stage's right edge at the same point at every width
+// crossing the stage's right edge at the same point at every width. Its width is
+// whatever the column leaves after the stage offset, so a long title wraps instead
+// of running into the list.
 const titleClass =
-  'pointer-events-none absolute left-[48.5%] top-[67.6%] whitespace-nowrap text-[5.56vw] leading-none transition-opacity duration-800'
+  'pointer-events-none absolute left-[48.5%] top-[67.6%] w-[calc(100cqw-1.75rem-11.98vw)] text-[5.56vw] leading-none transition-opacity duration-800'
 
 function Stage({ sections, active }: { sections: IndexSection[]; active: string | null }) {
   const previews = sections.flatMap((s) => s.rows).filter((row) => row.preview)
@@ -68,16 +70,18 @@ export default function ExperienceIndex({ sections }: { sections: IndexSection[]
   const [hovered, setHovered] = useState<string | null>(null)
 
   return (
-    <div className="md:flex md:items-start md:justify-between">
-      <div className="hidden md:sticky md:top-[13.4vw] md:ml-7 md:mt-[13.4vw] md:block">
-        <Stage sections={sections} active={hovered} />
+    <div className="lg:flex lg:items-start lg:gap-10">
+      <div className="@container hidden min-w-0 flex-1 lg:sticky lg:top-[13.4vw] lg:mt-[13.4vw] lg:block">
+        <div className="ml-7">
+          <Stage sections={sections} active={hovered} />
+        </div>
       </div>
 
-      <div className="mt-16 flex flex-col gap-[1lh] md:mt-36 md:items-end">
+      <div className="mt-16 flex shrink-0 flex-col gap-[1lh] lg:mt-36 lg:items-end">
         {sections.map((section) => (
           <section
             key={section.label}
-            className="grid grid-cols-[1fr_auto] gap-x-6 gap-y-1.5 md:grid-cols-[auto_auto] md:text-right"
+            className="grid grid-cols-[1fr_auto] gap-x-6 gap-y-1.5 lg:grid-cols-[auto_auto] lg:text-right"
           >
             <h2 className="col-span-2 font-bold">{section.label}</h2>
             {section.rows.map((row) => {
