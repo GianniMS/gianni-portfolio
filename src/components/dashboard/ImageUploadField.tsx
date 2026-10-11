@@ -75,11 +75,14 @@ export default function ImageUploadField({
   name,
   defaultValue,
   tile = true,
+  removable = true,
 }: {
   name: string
   defaultValue?: string
   // Thumbnails can end up in a home tile and are held to its shape; extra images are not
   tile?: boolean
+  // Off where the surrounding list already removes the whole slot
+  removable?: boolean
 }) {
   const [url, setUrl] = useState(defaultValue ?? '')
   const [uploading, setUploading] = useState(false)
@@ -116,15 +119,26 @@ export default function ImageUploadField({
     <div className="flex flex-col gap-3">
       <input type="hidden" name={name} value={url} />
 
-      <label className={`${buttonSecondary} cursor-pointer`}>
-        {url ? 'Replace image' : 'Choose image'}
-        <input
-          type="file"
-          accept={ACCEPTED.join(',')}
-          onChange={handleChange}
-          className="hidden"
-        />
-      </label>
+      <div className="flex gap-6">
+        <label className={`${buttonSecondary} cursor-pointer`}>
+          {url ? 'Replace image' : 'Choose image'}
+          <input
+            type="file"
+            accept={ACCEPTED.join(',')}
+            onChange={handleChange}
+            className="hidden"
+          />
+        </label>
+        {removable && url && (
+          <button
+            type="button"
+            onClick={() => setUrl('')}
+            className={`${buttonSecondary} text-foreground/50 hover:text-foreground`}
+          >
+            Delete image
+          </button>
+        )}
+      </div>
 
       <p className={hintClass}>
         {tile ? (

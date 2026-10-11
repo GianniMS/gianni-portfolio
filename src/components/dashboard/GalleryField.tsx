@@ -17,13 +17,13 @@ export default function GalleryField({ name, defaultValue = [] }: { name: string
       {slots.map((slot, i) => (
         <div key={slot.key} className="flex flex-col gap-2">
           <p>Image {i + 1}</p>
-          <ImageUploadField name={name} defaultValue={slot.url} tile={false} />
+          <ImageUploadField name={name} defaultValue={slot.url} tile={false} removable={false} />
           <button
             type="button"
             onClick={() => setSlots((prev) => prev.filter((s) => s.key !== slot.key))}
             className={`${buttonSecondary} text-foreground/50 hover:text-foreground`}
           >
-            Remove
+            Delete image
           </button>
         </div>
       ))}
