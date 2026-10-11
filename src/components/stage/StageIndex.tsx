@@ -20,7 +20,7 @@ export type IndexSection = { label: string; rows: IndexRow[] }
 const rowLine =
   'border-b border-transparent transition-colors duration-800 group-hover:border-foreground group-focus-visible:border-foreground'
 
-const TYPE_STEP_MS = 200
+const TYPE_STEP_MS = 150
 
 export default function StageIndex({
   sections,
