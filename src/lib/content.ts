@@ -137,8 +137,6 @@ export async function saveHome(home: HomeConfig): Promise<void> {
 export type Project = PortfolioItem & { category: 'project' }
 export type DetailItem = Extract<PortfolioItem, { link: 'internal' }>
 
-const DETAIL_CATEGORIES: PortfolioItem['category'][] = ['project', 'experience', 'certificate']
-
 export async function getProjects(): Promise<Project[]> {
   return (await getItems())
     .filter((i): i is Project => i.category === 'project')
@@ -146,9 +144,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getDetailItems(): Promise<DetailItem[]> {
-  return (await getItems()).filter(
-    (i): i is DetailItem => i.link === 'internal' && DETAIL_CATEGORIES.includes(i.category)
-  )
+  return (await getItems()).filter((i): i is DetailItem => i.link === 'internal')
 }
 
 export async function getDetailItem(slug: string): Promise<DetailItem | undefined> {

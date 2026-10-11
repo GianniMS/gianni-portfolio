@@ -5,6 +5,7 @@ import { useState } from 'react'
 import ImageUploadField from './ImageUploadField'
 import GalleryField from './GalleryField'
 import { PortfolioItem } from '@/types'
+import { PREVIEW_CATEGORIES } from '@/data/categories'
 import { fromParagraphs } from '@/lib/text'
 import {
   buttonPrimary,
@@ -139,12 +140,25 @@ export default function ItemForm({
 
           <div className={panelClass}>
             <p className={panelTitle}>Thumbnail</p>
-            <p className={hintClass}>Shown in lists and when picked as a home tile</p>
+            <p className={hintClass}>Shown when picked as a home tile</p>
             <ImageUploadField
               name="image"
               defaultValue={item?.link === 'internal' ? item.image : undefined}
             />
           </div>
+
+          {PREVIEW_CATEGORIES.includes(category) && (
+            <div className={panelClass}>
+              <p className={panelTitle}>Detail image</p>
+              <p className={hintClass}>
+                Shown when this is hovered on the Experience page; falls back to the thumbnail
+              </p>
+              <ImageUploadField
+                name="detailImage"
+                defaultValue={item?.link === 'internal' ? item.detailImage : undefined}
+              />
+            </div>
+          )}
 
           {category === 'project' && (
             <div className={panelClass}>

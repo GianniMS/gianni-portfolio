@@ -1,5 +1,5 @@
 import { getCVFresh, getHomeFresh, getItemsFresh, getProductsFresh } from '@/lib/content'
-import { CATEGORIES, CATEGORY_LABELS } from '@/data/categories'
+import { CATEGORY_LABELS, HOME_TILE_CATEGORIES } from '@/data/categories'
 import { encodeTileRef } from '@/lib/home'
 import { saveHomeAction } from '@/app/dashboard/actions'
 import HomeForm, { TileOption } from '@/components/dashboard/HomeForm'
@@ -23,7 +23,7 @@ export default async function HomeEditPage() {
       title: p.name,
       description: p.description,
     })),
-    ...CATEGORIES.flatMap((category) =>
+    ...HOME_TILE_CATEGORIES.flatMap((category) =>
       items.flatMap((item) =>
         item.category === category && item.link === 'internal'
           ? [

@@ -91,6 +91,7 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
     .map((s) => s.trim())
     .filter(Boolean)
   const description = toParagraphs(String(formData.get('description') ?? ''))
+  const detailImage = String(formData.get('detailImage') ?? '')
 
   const base = {
     id,
@@ -102,6 +103,7 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
     description,
     skills,
     image: String(formData.get('image') ?? ''),
+    ...(detailImage ? { detailImage } : {}),
     ...galleryFromFormData(formData),
   }
 

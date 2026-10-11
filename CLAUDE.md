@@ -18,6 +18,7 @@ Yarn (classic v1), not npm. Use `yarn add`/`yarn install`; don't reintroduce `pa
 |---|---|
 | `background` / inverted text | `#fffefc` |
 | `foreground` text | `#000000` |
+| `earth` (Experience page placeholder square) | `#453020` |
 
 Font: `font-sans` → Helvetica Neue (system font, never self-hosted), falling back to Helvetica / Arial.
 

@@ -1,7 +1,21 @@
 import { PortfolioItem } from '@/types'
 
-// Press and award items may still sit in the stored document; they are no longer managed or shown
-export const CATEGORIES: PortfolioItem['category'][] = ['project', 'experience', 'certificate']
+export const CATEGORIES: PortfolioItem['category'][] = [
+  'project',
+  'experience',
+  'certificate',
+  'award',
+  'press',
+]
+
+// Only these get a detail image and the hover preview on the Experience page
+export const PREVIEW_CATEGORIES: PortfolioItem['category'][] = ['project', 'experience']
+
+export const HOME_TILE_CATEGORIES: PortfolioItem['category'][] = [
+  'project',
+  'experience',
+  'certificate',
+]
 
 export const CATEGORY_LABELS: Record<PortfolioItem['category'], string> = {
   project: 'Projects',
