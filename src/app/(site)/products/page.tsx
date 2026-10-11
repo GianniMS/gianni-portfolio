@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { getProducts } from '@/lib/content'
+import { imageSrc } from '@/lib/images'
 
 export const metadata: Metadata = {
   title: 'Products',
@@ -17,7 +19,16 @@ export default async function ProductsPage() {
       <ul>
         {products.map((product) => (
           <li key={product.slug}>
-            <Link href={`/${product.slug}`}>{product.name}</Link>
+            <Link href={`/${product.slug}`}>
+              <Image
+                src={imageSrc(product.image)}
+                alt={product.name}
+                width={346}
+                height={450}
+                className="aspect-[346/450] w-[346px] max-w-full object-cover"
+              />
+              {product.name}
+            </Link>
             <p>{product.description}</p>
           </li>
         ))}
