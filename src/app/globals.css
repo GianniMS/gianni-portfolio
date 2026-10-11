@@ -6,7 +6,21 @@
   --color-earth: #453020;
 
   --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --animate-fade-in: fade-in 0.8s ease both;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
+
+/* Set on <html> only while the home page's first-load intro plays */
+@custom-variant intro (&:where(html[data-intro] *));
 
 @layer base {
   * {

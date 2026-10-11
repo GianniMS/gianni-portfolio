@@ -35,9 +35,16 @@ export const metadata: Metadata = {
   },
 }
 
+const INTRO_SCRIPT = `if (location.pathname === '/' && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.dataset.intro = ''`
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    // The intro script below adds data-intro before hydration, so React must not flag it
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Runs before first paint, so a direct visit to home starts blank instead of flashing */}
+        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
+      </head>
       <body>{children}</body>
     </html>
   )

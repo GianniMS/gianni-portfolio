@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import TileStrip from '@/components/home/TileStrip'
+import IntroDone from '@/components/home/IntroDone'
 import { getCV, getHome, getItems, getProducts } from '@/lib/content'
 import { resolveHomeTiles } from '@/lib/home'
 
@@ -19,8 +20,9 @@ export default async function HomePage() {
 
   return (
     <>
+      <IntroDone />
       <h1 className="sr-only">Gianni Mendonça Semedo</h1>
-      <p className="ml-auto mt-40 max-w-[335px] pr-3.5 text-right md:mt-[15vw] md:max-w-[656px] md:px-5">
+      <p className="ml-auto mt-40 max-w-[335px] pr-3.5 text-right intro:animate-fade-in md:mt-[15vw] md:max-w-[656px] md:px-5">
         {INTRO}
       </p>
       <div className="mt-2 md:mt-5">

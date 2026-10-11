@@ -2,6 +2,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { imageSrc } from '@/lib/images'
 
+// Each tile starts 0.3s after the previous one, once the 0.8s text fade has finished
+const INTRO_DELAYS = [
+  'intro:[animation-delay:0.8s]',
+  'intro:[animation-delay:1.1s]',
+  'intro:[animation-delay:1.4s]',
+  'intro:[animation-delay:1.7s]',
+  'intro:[animation-delay:2s]',
+]
+
 export type Tile = {
   key: string
   href: string
@@ -14,7 +23,7 @@ export default function TileStrip({ tiles }: { tiles: Tile[] }) {
   return (
     <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {tiles.map((tile, i) => (
-        <li key={tile.key}>
+        <li key={tile.key} className={`intro:animate-fade-in ${INTRO_DELAYS[i] ?? ''}`}>
           <Link href={tile.href} className="group relative block aspect-[346/450] overflow-hidden">
             {tile.image ? (
               <Image
