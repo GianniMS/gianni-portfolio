@@ -37,7 +37,7 @@ function stageFor(item: PortfolioItem): IndexRow['stage'] {
   }
   if (!PREVIEW_CATEGORIES.includes(item.category)) return undefined
   if (item.isPrivate) return { title: 'Private' }
-  if (item.link !== 'internal') return undefined
+  if (item.link !== 'internal') return { title: item.title }
   return { title: item.title, image: item.detailImage || item.image || undefined }
 }
 

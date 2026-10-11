@@ -1,8 +1,6 @@
-const PLACEHOLDER = 'images/TBD.png'
-
-// An item saved without an image would otherwise resolve to "/" and render broken.
-export function imageSrc(path?: string | null): string {
-  const value = path?.trim() || PLACEHOLDER
+// Missing images are not resolved here: callers show the earth square instead
+export function imageSrc(path: string): string {
+  const value = path.trim()
   return value.startsWith('http') ? value : `/${value}`
 }
 

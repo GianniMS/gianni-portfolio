@@ -107,14 +107,17 @@ export default function HomeForm({
                 ))}
               </select>
             </label>
-            {option && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={imageSrc(option.image)}
-                alt={`${option.label} thumbnail`}
-                className="aspect-[346/450] w-40 object-cover"
-              />
-            )}
+            {option &&
+              (option.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={imageSrc(option.image)}
+                  alt={`${option.label} thumbnail`}
+                  className="aspect-[346/450] w-40 object-cover"
+                />
+              ) : (
+                <div className="aspect-[346/450] w-40 bg-earth" />
+              ))}
             {option && (
               <HoverFields
                 key={value}

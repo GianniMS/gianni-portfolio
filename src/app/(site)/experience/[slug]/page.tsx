@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url,
       type: 'article',
-      images: [imageSrc(project.image)],
+      images: project.image ? [imageSrc(project.image)] : undefined,
     },
   }
 }
@@ -42,14 +42,18 @@ export default async function ProjectPage({ params }: Props) {
       <p>
         {project.isPrivate ? 'Private' : 'Public'} {formatItemYear(project)}
       </p>
-      <Image
-        src={imageSrc(project.image)}
-        alt={project.title}
-        width={1600}
-        height={1000}
-        className="h-auto w-full max-w-3xl"
-        priority
-      />
+      {project.image ? (
+        <Image
+          src={imageSrc(project.image)}
+          alt={project.title}
+          width={1600}
+          height={1000}
+          className="h-auto w-full max-w-3xl"
+          priority
+        />
+      ) : (
+        <div className="aspect-[346/450] w-full max-w-sm bg-earth" />
+      )}
       {project.description.map((paragraph, i) => (
         <p key={i} className="whitespace-pre-line">
           {paragraph}
