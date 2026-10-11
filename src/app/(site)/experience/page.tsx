@@ -5,7 +5,7 @@ import { getItems } from '@/lib/content'
 import {
   CATEGORIES,
   CATEGORY_LABELS,
-  ORGANIZATION_CATEGORIES,
+  ORGANIZATION_STAGE_CATEGORIES,
   PREVIEW_CATEGORIES,
 } from '@/data/categories'
 import { formatItemDuration, formatItemYear, getItemTimestamp } from '@/data/itemDates'
@@ -18,27 +18,30 @@ export const metadata: Metadata = {
 }
 
 // Entries saved before the organization field had it typed into the title as
-// "Title - Organization"; that suffix stands in until the field is filled.
-function organizationOf(item: PortfolioItem): string | undefined {
-  if (item.organization) return item.organization
+// "Title - Organization"; that split stands in until the field is filled.
+function splitTitle(item: PortfolioItem): { title: string; organization?: string } {
+  if (item.organization) return { title: item.title, organization: item.organization }
   const split = item.title.lastIndexOf(' - ')
-  return split === -1 ? undefined : item.title.slice(split + 3)
+  if (split === -1) return { title: item.title }
+  return { title: item.title.slice(0, split), organization: item.title.slice(split + 3) }
 }
 
 function listTitle(item: PortfolioItem): string {
-  return item.organization ? `${item.title} - ${item.organization}` : item.title
+  const { title, organization } = splitTitle(item)
+  if (!organization) return title
+  return `${title} ${item.category === 'experience' ? '|' : '-'} ${organization}`
 }
 
 // Private work never shows its image: the stage stays the earth square, titled Private
 function stageFor(item: PortfolioItem): IndexRow['stage'] {
-  if (ORGANIZATION_CATEGORIES.includes(item.category)) {
-    const organization = organizationOf(item)
+  const { title, organization } = splitTitle(item)
+  if (ORGANIZATION_STAGE_CATEGORIES.includes(item.category)) {
     return organization ? { title: organization } : undefined
   }
   if (!PREVIEW_CATEGORIES.includes(item.category)) return undefined
   if (item.isPrivate) return { title: 'Private' }
-  if (item.link !== 'internal') return { title: item.title }
-  return { title: item.title, image: item.detailImage || item.image || undefined }
+  if (item.link !== 'internal') return { title }
+  return { title, image: item.detailImage || item.image || undefined }
 }
 
 export default async function ExperiencePage() {

@@ -41,7 +41,7 @@ export default function ItemForm({
         <p className={panelTitle}>Basics</p>
 
         <label className={labelClass}>
-          Title
+          {category === 'experience' ? 'Function' : 'Title'}
           <input name="title" defaultValue={item?.title} required className={inputClass} />
         </label>
 
@@ -49,8 +49,9 @@ export default function ItemForm({
           <label className={labelClass}>
             Organization
             <span className={hintClass}>
-              E.g. Google. Shown after the title in the list and as the big text on the
-              Experience page
+              {category === 'experience'
+                ? 'E.g. JEM-id. Shown after the function in the list'
+                : 'E.g. Google. Shown after the title in the list and as the big text on the Experience page'}
             </span>
             <input name="organization" defaultValue={item?.organization} className={inputClass} />
           </label>
