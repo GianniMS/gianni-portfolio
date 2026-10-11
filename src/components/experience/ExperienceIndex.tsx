@@ -19,6 +19,9 @@ export type IndexSection = { label: string; rows: IndexRow[] }
 
 const DEFAULT_TITLE = 'Experience'
 
+const rowLine =
+  'border-b border-transparent transition-colors duration-800 group-hover:border-foreground group-focus-visible:border-foreground'
+
 // Positions are taken from the 427×556 stage in the design, so the title keeps
 // crossing the stage's right edge at the same point at every width. Its width is
 // whatever the column leaves after the stage offset, so a long title wraps instead
@@ -81,7 +84,7 @@ export default function ExperienceIndex({ sections }: { sections: IndexSection[]
         {sections.map((section) => (
           <section
             key={section.label}
-            className="grid grid-cols-[1fr_auto] gap-x-6 gap-y-1.5 lg:grid-cols-[auto_auto] lg:text-right"
+            className="grid grid-cols-[1fr_auto] gap-y-1.5 lg:grid-cols-[auto_auto] lg:text-right"
           >
             <h2 className="col-span-2 font-bold">{section.label}</h2>
             {section.rows.map((row) => {
@@ -95,13 +98,16 @@ export default function ExperienceIndex({ sections }: { sections: IndexSection[]
                   onMouseLeave={() => setHovered(null)}
                   onFocus={() => setHovered(preview)}
                   onBlur={() => setHovered(null)}
-                  className="col-span-2 grid grid-cols-subgrid border-b border-transparent transition-colors duration-800 hover:border-foreground focus-visible:border-foreground focus-visible:outline-none"
+                  className="group col-span-2 grid grid-cols-subgrid focus-visible:outline-none"
                 >
-                  <span>
+                  {/* The name hugs its text (padding stands in for the column gap) and the
+                      year fills its column, so the underline runs from the start of the
+                      name to the end of the year without crossing empty column space */}
+                  <span className={`justify-self-start pr-6 lg:justify-self-end ${rowLine}`}>
                     {row.title}
                     {row.isPrivate && ' (private)'}
                   </span>
-                  <span className="text-right">{row.year}</span>
+                  <span className={`text-right ${rowLine}`}>{row.year}</span>
                 </Link>
               )
             })}

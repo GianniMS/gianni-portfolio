@@ -12,15 +12,15 @@ export type Tile = {
 
 export default function TileStrip({ tiles }: { tiles: Tile[] }) {
   return (
-    <ul className="grid grid-cols-2 md:flex">
+    <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {tiles.map((tile, i) => (
-        <li key={tile.key} className="md:w-1/5">
+        <li key={tile.key}>
           <Link href={tile.href} className="group relative block aspect-[346/450] overflow-hidden">
             <Image
               src={imageSrc(tile.image)}
               alt={tile.title}
               fill
-              sizes="(min-width: 768px) 20vw, 50vw"
+              sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 34vw, 50vw"
               className="object-cover"
               priority={i < 2}
             />
