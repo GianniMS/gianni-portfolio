@@ -11,6 +11,9 @@ export const CATEGORIES: PortfolioItem['category'][] = [
 // Only these get a detail image and the hover preview on the Experience page
 export const PREVIEW_CATEGORIES: PortfolioItem['category'][] = ['project', 'experience']
 
+// These name the issuing or publishing organization, which the Experience stage shows
+export const ORGANIZATION_CATEGORIES: PortfolioItem['category'][] = ['certificate', 'award', 'press']
+
 export const HOME_TILE_CATEGORIES: PortfolioItem['category'][] = [
   'project',
   'experience',

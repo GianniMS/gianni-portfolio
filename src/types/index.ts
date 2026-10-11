@@ -7,6 +7,7 @@ export type PortfolioItem = {
   title: string
   category: 'project' | 'experience' | 'certificate' | 'press' | 'award'
   isPrivate?: boolean
+  organization?: string
 } & (
   | { link: 'external'; href: string; year: number }
   | ({

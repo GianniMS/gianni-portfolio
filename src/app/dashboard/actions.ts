@@ -73,6 +73,7 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
   const category = formData.get('category') as PortfolioItem['category']
   const linkType = formData.get('linkType') as 'internal' | 'external'
   const isPrivate = formData.get('isPrivate') !== null
+  const organization = String(formData.get('organization') ?? '').trim()
 
   if (linkType === 'external') {
     return {
@@ -80,6 +81,7 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
       title,
       category,
       ...(isPrivate ? { isPrivate } : {}),
+      ...(organization ? { organization } : {}),
       link: 'external',
       href: String(formData.get('href') ?? ''),
       year: Number(formData.get('year') ?? new Date().getFullYear()),
@@ -98,6 +100,7 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
     title,
     category,
     ...(isPrivate ? { isPrivate } : {}),
+    ...(organization ? { organization } : {}),
     link: 'internal' as const,
     slug: String(formData.get('slug') ?? ''),
     description,

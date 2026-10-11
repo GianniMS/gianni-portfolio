@@ -5,7 +5,7 @@ import { useState } from 'react'
 import ImageUploadField from './ImageUploadField'
 import GalleryField from './GalleryField'
 import { PortfolioItem } from '@/types'
-import { PREVIEW_CATEGORIES } from '@/data/categories'
+import { ORGANIZATION_CATEGORIES, PREVIEW_CATEGORIES } from '@/data/categories'
 import { fromParagraphs } from '@/lib/text'
 import {
   buttonPrimary,
@@ -44,6 +44,17 @@ export default function ItemForm({
           Title
           <input name="title" defaultValue={item?.title} required className={inputClass} />
         </label>
+
+        {ORGANIZATION_CATEGORIES.includes(category) && (
+          <label className={labelClass}>
+            Organization
+            <span className={hintClass}>
+              E.g. Google. Shown after the title in the list and as the big text on the
+              Experience page
+            </span>
+            <input name="organization" defaultValue={item?.organization} className={inputClass} />
+          </label>
+        )}
 
         {category !== 'certificate' && (
           <label className={radioLabel}>

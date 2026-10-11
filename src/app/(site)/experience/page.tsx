@@ -2,7 +2,12 @@ import type { Metadata } from 'next'
 import ExperienceIndex, { IndexRow, IndexSection } from '@/components/experience/ExperienceIndex'
 import { PortfolioItem } from '@/types'
 import { getItems } from '@/lib/content'
-import { CATEGORIES, CATEGORY_LABELS, PREVIEW_CATEGORIES } from '@/data/categories'
+import {
+  CATEGORIES,
+  CATEGORY_LABELS,
+  ORGANIZATION_CATEGORIES,
+  PREVIEW_CATEGORIES,
+} from '@/data/categories'
 import { formatItemYear, getItemTimestamp } from '@/data/itemDates'
 
 export const metadata: Metadata = {
@@ -12,8 +17,24 @@ export const metadata: Metadata = {
   alternates: { canonical: '/experience' },
 }
 
+// Entries saved before the organization field had it typed into the title as
+// "Title - Organization"; that suffix stands in until the field is filled.
+function organizationOf(item: PortfolioItem): string | undefined {
+  if (item.organization) return item.organization
+  const split = item.title.lastIndexOf(' - ')
+  return split === -1 ? undefined : item.title.slice(split + 3)
+}
+
+function listTitle(item: PortfolioItem): string {
+  return item.organization ? `${item.title} - ${item.organization}` : item.title
+}
+
 // Private work never shows its image: the stage stays the earth square, titled Private
 function stageFor(item: PortfolioItem): IndexRow['stage'] {
+  if (ORGANIZATION_CATEGORIES.includes(item.category)) {
+    const organization = organizationOf(item)
+    return organization ? { title: organization } : undefined
+  }
   if (!PREVIEW_CATEGORIES.includes(item.category)) return undefined
   if (item.isPrivate) return { title: 'Private' }
   if (item.link !== 'internal') return undefined
@@ -30,7 +51,7 @@ export default async function ExperiencePage() {
       .sort((a, b) => getItemTimestamp(b) - getItemTimestamp(a))
       .map((item) => ({
         id: item.id,
-        title: item.title,
+        title: listTitle(item),
         isPrivate: Boolean(item.isPrivate),
         year: formatItemYear(item),
         href: item.link === 'internal' ? `/experience/${item.slug}` : item.href,
