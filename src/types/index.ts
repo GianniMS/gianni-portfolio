@@ -15,6 +15,7 @@ export type PortfolioItem = {
       description: string[]
       skills: string[]
       image: string
+      gallery?: string[]
     } & DateInfo)
 )
 

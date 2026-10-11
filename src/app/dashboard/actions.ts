@@ -20,6 +20,7 @@ import {
   saveProducts,
 } from '@/lib/content'
 import { HOME_TILE_COUNT, decodeTileRef } from '@/lib/home'
+import { GALLERY_MAX } from '@/lib/images'
 import { CVData, HomeConfig, PortfolioItem, Product } from '@/types'
 import { toLines, toParagraphs } from '@/lib/text'
 
@@ -57,6 +58,15 @@ async function requireAuth() {
   if (!ok) redirect('/dashboard/login')
 }
 
+function galleryFromFormData(formData: FormData): { gallery?: string[] } {
+  const gallery = formData
+    .getAll('gallery')
+    .map(String)
+    .filter(Boolean)
+    .slice(0, GALLERY_MAX)
+  return gallery.length ? { gallery } : {}
+}
+
 function itemFromFormData(formData: FormData, id: string): PortfolioItem {
   const title = String(formData.get('title') ?? '')
   const category = formData.get('category') as PortfolioItem['category']
@@ -91,6 +101,7 @@ function itemFromFormData(formData: FormData, id: string): PortfolioItem {
     description,
     skills,
     image: String(formData.get('image') ?? ''),
+    ...galleryFromFormData(formData),
   }
 
   const dateType = formData.get('dateType') as 'single' | 'range'

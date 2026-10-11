@@ -74,9 +74,12 @@ async function fitToTile(file: File): Promise<File> {
 export default function ImageUploadField({
   name,
   defaultValue,
+  tile = true,
 }: {
   name: string
   defaultValue?: string
+  // Thumbnails can end up in a home tile and are held to its shape; extra images are not
+  tile?: boolean
 }) {
   const [url, setUrl] = useState(defaultValue ?? '')
   const [uploading, setUploading] = useState(false)
@@ -96,7 +99,7 @@ export default function ImageUploadField({
     setUploading(true)
     setError(null)
     try {
-      const fitted = await fitToTile(file)
+      const fitted = tile ? await fitToTile(file) : file
       const blob = await upload(fitted.name, fitted, {
         access: 'public',
         handleUploadUrl: '/api/dashboard/upload',
@@ -124,9 +127,15 @@ export default function ImageUploadField({
       </label>
 
       <p className={hintClass}>
-        PNG, JPEG or WebP at least {TILE_MIN_WIDTH}×{(TILE_MIN_WIDTH / TILE_RATIO.width) * TILE_RATIO.height}px;
+        {tile ? (
+          <>
+            PNG, JPEG or WebP at least {TILE_MIN_WIDTH}×{(TILE_MIN_WIDTH / TILE_RATIO.width) * TILE_RATIO.height}px;
         other shapes are centre-cropped to the {TILE_RATIO.width}:{TILE_RATIO.height} tile. An SVG must
-        already be {TILE_RATIO.width}:{TILE_RATIO.height}.
+            already be {TILE_RATIO.width}:{TILE_RATIO.height}.
+          </>
+        ) : (
+          'PNG, JPEG, WebP or SVG, any shape'
+        )}
       </p>
       {uploading && <p className={hintClass}>Uploading…</p>}
       {error && <p className={errorClass}>{error}</p>}
@@ -136,7 +145,7 @@ export default function ImageUploadField({
         <img
           src={url}
           alt="Preview"
-          className="aspect-[346/450] w-40 object-cover"
+          className={tile ? 'aspect-[346/450] w-40 object-cover' : 'h-40 w-auto'}
         />
       ) : (
         <p className={hintClass}>No image yet</p>

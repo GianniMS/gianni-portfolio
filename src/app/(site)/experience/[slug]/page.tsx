@@ -56,6 +56,16 @@ export default async function ProjectPage({ params }: Props) {
         </p>
       ))}
       {project.skills.length > 0 && <p>{project.skills.join(', ')}</p>}
+      {project.gallery?.map((src, i) => (
+        <Image
+          key={src}
+          src={imageSrc(src)}
+          alt={`${project.title} image ${i + 1}`}
+          width={1600}
+          height={1000}
+          className="h-auto w-full max-w-3xl"
+        />
+      ))}
     </article>
   )
 }

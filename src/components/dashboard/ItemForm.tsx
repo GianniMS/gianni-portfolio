@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import ImageUploadField from './ImageUploadField'
+import GalleryField from './GalleryField'
 import { PortfolioItem } from '@/types'
 import { fromParagraphs } from '@/lib/text'
 import {
@@ -137,12 +138,23 @@ export default function ItemForm({
           </div>
 
           <div className={panelClass}>
-            <p className={panelTitle}>Image</p>
+            <p className={panelTitle}>Thumbnail</p>
+            <p className={hintClass}>Shown in lists and when picked as a home tile</p>
             <ImageUploadField
               name="image"
               defaultValue={item?.link === 'internal' ? item.image : undefined}
             />
           </div>
+
+          {category === 'project' && (
+            <div className={panelClass}>
+              <p className={panelTitle}>Extra images</p>
+              <GalleryField
+                name="gallery"
+                defaultValue={item?.link === 'internal' ? item.gallery : undefined}
+              />
+            </div>
+          )}
 
           <div className={panelClass}>
             <p className={panelTitle}>Dates</p>
