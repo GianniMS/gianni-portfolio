@@ -75,13 +75,23 @@ export function Stage({ entries, active }: { entries: StageEntry[]; active: stri
 }
 
 // Stage on the left from 1024px up, content on the right; below that only the content
-export function StageLayout({ stage, children }: { stage: ReactNode; children: ReactNode }) {
+export function StageLayout({
+  stage,
+  contentClassName = '',
+  children,
+}: {
+  stage: ReactNode
+  contentClassName?: string
+  children: ReactNode
+}) {
   return (
     <div className="px-2.5 pb-20 md:px-5 lg:flex lg:items-start lg:gap-10">
       <div className="@container hidden min-w-0 flex-1 lg:sticky lg:top-[13.4vw] lg:mt-[13.4vw] lg:block">
         <div className="ml-7">{stage}</div>
       </div>
-      <div className="mt-16 flex shrink-0 flex-col gap-[1lh] [overflow-wrap:anywhere] lg:mt-36 lg:items-end">
+      <div
+        className={`mt-16 flex shrink-0 flex-col gap-[1lh] [overflow-wrap:anywhere] lg:mt-36 lg:items-end ${contentClassName}`}
+      >
         {children}
       </div>
     </div>

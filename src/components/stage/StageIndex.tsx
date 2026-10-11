@@ -55,7 +55,12 @@ export default function StageIndex({
   ]
 
   return (
-    <StageLayout stage={<Stage entries={entries} active={hovered} />}>
+    // The list waits for the title to finish typing, but only where the stage is
+    // visible and motion is allowed; reduced motion skips the typing altogether
+    <StageLayout
+      stage={<Stage entries={entries} active={hovered} />}
+      contentClassName={`transition-opacity duration-800 ${typed < defaultTitle.length ? 'motion-safe:lg:opacity-0' : ''}`}
+    >
       {sections.map((section) => (
         <section
           key={section.label}
