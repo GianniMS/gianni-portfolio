@@ -51,12 +51,14 @@ export default function MobileMenu({ links, cvPath }: { links: NavLink[]; cvPath
               </NavLink>
             </li>
           ))}
+          {cvPath && (
+            <li>
+              <a href={cvPath} download onClick={close} className={navLinkClass}>
+                Download CV
+              </a>
+            </li>
+          )}
         </ul>
-        {cvPath && (
-          <a href={cvPath} download onClick={close} className={`${navLinkClass} mt-8`}>
-            Download CV
-          </a>
-        )}
       </nav>
     </div>
   )
