@@ -50,10 +50,10 @@ async function writeJson(pathname: string, data: unknown): Promise<void> {
   })
 }
 
-// updateTag only gives the writer read-your-own-writes; revalidateTag is what
-// purges the shared cache every visitor reads from.
+// 'max' would serve the pre-save document once more (stale-while-revalidate), which
+// reads as a save that did not take; expire: 0 makes the next visitor wait for fresh data.
 function purge(tag: string) {
-  revalidateTag(tag, 'max')
+  revalidateTag(tag, { expire: 0 })
   revalidatePath('/', 'layout')
 }
 

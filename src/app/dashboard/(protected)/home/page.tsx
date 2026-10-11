@@ -42,7 +42,10 @@ export default async function HomeEditPage() {
   return (
     <>
       <PageHeader title="Home" />
+      {/* Keyed on the saved document: React resets an action form's fields to their
+          mount-time defaults, so the form remounts after a save to show what was stored */}
       <HomeForm
+        key={JSON.stringify(home)}
         home={home}
         options={options}
         aboutFallback={{ title: 'About Me', description: cv?.about[0] ?? '' }}

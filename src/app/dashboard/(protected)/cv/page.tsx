@@ -18,7 +18,7 @@ export default async function PagesEditPage() {
     <>
       <PageHeader title="Pages" meta="About Me, CV and Contact" />
 
-      <form action={saveCVAction} className="flex max-w-2xl flex-col gap-10">
+      <form key={JSON.stringify(cv)} action={saveCVAction} className="flex max-w-2xl flex-col gap-10">
         <div className={panelClass}>
           <p className={panelTitle}>About Me</p>
           <label className={labelClass}>
