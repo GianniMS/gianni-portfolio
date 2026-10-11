@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { Stage, StageLayout } from '@/components/stage/Stage'
+import { navLinkClass } from '@/components/layout/NavLink'
 import { getCV } from '@/lib/content'
 
 export const metadata: Metadata = {
@@ -20,18 +22,26 @@ export default async function ContactPage() {
   ].filter((link) => link.href)
 
   return (
-    <>
-      <h1>Contact</h1>
-      <p>For project inquiries, collaborations or anything else, reach me here:</p>
-      <ul>
-        {links.map((link) => (
-          <li key={link.label}>
-            <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
-              {link.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </>
+    <StageLayout stage={<Stage entries={[{ id: null, title: 'Contact' }]} active={null} />}>
+      <h1 className="sr-only">Contact</h1>
+      <div className="flex max-w-[616px] flex-col gap-[1lh] lg:text-right">
+        <p>For project inquiries, collaborations or anything else, reach me here:</p>
+        <ul>
+          {links.map((link) => (
+            <li key={link.label}>
+              <a
+                href={link.href}
+                {...(link.href.startsWith('http')
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+                className={navLinkClass}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </StageLayout>
   )
 }

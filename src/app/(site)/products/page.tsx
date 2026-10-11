@@ -26,9 +26,9 @@ export default async function ProductsPage() {
   ]
 
   return (
-    <div className="px-2.5 pb-20 md:px-5">
+    <>
       <h1 className="sr-only">Products</h1>
       <StageIndex sections={sections} defaultTitle="Products" />
-    </div>
+    </>
   )
 }

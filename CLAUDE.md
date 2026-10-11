@@ -36,7 +36,7 @@ src/
   components/
     layout/      # Navbar, MobileMenu, BackToTop
     home/        # TileStrip
-    stage/       # StageIndex (Experience and Products index with hover stage)
+    stage/       # Stage + StageLayout (shared page layout), StageIndex (Experience/Products list)
     product/     # ProductDocView, productDocs (shared doc-page helpers)
     dashboard/
   data/          # products.ts (seed until the first save), categories.ts, itemDates.ts

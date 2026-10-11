@@ -64,9 +64,9 @@ export default async function ExperiencePage() {
   })).filter((section) => section.rows.length > 0)
 
   return (
-    <div className="px-2.5 pb-20 md:px-5">
+    <>
       <h1 className="sr-only">Experience</h1>
       <StageIndex sections={sections} defaultTitle="Experience" />
-    </div>
+    </>
   )
 }

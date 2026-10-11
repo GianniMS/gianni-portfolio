@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getCV } from '@/lib/content'
+import { Stage, StageLayout } from '@/components/stage/Stage'
+import { navLinkClass } from '@/components/layout/NavLink'
+import { getCV, getHome } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'About Me',
@@ -9,32 +11,44 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
-  const cv = await getCV()
+  const [cv, home] = await Promise.all([getCV(), getHome()])
   if (!cv) notFound()
 
+  // The stage reuses the About Me tile image from the Home group
+  const stage = (
+    <Stage
+      entries={[{ id: null, title: 'About Me', image: home?.about.image || undefined }]}
+      active={null}
+    />
+  )
+
   return (
-    <>
-      <h1>About Me</h1>
-      {cv.about.map((paragraph, i) => (
-        <p key={i} className="whitespace-pre-line">
-          {paragraph}
-        </p>
-      ))}
-      {cv.involvedWith.length > 0 && (
-        <section>
-          <h2>Involved With</h2>
-          <ul>
-            {cv.involvedWith.map((name) => (
-              <li key={name}>{name}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-      {cv.cvPdfPath && (
-        <a href={cv.cvPdfPath} download>
-          Download CV
-        </a>
-      )}
-    </>
+    <StageLayout stage={stage}>
+      <h1 className="sr-only">About Me</h1>
+      <div className="flex max-w-[616px] flex-col gap-[1lh] lg:text-right">
+        {cv.about.map((paragraph, i) => (
+          <p key={i} className="whitespace-pre-line">
+            {paragraph}
+          </p>
+        ))}
+        {cv.involvedWith.length > 0 && (
+          <section>
+            <h2 className="font-bold">Involved With</h2>
+            <ul>
+              {cv.involvedWith.map((name) => (
+                <li key={name}>{name}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {cv.cvPdfPath && (
+          <p>
+            <a href={cv.cvPdfPath} download className={navLinkClass}>
+              Download CV
+            </a>
+          </p>
+        )}
+      </div>
+    </StageLayout>
   )
 }
