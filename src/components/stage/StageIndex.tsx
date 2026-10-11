@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Stage, StageLayout } from './Stage'
 
 export type IndexRow = {
@@ -20,18 +20,35 @@ export type IndexSection = { label: string; rows: IndexRow[] }
 const rowLine =
   'border-b border-transparent transition-colors duration-800 group-hover:border-foreground group-focus-visible:border-foreground'
 
+const TYPE_STEP_MS = 300
+
 export default function StageIndex({
   sections,
   defaultTitle,
+  typeDefaultTitle = false,
 }: {
   sections: IndexSection[]
   // Shown on the stage while nothing with a preview is hovered
   defaultTitle: string
+  // Types the default title out one character per step when the page opens
+  typeDefaultTitle?: boolean
 }) {
   const [hovered, setHovered] = useState<string | null>(null)
+  const [typed, setTyped] = useState(typeDefaultTitle ? 0 : defaultTitle.length)
+
+  useEffect(() => {
+    if (!typeDefaultTitle || matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const timer = setInterval(() => {
+      setTyped((n) => {
+        if (n + 1 >= defaultTitle.length) clearInterval(timer)
+        return Math.min(n + 1, defaultTitle.length)
+      })
+    }, TYPE_STEP_MS)
+    return () => clearInterval(timer)
+  }, [typeDefaultTitle, defaultTitle])
 
   const entries = [
-    { id: null, title: defaultTitle },
+    { id: null, title: defaultTitle, typed: typeDefaultTitle ? typed : undefined },
     ...sections
       .flatMap((s) => s.rows)
       .flatMap((row) => (row.stage ? [{ id: row.id, ...row.stage }] : [])),

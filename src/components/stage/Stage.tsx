@@ -2,7 +2,24 @@ import Image from 'next/image'
 import { ReactNode } from 'react'
 import { imageSrc } from '@/lib/images'
 
-export type StageEntry = { id: string | null; title: string; image?: string }
+export type StageEntry = {
+  id: string | null
+  title: string
+  image?: string
+  // While typing, how many characters of the title are shown
+  typed?: number
+}
+
+// Untyped characters stay in the layout, invisible, so the title never rewraps as it types
+function StageTitle({ entry }: { entry: StageEntry }) {
+  if (entry.typed === undefined) return entry.title
+  return (
+    <>
+      {entry.title.slice(0, entry.typed)}
+      <span className="invisible motion-reduce:visible">{entry.title.slice(entry.typed)}</span>
+    </>
+  )
+}
 
 // Positions are taken from the 427×556 stage in the design, so the title keeps
 // crossing the stage's right edge at the same point at every width. Its width is
@@ -22,7 +39,7 @@ export function Stage({ entries, active }: { entries: StageEntry[]; active: stri
           background colour, so the colour flips exactly at the stage edge */}
       {entries.map((e) => (
         <p key={e.id ?? 'default'} aria-hidden className={`${titleClass} ${shown(e.id)}`}>
-          {e.title}
+          <StageTitle entry={e} />
         </p>
       ))}
       <div className="absolute inset-0 overflow-hidden bg-earth">
@@ -45,7 +62,7 @@ export function Stage({ entries, active }: { entries: StageEntry[]; active: stri
             aria-hidden
             className={`${titleClass} text-background ${shown(e.id)}`}
           >
-            {e.title}
+            <StageTitle entry={e} />
           </p>
         ))}
       </div>
