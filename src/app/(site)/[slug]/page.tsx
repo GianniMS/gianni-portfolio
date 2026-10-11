@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: product.name,
     description: product.description,
-    alternates: { canonical: `/products/${product.slug}` },
+    alternates: { canonical: `/${product.slug}` },
   }
 }
 
@@ -43,7 +43,7 @@ export default async function ProductPage({ params }: Props) {
           .filter((d) => product[d.kind])
           .map((d) => (
             <li key={d.kind}>
-              <Link href={`/products/${product.slug}/${d.kind}`}>{d.label}</Link>
+              <Link href={`/${product.slug}/${d.kind}`}>{d.label}</Link>
             </li>
           ))}
       </ul>

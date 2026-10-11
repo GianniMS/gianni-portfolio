@@ -28,7 +28,7 @@ function sourceFor(
     const product = products.find((p) => p.slug === ref.slug)
     if (!product) return null
     return {
-      href: `/products/${product.slug}`,
+      href: `/${product.slug}`,
       image: product.image ?? '',
       title: product.name,
       description: product.description,

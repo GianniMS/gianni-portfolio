@@ -22,7 +22,7 @@ export async function docMetadata(kind: DocKind, { params }: DocParams): Promise
   if (!product?.[kind]) return {}
   return {
     title: `${product.name} ${DOC_TITLES[kind]}`,
-    alternates: { canonical: `/products/${product.slug}/${kind}` },
+    alternates: { canonical: `/${product.slug}/${kind}` },
   }
 }
 

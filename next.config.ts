@@ -12,8 +12,7 @@ const nextConfig: NextConfig = {
   // Old URLs are linked from the Chrome Web Store listing and search results
   async redirects() {
     return [
-      { source: "/tabcraft", destination: "/products/tabcraft", permanent: true },
-      { source: "/tabcraft/:doc(privacy|terms)", destination: "/products/tabcraft/:doc", permanent: true },
+      { source: "/products/:path+", destination: "/:path+", permanent: true },
       { source: "/projects/:slug", destination: "/experience/:slug", permanent: true },
       { source: "/portfolio", destination: "/experience", permanent: true },
       { source: "/portfolio/:slug", destination: "/experience/:slug", permanent: true },

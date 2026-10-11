@@ -13,11 +13,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   const productPages = products.flatMap((p) => [
-    { url: `${BASE}/products/${p.slug}`, changeFrequency: 'monthly' as const, priority: 0.7 },
+    { url: `${BASE}/${p.slug}`, changeFrequency: 'monthly' as const, priority: 0.7 },
     ...(['support', 'privacy', 'terms'] as const)
       .filter((kind) => p[kind])
       .map((kind) => ({
-        url: `${BASE}/products/${p.slug}/${kind}`,
+        url: `${BASE}/${p.slug}/${kind}`,
         changeFrequency: 'yearly' as const,
         priority: 0.3,
       })),

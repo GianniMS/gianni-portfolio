@@ -30,7 +30,7 @@ Font: `font-sans` → Helvetica Neue (system font, never self-hosted), falling b
 ```
 src/
   app/
-    (site)/      # public: /, products, products/[slug]/{support,privacy,terms}, experience, experience/[slug], about, contact
+    (site)/      # public: /, products, [slug] (a product) + [slug]/{support,privacy,terms}, experience, experience/[slug], about, contact
     dashboard/   # protected CMS: Home, Products, Projects, Experience, Certificates, Pages
   components/
     layout/      # Navbar, MobileMenu, BackToTop

@@ -166,3 +166,16 @@ export const defaultProducts: Product[] = [
     },
   },
 ]
+
+// Products live at the site root, so a slug must not shadow a page or redirect
+export const RESERVED_SLUGS = [
+  'products',
+  'experience',
+  'about',
+  'contact',
+  'dashboard',
+  'api',
+  'cv',
+  'portfolio',
+  'projects',
+]

@@ -28,7 +28,7 @@ export default function ProductForm({
         </label>
         <label className={labelClass}>
           Slug
-          <span className={hintClass}>Used in the page URL: /products/slug</span>
+          <span className={hintClass}>Used in the page URL: giannims.com/slug</span>
           <input
             name="slug"
             defaultValue={product?.slug}

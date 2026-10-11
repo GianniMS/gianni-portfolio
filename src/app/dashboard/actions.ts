@@ -21,6 +21,7 @@ import {
 } from '@/lib/content'
 import { HOME_TILE_COUNT, decodeTileRef } from '@/lib/home'
 import { GALLERY_MAX } from '@/lib/images'
+import { RESERVED_SLUGS } from '@/data/products'
 import { CVData, HomeConfig, PortfolioItem, Product } from '@/types'
 import { toLines, toParagraphs } from '@/lib/text'
 
@@ -175,6 +176,9 @@ function productFromFormData(formData: FormData, existing?: Product): Product {
 }
 
 function assertFreeSlug(products: Product[], slug: string) {
+  if (RESERVED_SLUGS.includes(slug)) {
+    throw new Error(`"${slug}" is already a page on the site; pick another slug.`)
+  }
   if (products.some((p) => p.slug === slug)) {
     throw new Error(`A product with the slug "${slug}" already exists.`)
   }
