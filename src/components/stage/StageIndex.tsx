@@ -55,11 +55,11 @@ export default function StageIndex({
   ]
 
   return (
-    // The list waits for the title to finish typing, but only where the stage is
-    // visible and motion is allowed; reduced motion skips the typing altogether
+    // The list waits for the title to finish typing plus one 0.8s beat, but only where
+    // the stage is visible and motion is allowed; reduced motion skips the typing altogether
     <StageLayout
       stage={<Stage entries={entries} active={hovered} />}
-      contentClassName={`transition-opacity duration-800 ${typed < defaultTitle.length ? 'motion-safe:lg:opacity-0' : ''}`}
+      contentClassName={`transition-opacity delay-800 duration-800 ${typed < defaultTitle.length ? 'motion-safe:lg:opacity-0' : ''}`}
     >
       {sections.map((section) => (
         <section
