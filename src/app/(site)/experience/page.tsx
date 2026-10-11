@@ -8,7 +8,7 @@ import {
   ORGANIZATION_CATEGORIES,
   PREVIEW_CATEGORIES,
 } from '@/data/categories'
-import { formatItemYear, getItemTimestamp } from '@/data/itemDates'
+import { formatItemDuration, formatItemYear, getItemTimestamp } from '@/data/itemDates'
 
 export const metadata: Metadata = {
   title: 'Experience',
@@ -53,7 +53,7 @@ export default async function ExperiencePage() {
         id: item.id,
         title: listTitle(item),
         isPrivate: Boolean(item.isPrivate),
-        year: formatItemYear(item),
+        year: category === 'experience' ? formatItemDuration(item) : formatItemYear(item),
         href: item.link === 'internal' ? `/experience/${item.slug}` : item.href,
         external: item.link === 'external',
         stage: stageFor(item),
