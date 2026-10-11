@@ -12,7 +12,8 @@ export type IndexRow = {
   year: string
   href: string
   external: boolean
-  preview?: string
+  // What the stage shows while this row is hovered; rows without one leave the default
+  stage?: { title: string; image?: string }
 }
 
 export type IndexSection = { label: string; rows: IndexRow[] }
@@ -30,8 +31,10 @@ const titleClass =
   'pointer-events-none absolute left-[48.5%] top-[67.6%] w-[calc(100cqw-1.75rem-11.98vw)] text-[5.56vw] leading-none transition-opacity duration-800'
 
 function Stage({ sections, active }: { sections: IndexSection[]; active: string | null }) {
-  const previews = sections.flatMap((s) => s.rows).filter((row) => row.preview)
-  const titles = [{ id: null, title: DEFAULT_TITLE }, ...previews]
+  const staged = sections
+    .flatMap((s) => s.rows)
+    .flatMap((row) => (row.stage ? [{ id: row.id, ...row.stage }] : []))
+  const titles = [{ id: null, title: DEFAULT_TITLE }, ...staged]
 
   const shown = (id: string | null) => (id === active ? 'opacity-100' : 'opacity-0')
 
@@ -45,16 +48,19 @@ function Stage({ sections, active }: { sections: IndexSection[]; active: string 
         </p>
       ))}
       <div className="absolute inset-0 overflow-hidden bg-earth">
-        {previews.map((row) => (
-          <Image
-            key={row.id}
-            src={imageSrc(row.preview)}
-            alt=""
-            fill
-            sizes="25vw"
-            className={`object-cover transition-opacity duration-800 ${shown(row.id)}`}
-          />
-        ))}
+        {staged.map(
+          (row) =>
+            row.image && (
+              <Image
+                key={row.id}
+                src={imageSrc(row.image)}
+                alt=""
+                fill
+                sizes="25vw"
+                className={`object-cover transition-opacity duration-800 ${shown(row.id)}`}
+              />
+            )
+        )}
         {titles.map((t) => (
           <p
             key={t.id ?? 'default'}
@@ -88,7 +94,7 @@ export default function ExperienceIndex({ sections }: { sections: IndexSection[]
           >
             <h2 className="col-span-2 font-bold">{section.label}</h2>
             {section.rows.map((row) => {
-              const preview = row.preview ? row.id : null
+              const preview = row.stage ? row.id : null
               return (
                 <Link
                   key={row.id}

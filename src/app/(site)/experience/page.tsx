@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import ExperienceIndex, { IndexSection } from '@/components/experience/ExperienceIndex'
+import ExperienceIndex, { IndexRow, IndexSection } from '@/components/experience/ExperienceIndex'
+import { PortfolioItem } from '@/types'
 import { getItems } from '@/lib/content'
 import { CATEGORIES, CATEGORY_LABELS, PREVIEW_CATEGORIES } from '@/data/categories'
 import { formatItemYear, getItemTimestamp } from '@/data/itemDates'
@@ -9,6 +10,14 @@ export const metadata: Metadata = {
   description:
     'Projects, experience, certificates, awards and press of Gianni Mendonça Semedo.',
   alternates: { canonical: '/experience' },
+}
+
+// Private work never shows its image: the stage stays the earth square, titled Private
+function stageFor(item: PortfolioItem): IndexRow['stage'] {
+  if (!PREVIEW_CATEGORIES.includes(item.category)) return undefined
+  if (item.isPrivate) return { title: 'Private' }
+  if (item.link !== 'internal') return undefined
+  return { title: item.title, image: item.detailImage || item.image || undefined }
 }
 
 export default async function ExperiencePage() {
@@ -26,10 +35,7 @@ export default async function ExperiencePage() {
         year: formatItemYear(item),
         href: item.link === 'internal' ? `/experience/${item.slug}` : item.href,
         external: item.link === 'external',
-        preview:
-          item.link === 'internal' && PREVIEW_CATEGORIES.includes(category)
-            ? item.detailImage || item.image
-            : undefined,
+        stage: stageFor(item),
       })),
   })).filter((section) => section.rows.length > 0)
 
