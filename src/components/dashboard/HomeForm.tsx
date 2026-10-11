@@ -4,9 +4,10 @@ import { useState } from 'react'
 import ImageUploadField from './ImageUploadField'
 import { HomeConfig, HoverText } from '@/types'
 import { HOME_TILE_COUNT, encodeTileRef } from '@/lib/home'
+import { imageSrc } from '@/lib/images'
 import { buttonPrimary, hintClass, inputClass, labelClass, panelClass, panelTitle } from './styles'
 
-export type TileOption = { value: string; label: string; group: string } & HoverText
+export type TileOption = { value: string; label: string; group: string; image: string } & HoverText
 
 function HoverFields({
   prefix,
@@ -99,13 +100,21 @@ export default function HomeForm({
                       .filter((o) => o.group === group)
                       .map((o) => (
                         <option key={o.value} value={o.value}>
-                          {o.label}
+                          {o.label} ({o.group})
                         </option>
                       ))}
                   </optgroup>
                 ))}
               </select>
             </label>
+            {option && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={imageSrc(option.image)}
+                alt={`${option.label} thumbnail`}
+                className="aspect-[346/450] w-40 object-cover"
+              />
+            )}
             {option && (
               <HoverFields
                 key={value}
