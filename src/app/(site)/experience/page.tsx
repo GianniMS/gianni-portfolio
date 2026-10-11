@@ -9,21 +9,13 @@ import {
   PREVIEW_CATEGORIES,
 } from '@/data/categories'
 import { formatItemDuration, formatItemYear, getItemTimestamp } from '@/data/itemDates'
+import { splitTitle } from '@/data/itemText'
 
 export const metadata: Metadata = {
   title: 'Experience',
   description:
     'Projects, experience, certificates, awards and press of Gianni Mendonça Semedo.',
   alternates: { canonical: '/experience' },
-}
-
-// Entries saved before the organization field had it typed into the title as
-// "Title - Organization"; that split stands in until the field is filled.
-function splitTitle(item: PortfolioItem): { title: string; organization?: string } {
-  if (item.organization) return { title: item.title, organization: item.organization }
-  const split = item.title.lastIndexOf(' - ')
-  if (split === -1) return { title: item.title }
-  return { title: item.title.slice(0, split), organization: item.title.slice(split + 3) }
 }
 
 function listTitle(item: PortfolioItem): string {

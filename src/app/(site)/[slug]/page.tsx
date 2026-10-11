@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getProduct, getProducts } from '@/lib/content'
-import ProductShell from '@/components/product/ProductShell'
+import ReadingShell from '@/components/layout/ReadingShell'
 import { ProductDocSections } from '@/components/product/ProductDocView'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -25,7 +25,7 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound()
 
   return (
-    <ProductShell title={product.name}>
+    <ReadingShell title={product.name}>
       <p className="text-[clamp(1.25rem,1.7vw,1.75rem)] leading-snug">{product.description}</p>
       {product.link && (
         <p className="mt-10">
@@ -45,6 +45,6 @@ export default async function ProductPage({ params }: Props) {
           <ProductDocSections doc={product.support} />
         </section>
       )}
-    </ProductShell>
+    </ReadingShell>
   )
 }

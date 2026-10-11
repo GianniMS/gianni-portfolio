@@ -34,10 +34,10 @@ src/
     (site)/      # public: /, products, [slug] (a product) + [slug]/{support,privacy,terms}, experience, experience/[slug], about, contact
     dashboard/   # protected CMS: Home, Products, Projects, Experience, Certificates, Pages
   components/
-    layout/      # Navbar, MobileMenu, BackToTop
+    layout/      # Navbar, MobileMenu, NavLink, BackToTop, ReadingShell (title + reading column)
     home/        # TileStrip
     stage/       # Stage + StageLayout (shared page layout), StageIndex (Experience/Products list)
-    product/     # ProductShell (title + reading column), ProductDocView, productDocs
+    product/     # ProductDocView, productDocs
     dashboard/
   data/          # products.ts (seed until the first save), categories.ts, itemDates.ts
   lib/           # content.ts (blob-backed items, CV, products, home), home.ts, images.ts, text.ts, auth.ts

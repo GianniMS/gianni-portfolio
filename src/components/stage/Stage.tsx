@@ -60,7 +60,9 @@ export function StageLayout({ stage, children }: { stage: ReactNode; children: R
       <div className="@container hidden min-w-0 flex-1 lg:sticky lg:top-[13.4vw] lg:mt-[13.4vw] lg:block">
         <div className="ml-7">{stage}</div>
       </div>
-      <div className="mt-16 flex shrink-0 flex-col gap-[1lh] lg:mt-36 lg:items-end">{children}</div>
+      <div className="mt-16 flex shrink-0 flex-col gap-[1lh] [overflow-wrap:anywhere] lg:mt-36 lg:items-end">
+        {children}
+      </div>
     </div>
   )
 }

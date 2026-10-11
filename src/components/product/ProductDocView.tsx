@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { ProductDoc } from '@/types'
-import ProductShell from './ProductShell'
+import ReadingShell from '@/components/layout/ReadingShell'
 
 const LINKABLE = /(https?:\/\/[^\s)]+|[\w.+-]+@[\w-]+\.[\w.]+\w)/g
 
@@ -52,8 +52,8 @@ export function ProductDocSections({ doc }: { doc: ProductDoc }) {
 
 export default function ProductDocView({ title, doc }: { title: string; doc: ProductDoc }) {
   return (
-    <ProductShell title={title} aside={doc.updated && `Last updated ${doc.updated}`}>
+    <ReadingShell title={title} aside={doc.updated && `Last updated ${doc.updated}`}>
       <ProductDocSections doc={doc} />
-    </ProductShell>
+    </ReadingShell>
   )
 }
