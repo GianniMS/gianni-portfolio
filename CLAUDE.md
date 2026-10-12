@@ -18,7 +18,7 @@ Yarn (classic v1), not npm. Use `yarn add`/`yarn install`; don't reintroduce `pa
 |---|---|
 | `background` / inverted text | `#fffefc` |
 | `foreground` text | `#000000` |
-| `earth` (square shown wherever an image is missing) | `#453020` |
+| `slate-light` → `slate-dark` (`bg-placeholder` gradient, shown wherever an image is missing) | `#444e55` → `#21272b` |
 
 Font: `font-sans` → Helvetica Neue (system font, never self-hosted), falling back to Helvetica / Arial.
 

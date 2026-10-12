@@ -46,7 +46,7 @@ export function Stage({ entries, active }: { entries: StageEntry[]; active: stri
           <StageTitle entry={e} />
         </p>
       ))}
-      <div className="absolute inset-0 overflow-hidden bg-earth">
+      <div className="absolute inset-0 overflow-hidden bg-placeholder">
         {entries.map(
           (e) =>
             e.image && (

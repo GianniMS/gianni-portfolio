@@ -72,7 +72,7 @@ export default async function DetailPage({ params }: Props) {
               priority
             />
           ) : (
-            <div className="aspect-[427/556] w-full max-w-[427px] bg-earth" />
+            <div className="aspect-[427/556] w-full max-w-[427px] bg-placeholder" />
           )}
 
           {item.description.length > 0 && (

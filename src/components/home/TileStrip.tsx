@@ -35,7 +35,7 @@ export default function TileStrip({ tiles }: { tiles: Tile[] }) {
                 priority={i < 2}
               />
             ) : (
-              <div className="absolute inset-0 bg-earth" />
+              <div className="absolute inset-0 bg-placeholder" />
             )}
             <div className="absolute inset-0 flex flex-col items-end justify-end bg-foreground/70 pb-6 pl-10 pr-3.5 text-right text-background opacity-0 transition-opacity duration-800 group-hover:opacity-100 group-focus-visible:opacity-100">
               <p>{tile.title}</p>

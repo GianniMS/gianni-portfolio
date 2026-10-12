@@ -116,7 +116,7 @@ export default function HomeForm({
                   className="aspect-[346/450] w-40 object-cover"
                 />
               ) : (
-                <div className="aspect-[346/450] w-40 bg-earth" />
+                <div className="aspect-[346/450] w-40 bg-placeholder" />
               ))}
             {option && (
               <HoverFields
