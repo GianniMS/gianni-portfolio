@@ -24,16 +24,16 @@ function listTitle(item: PortfolioItem): string {
   return `${title} ${item.category === 'experience' ? '|' : '-'} ${organization}`
 }
 
-// Private work never shows its image: the stage stays the earth square, titled Private
+// Private work is titled Private but still shows its image when it has one
 function stageFor(item: PortfolioItem): IndexRow['stage'] {
   const { title, organization } = splitTitle(item)
   if (ORGANIZATION_STAGE_CATEGORIES.includes(item.category)) {
     return organization ? { title: organization } : undefined
   }
   if (!PREVIEW_CATEGORIES.includes(item.category)) return undefined
-  if (item.isPrivate) return { title: 'Private' }
-  if (item.link !== 'internal') return { title }
-  return { title, image: item.detailImage || item.image || undefined }
+  const stageTitle = item.isPrivate ? 'Private' : title
+  if (item.link !== 'internal') return { title: stageTitle }
+  return { title: stageTitle, image: item.detailImage || item.image || undefined }
 }
 
 export default async function ExperiencePage() {
