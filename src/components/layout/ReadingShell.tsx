@@ -17,7 +17,7 @@ export default function ReadingShell({
 }) {
   return (
     <div className="mt-12 lg:mt-20 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,640px)] lg:gap-x-10">
-      <div className="lg:sticky lg:top-10 lg:col-span-2 lg:row-start-1 lg:grid lg:grid-cols-subgrid lg:self-start">
+      <div className="lg:sticky lg:top-10 lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:grid lg:grid-cols-subgrid lg:self-start">
         {/* Sized against its own column so a long title never spills into the text */}
         <header className="@container">
           <h1 className="flex items-center gap-[0.15em] text-[clamp(2.5rem,18cqw,8rem)] leading-none tracking-tight [overflow-wrap:anywhere] hyphens-auto">
@@ -28,7 +28,7 @@ export default function ReadingShell({
         </header>
         {strip && (
           <>
-            <div className="mt-12 lg:col-span-2 lg:row-start-2">{strip}</div>
+            <div className="mt-12 lg:col-span-2 lg:col-start-1 lg:row-start-2">{strip}</div>
             <div
               aria-hidden
               className="pointer-events-none relative mt-12 hidden bg-background before:absolute before:inset-y-0 before:right-full before:w-40 before:bg-linear-to-r before:from-transparent before:to-background lg:col-start-2 lg:row-start-2 lg:block"
