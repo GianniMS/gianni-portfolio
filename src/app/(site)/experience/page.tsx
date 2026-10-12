@@ -58,7 +58,7 @@ export default async function ExperiencePage() {
   return (
     <>
       <h1 className="sr-only">Experience</h1>
-      <StageIndex sections={sections} defaultTitle="Experience" typeDefaultTitle />
+      <StageIndex sections={sections} defaultTitle="Experience" fadeIn />
     </>
   )
 }

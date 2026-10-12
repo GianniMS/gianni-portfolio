@@ -6,23 +6,6 @@ export type StageEntry = {
   id: string | null
   title: string
   image?: string
-  // While typing, how many characters of the title are shown
-  typed?: number
-}
-
-// Every character is laid out from the start and fades in when typed, so the title
-// never rewraps while it types
-function StageTitle({ entry }: { entry: StageEntry }) {
-  const { typed } = entry
-  if (typed === undefined) return entry.title
-  return [...entry.title].map((char, i) => (
-    <span
-      key={i}
-      className={`transition-opacity duration-800 motion-reduce:opacity-100 ${i < typed ? 'opacity-100' : 'opacity-0'}`}
-    >
-      {char}
-    </span>
-  ))
 }
 
 // Positions are taken from the 427×556 stage in the design, so the title keeps
@@ -32,10 +15,25 @@ function StageTitle({ entry }: { entry: StageEntry }) {
 const titleClass =
   'pointer-events-none absolute left-[48.5%] top-[67.6%] w-[calc(100cqw-1.75rem-11.98vw)] text-[5.56vw] leading-none transition-opacity duration-800'
 
+// The opening fade sits on an inner span: an animation's end state would otherwise
+// pin the paragraph's opacity and stop the default title crossfading out on hover
+const TITLE_FADE = 'motion-safe:animate-fade-in motion-safe:[animation-delay:0.8s]'
+
 // Every entry is rendered up front and crossfaded, so switching never waits on a load.
-// The entry with id null is the resting state.
-export function Stage({ entries, active }: { entries: StageEntry[]; active: string | null }) {
+// The entry with id null is the resting state. With fadeIn the square fades in first,
+// then the resting title.
+export function Stage({
+  entries,
+  active,
+  fadeIn = false,
+}: {
+  entries: StageEntry[]
+  active: string | null
+  fadeIn?: boolean
+}) {
   const shown = (id: string | null) => (id === active ? 'opacity-100' : 'opacity-0')
+  const title = (e: StageEntry) =>
+    fadeIn && e.id === null ? <span className={`block ${TITLE_FADE}`}>{e.title}</span> : e.title
 
   return (
     <div className="relative aspect-[427/556] w-[24.7vw]">
@@ -43,10 +41,12 @@ export function Stage({ entries, active }: { entries: StageEntry[]; active: stri
           background colour, so the colour flips exactly at the stage edge */}
       {entries.map((e) => (
         <p key={e.id ?? 'default'} aria-hidden className={`${titleClass} ${shown(e.id)}`}>
-          <StageTitle entry={e} />
+          {title(e)}
         </p>
       ))}
-      <div className="absolute inset-0 overflow-hidden bg-placeholder">
+      <div
+        className={`absolute inset-0 overflow-hidden bg-placeholder ${fadeIn ? 'motion-safe:animate-fade-in' : ''}`}
+      >
         {entries.map(
           (e) =>
             e.image && (
@@ -66,7 +66,7 @@ export function Stage({ entries, active }: { entries: StageEntry[]; active: stri
             aria-hidden
             className={`${titleClass} text-background ${shown(e.id)}`}
           >
-            <StageTitle entry={e} />
+            {title(e)}
           </p>
         ))}
       </div>

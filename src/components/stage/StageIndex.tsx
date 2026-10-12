@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Stage, StageLayout } from './Stage'
 
 export type IndexRow = {
@@ -20,46 +20,33 @@ export type IndexSection = { label: string; rows: IndexRow[] }
 const rowLine =
   'border-b border-transparent transition-colors duration-800 group-hover:border-foreground group-focus-visible:border-foreground'
 
-const TYPE_STEP_MS = 150
-
 export default function StageIndex({
   sections,
   defaultTitle,
-  typeDefaultTitle = false,
+  fadeIn = false,
 }: {
   sections: IndexSection[]
   // Shown on the stage while nothing with a preview is hovered
   defaultTitle: string
-  // Types the default title out one character per step when the page opens
-  typeDefaultTitle?: boolean
+  // On open the square fades in, then the title and the list together
+  fadeIn?: boolean
 }) {
   const [hovered, setHovered] = useState<string | null>(null)
-  const [typed, setTyped] = useState(typeDefaultTitle ? 0 : defaultTitle.length)
-
-  useEffect(() => {
-    if (!typeDefaultTitle || matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const timer = setInterval(() => {
-      setTyped((n) => {
-        if (n + 1 >= defaultTitle.length) clearInterval(timer)
-        return Math.min(n + 1, defaultTitle.length)
-      })
-    }, TYPE_STEP_MS)
-    return () => clearInterval(timer)
-  }, [typeDefaultTitle, defaultTitle])
 
   const entries = [
-    { id: null, title: defaultTitle, typed: typeDefaultTitle ? typed : undefined },
+    { id: null, title: defaultTitle },
     ...sections
       .flatMap((s) => s.rows)
       .flatMap((row) => (row.stage ? [{ id: row.id, ...row.stage }] : [])),
   ]
 
   return (
-    // The list waits for the title to finish typing plus one 0.8s beat, but only where
-    // the stage is visible and motion is allowed; reduced motion skips the typing altogether
+    // The list only waits where the stage is visible to fade in ahead of it
     <StageLayout
-      stage={<Stage entries={entries} active={hovered} />}
-      contentClassName={`transition-opacity delay-800 duration-800 ${typed < defaultTitle.length ? 'motion-safe:lg:opacity-0' : ''}`}
+      stage={<Stage entries={entries} active={hovered} fadeIn={fadeIn} />}
+      contentClassName={
+        fadeIn ? 'motion-safe:lg:animate-fade-in motion-safe:lg:[animation-delay:0.8s]' : ''
+      }
     >
       {sections.map((section) => (
         <section
