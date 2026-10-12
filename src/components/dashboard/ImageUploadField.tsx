@@ -118,6 +118,18 @@ export default function ImageUploadField({
   return (
     <div className="flex flex-col gap-3">
       <input type="hidden" name={name} value={url} />
+      {/* Saving mid-upload would store the previous image, so the form is held invalid until it lands */}
+      {uploading && (
+        <input
+          required
+          tabIndex={-1}
+          aria-hidden
+          value=""
+          onChange={() => {}}
+          ref={(el) => el?.setCustomValidity('Wait for the image to finish uploading.')}
+          className="sr-only"
+        />
+      )}
 
       <div className="flex gap-6">
         <label className={`${buttonSecondary} cursor-pointer`}>
