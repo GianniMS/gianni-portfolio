@@ -5,6 +5,7 @@ import { getProduct, getProducts } from '@/lib/content'
 import ReadingShell from '@/components/layout/ReadingShell'
 import { ProductDocSections } from '@/components/product/ProductDocView'
 import { imageSrc } from '@/lib/images'
+import ProductStrip from '@/components/product/ProductStrip'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -45,21 +46,7 @@ export default async function ProductPage({ params }: Props) {
       }
       strip={
         gallery.length > 0 && (
-          // The end padding lets the last image scroll clear of the reading column
-          <ul className="-mx-2.5 flex snap-x gap-5 overflow-x-auto px-2.5 pb-2 md:-mx-5 md:px-5 lg:mx-0 lg:pr-[calc(640px+2.5rem)] lg:pl-0">
-            {gallery.map((src, i) => (
-              <li key={src} className="shrink-0 snap-start">
-                <Image
-                  src={imageSrc(src)}
-                  alt={`${product.name} image ${i + 1}`}
-                  width={1200}
-                  height={800}
-                  sizes="(min-width: 1024px) 480px, 80vw"
-                  className="h-64 w-auto max-w-none lg:h-80"
-                />
-              </li>
-            ))}
-          </ul>
+          <ProductStrip name={product.name} images={gallery} />
         )
       }
     >
