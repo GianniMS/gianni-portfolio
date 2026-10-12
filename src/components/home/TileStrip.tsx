@@ -2,13 +2,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { imageSrc } from '@/lib/images'
 
-// Each tile starts 0.3s after the previous one, once the 0.8s text fade has finished
-const INTRO_DELAYS = [
-  'intro:[animation-delay:0.8s]',
-  'intro:[animation-delay:1.1s]',
-  'intro:[animation-delay:1.4s]',
-  'intro:[animation-delay:1.7s]',
-  'intro:[animation-delay:2s]',
+// Unlike the nav and text, the tiles fade in on every visit, not just the first load.
+// Each starts 0.3s after the previous one, once the 0.8s text fade has finished.
+const FADE_DELAYS = [
+  'motion-safe:[animation-delay:0.8s]',
+  'motion-safe:[animation-delay:1.1s]',
+  'motion-safe:[animation-delay:1.4s]',
+  'motion-safe:[animation-delay:1.7s]',
+  'motion-safe:[animation-delay:2s]',
 ]
 
 export type Tile = {
@@ -23,7 +24,7 @@ export default function TileStrip({ tiles }: { tiles: Tile[] }) {
   return (
     <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {tiles.map((tile, i) => (
-        <li key={tile.key} className={`intro:animate-fade-in ${INTRO_DELAYS[i] ?? ''}`}>
+        <li key={tile.key} className={`motion-safe:animate-fade-in ${FADE_DELAYS[i] ?? ''}`}>
           <Link href={tile.href} className="group relative block aspect-[346/450] overflow-hidden">
             {tile.image ? (
               <Image
