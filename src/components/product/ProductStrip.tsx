@@ -51,7 +51,7 @@ export default function ProductStrip({ name, images }: { name: string; images: s
           </li>
         ))}
       </ul>
-      <div className="mt-2 text-right lg:pr-[calc(640px+2.5rem)]">
+      <div className="mt-2 text-right lg:pr-[calc(640px+2.5rem+10rem)]">
         <button
           type="button"
           onClick={slideToEnd}
