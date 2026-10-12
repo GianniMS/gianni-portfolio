@@ -38,8 +38,10 @@ export default function ProductStrip({ name, images }: { name: string; images: s
     })
   }
 
-  const arrowClass = (visible: boolean) =>
-    `p-2.5 text-3xl leading-none transition-opacity duration-800 ${visible ? 'opacity-100' : 'pointer-events-none opacity-0'}`
+  // Both arrows show whenever the strip can scroll at all; the one with nowhere to go dims
+  const scrollable = canSlide.back || canSlide.forward
+  const arrowClass = (active: boolean) =>
+    `p-2.5 text-3xl leading-none transition-opacity duration-800 ${!scrollable ? 'opacity-0' : active ? 'opacity-100' : 'opacity-30'}`
 
   return (
     <div>
@@ -67,7 +69,8 @@ export default function ProductStrip({ name, images }: { name: string; images: s
           onClick={() => slideTo('start')}
           aria-label="Slide back to the first image"
           className={arrowClass(canSlide.back)}
-          inert={!canSlide.back}
+          disabled={!canSlide.back}
+          inert={!scrollable}
         >
           ←
         </button>
@@ -76,7 +79,8 @@ export default function ProductStrip({ name, images }: { name: string; images: s
           onClick={() => slideTo('end')}
           aria-label="Slide to the last image"
           className={arrowClass(canSlide.forward)}
-          inert={!canSlide.forward}
+          disabled={!canSlide.forward}
+          inert={!scrollable}
         >
           →
         </button>
