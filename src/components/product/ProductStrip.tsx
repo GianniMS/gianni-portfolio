@@ -6,12 +6,16 @@ import { imageSrc } from '@/lib/images'
 
 export default function ProductStrip({ name, images }: { name: string; images: string[] }) {
   const listRef = useRef<HTMLUListElement>(null)
-  const [canSlide, setCanSlide] = useState(false)
+  const [canSlide, setCanSlide] = useState({ back: false, forward: false })
 
   useEffect(() => {
     const list = listRef.current
     if (!list) return
-    const update = () => setCanSlide(list.scrollLeft < list.scrollWidth - list.clientWidth - 1)
+    const update = () =>
+      setCanSlide({
+        back: list.scrollLeft > 1,
+        forward: list.scrollLeft < list.scrollWidth - list.clientWidth - 1,
+      })
     update()
     list.addEventListener('scroll', update, { passive: true })
     // Images widen the list as they load, so the items are watched as well as the list
@@ -24,12 +28,18 @@ export default function ProductStrip({ name, images }: { name: string; images: s
     }
   }, [])
 
-  const slideToEnd = () => {
+  const slideTo = (end: 'start' | 'end') => {
     const list = listRef.current
     if (!list) return
     const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    list.scrollTo({ left: list.scrollWidth, behavior: smooth ? 'smooth' : 'auto' })
+    list.scrollTo({
+      left: end === 'start' ? 0 : list.scrollWidth,
+      behavior: smooth ? 'smooth' : 'auto',
+    })
   }
+
+  const arrowClass = (visible: boolean) =>
+    `p-2.5 text-3xl leading-none transition-opacity duration-800 ${visible ? 'opacity-100' : 'pointer-events-none opacity-0'}`
 
   return (
     <div>
@@ -51,13 +61,22 @@ export default function ProductStrip({ name, images }: { name: string; images: s
           </li>
         ))}
       </ul>
-      <div className="mt-2 text-right lg:pr-[calc(640px+2.5rem+10rem)]">
+      <div className="mt-2 flex justify-between lg:pr-[calc(640px+2.5rem+10rem)]">
         <button
           type="button"
-          onClick={slideToEnd}
+          onClick={() => slideTo('start')}
+          aria-label="Slide back to the first image"
+          className={arrowClass(canSlide.back)}
+          inert={!canSlide.back}
+        >
+          ←
+        </button>
+        <button
+          type="button"
+          onClick={() => slideTo('end')}
           aria-label="Slide to the last image"
-          className={`p-2.5 text-3xl leading-none transition-opacity duration-800 ${canSlide ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
-          inert={!canSlide}
+          className={arrowClass(canSlide.forward)}
+          inert={!canSlide.forward}
         >
           →
         </button>
