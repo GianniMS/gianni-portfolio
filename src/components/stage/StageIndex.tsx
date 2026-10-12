@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Stage, StageLayout } from './Stage'
+import { STAGE_CONTENT_FADE, Stage, StageLayout } from './Stage'
 
 export type IndexRow = {
   id: string
@@ -41,12 +41,9 @@ export default function StageIndex({
   ]
 
   return (
-    // The list only waits where the stage is visible to fade in ahead of it
     <StageLayout
       stage={<Stage entries={entries} active={hovered} fadeIn={fadeIn} />}
-      contentClassName={
-        fadeIn ? 'motion-safe:lg:animate-fade-in motion-safe:lg:[animation-delay:0.8s]' : ''
-      }
+      contentClassName={fadeIn ? STAGE_CONTENT_FADE : ''}
     >
       {sections.map((section) => (
         <section

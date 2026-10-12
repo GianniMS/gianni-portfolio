@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Stage, StageLayout } from '@/components/stage/Stage'
+import { STAGE_CONTENT_FADE, Stage, StageLayout } from '@/components/stage/Stage'
 import { navLinkClass } from '@/components/layout/NavLink'
 import { getCV } from '@/lib/content'
 
@@ -22,7 +22,10 @@ export default async function ContactPage() {
   ].filter((link) => link.href)
 
   return (
-    <StageLayout stage={<Stage entries={[{ id: null, title: 'Contact' }]} active={null} />}>
+    <StageLayout
+      contentClassName={STAGE_CONTENT_FADE}
+      stage={<Stage entries={[{ id: null, title: 'Contact' }]} active={null} fadeIn />}
+    >
       <h1 className="sr-only">Contact</h1>
       <div className="flex max-w-[616px] flex-col gap-[1lh] lg:text-right">
         <p>For project inquiries, collaborations or anything else, reach me here:</p>

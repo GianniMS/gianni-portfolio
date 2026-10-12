@@ -28,7 +28,7 @@ export default async function ProductsPage() {
   return (
     <>
       <h1 className="sr-only">Products</h1>
-      <StageIndex sections={sections} defaultTitle="Products" />
+      <StageIndex sections={sections} defaultTitle="Products" fadeIn />
     </>
   )
 }

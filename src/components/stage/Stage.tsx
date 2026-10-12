@@ -74,6 +74,11 @@ export function Stage({
   )
 }
 
+// Content beside a fading-in stage follows with its title; it only waits from 1024px up,
+// where the stage is visible to fade in ahead of it
+export const STAGE_CONTENT_FADE =
+  'motion-safe:lg:animate-fade-in motion-safe:lg:[animation-delay:0.8s]'
+
 // Stage on the left from 1024px up, content on the right; below that only the content
 export function StageLayout({
   stage,

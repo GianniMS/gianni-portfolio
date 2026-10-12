@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Stage, StageLayout } from '@/components/stage/Stage'
+import { STAGE_CONTENT_FADE, Stage, StageLayout } from '@/components/stage/Stage'
 import { navLinkClass } from '@/components/layout/NavLink'
 import { getCV, getHome } from '@/lib/content'
 
@@ -19,11 +19,12 @@ export default async function AboutPage() {
     <Stage
       entries={[{ id: null, title: 'About Me', image: home?.about.image || undefined }]}
       active={null}
+      fadeIn
     />
   )
 
   return (
-    <StageLayout stage={stage}>
+    <StageLayout contentClassName={STAGE_CONTENT_FADE} stage={stage}>
       <h1 className="sr-only">About Me</h1>
       <div className="flex max-w-[616px] flex-col gap-[1lh] lg:text-right">
         {cv.about.map((paragraph, i) => (
