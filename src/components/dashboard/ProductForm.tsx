@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import ImageUploadField from './ImageUploadField'
+import GalleryField from './GalleryField'
 import { Product } from '@/types'
 import {
   buttonPrimary,
@@ -57,6 +58,21 @@ export default function ProductForm({
       <div className={panelClass}>
         <p className={panelTitle}>Image</p>
         <ImageUploadField name="image" defaultValue={product?.image} />
+      </div>
+
+      <div className={panelClass}>
+        <p className={panelTitle}>Icon</p>
+        <p className={hintClass}>Shown left of the name on the product page; square works best</p>
+        <ImageUploadField name="icon" defaultValue={product?.icon} tile={false} />
+      </div>
+
+      <div className={panelClass}>
+        <p className={panelTitle}>Images</p>
+        <GalleryField
+          name="gallery"
+          defaultValue={product?.gallery}
+          hint="shown in a sideways strip under the name, in this order"
+        />
       </div>
 
       <div className="flex items-center gap-6">

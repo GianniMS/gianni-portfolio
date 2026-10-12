@@ -169,6 +169,7 @@ export async function saveCVAction(formData: FormData) {
 
 function productFromFormData(formData: FormData, existing?: Product): Product {
   const image = String(formData.get('image') ?? '')
+  const icon = String(formData.get('icon') ?? '')
   return {
     // Support, privacy and terms are not edited here yet, so an update keeps them
     ...existing,
@@ -177,6 +178,9 @@ function productFromFormData(formData: FormData, existing?: Product): Product {
     description: String(formData.get('description') ?? ''),
     link: String(formData.get('link') ?? ''),
     image: image || undefined,
+    icon: icon || undefined,
+    gallery: undefined,
+    ...galleryFromFormData(formData),
   }
 }
 

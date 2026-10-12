@@ -49,6 +49,8 @@ export type Product = {
   description: string
   link: string
   image?: string
+  icon?: string
+  gallery?: string[]
   support?: ProductDoc
   privacy?: ProductDoc
   terms?: ProductDoc

@@ -5,14 +5,22 @@ import ImageUploadField from './ImageUploadField'
 import { GALLERY_MAX } from '@/lib/images'
 import { buttonSecondary, hintClass } from './styles'
 
-export default function GalleryField({ name, defaultValue = [] }: { name: string; defaultValue?: string[] }) {
+export default function GalleryField({
+  name,
+  defaultValue = [],
+  hint = 'shown on the detail page in this order',
+}: {
+  name: string
+  defaultValue?: string[]
+  hint?: string
+}) {
   const nextKey = useRef(defaultValue.length)
   const [slots, setSlots] = useState(() => defaultValue.map((url, key) => ({ key, url })))
 
   return (
     <div className="flex flex-col gap-6">
       <p className={hintClass}>
-        Up to {GALLERY_MAX} extra images, shown on the detail page in this order
+        Up to {GALLERY_MAX} extra images, {hint}
       </p>
       {slots.map((slot, i) => (
         <div key={slot.key} className="flex flex-col gap-2">
