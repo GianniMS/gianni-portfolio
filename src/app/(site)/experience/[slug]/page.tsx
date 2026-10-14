@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/metadata'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -18,22 +19,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const item = await getDetailItem((await params).slug)
   if (!item) return { title: 'Experience' }
 
-  const description = item.description[0] ?? 'Work by Gianni Mendonça Semedo.'
-  const url = `/experience/${item.slug}`
-  const image = !item.isPrivate && (item.detailImage || item.image)
-
-  return {
-    title: item.title,
-    description,
-    alternates: { canonical: url },
-    openGraph: {
-      title: item.title,
-      description,
-      url,
-      type: 'article',
-      images: image ? [imageSrc(image)] : undefined,
-    },
-  }
+  const { title, organization } = splitTitle(item)
+  const image = item.detailImage || item.image
+  return pageMetadata({
+    title: organization ? `${title} | ${organization}` : title,
+    description:
+      item.description[0] ??
+      `${title}${organization ? ` at ${organization}` : ''}, by Gianni Mendonça Semedo.`,
+    path: `/experience/${item.slug}`,
+    type: 'article',
+    image: image ? imageSrc(image) : undefined,
+  })
 }
 
 export default async function DetailPage({ params }: Props) {

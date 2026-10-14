@@ -1,3 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#453020" />
+  <defs>
+    <!-- The site's placeholder gradient: 149deg, #444e55 at 6.5% to #21272b at 59.3% -->
+    <linearGradient id="g" x1="0.147" y1="-0.088" x2="0.853" y2="1.088">
+      <stop offset="0.065" stop-color="#444e55" />
+      <stop offset="0.593" stop-color="#21272b" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" fill="url(#g)" />
 </svg>

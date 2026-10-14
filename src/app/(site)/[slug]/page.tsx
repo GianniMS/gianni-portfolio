@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/metadata'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getProduct, getProducts } from '@/lib/content'
@@ -15,11 +16,13 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = await getProduct((await params).slug)
   if (!product) return {}
-  return {
+  const image = product.gallery?.[0] || product.image
+  return pageMetadata({
     title: product.name,
-    description: product.description || `${product.name} by Gianni Mendonça Semedo.`,
-    alternates: { canonical: `/${product.slug}` },
-  }
+    description: product.description || `${product.name}, a product by Gianni Mendonça Semedo.`,
+    path: `/${product.slug}`,
+    image: image ? imageSrc(image) : undefined,
+  })
 }
 
 export default async function ProductPage({ params }: Props) {

@@ -5,7 +5,7 @@ import { ReactNode } from 'react'
 const NAME = 'Gianni Mendonça Semedo'
 const HEADLINE = `${NAME} | Full Stack Developer`
 const DESCRIPTION =
-  'Portfolio of Gianni Mendonça Semedo, full stack developer in Rotterdam, The Netherlands. Products, projects and more.'
+  'Gianni Mendonça Semedo, full stack developer in Rotterdam. Research, design and development, from a complex problem to a structured solution.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.giannims.com'),

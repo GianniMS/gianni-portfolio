@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/metadata'
 import StageIndex, { IndexRow, IndexSection } from '@/components/stage/StageIndex'
 import { PortfolioItem } from '@/types'
 import { getItems } from '@/lib/content'
@@ -11,12 +12,12 @@ import {
 import { formatItemDuration, formatItemYear, getItemTimestamp } from '@/data/itemDates'
 import { itemHref, splitTitle } from '@/data/itemText'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Experience',
   description:
-    'Projects, experience, certificates, awards and press of Gianni Mendonça Semedo.',
-  alternates: { canonical: '/experience' },
-}
+    'Projects, work experience, certificates, awards and press of Gianni Mendonça Semedo, full stack developer in Rotterdam.',
+  path: '/experience',
+})
 
 function listTitle(item: PortfolioItem): string {
   const { title, organization } = splitTitle(item)

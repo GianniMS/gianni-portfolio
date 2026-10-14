@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/metadata'
 import TilePage from '@/components/home/TilePage'
 import { BIG_LABEL_SIZE } from '@/components/home/bigLabel'
 import { getHome, getItems, getProducts } from '@/lib/content'
 import { resolvePickedTiles } from '@/lib/home'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Products',
-  description: 'Products made by Gianni Mendonça Semedo.',
-  alternates: { canonical: '/products' },
-}
+  description:
+    'Products by Gianni Mendonça Semedo, each tailored to its audience while preserving the value of the brand behind it.',
+  path: '/products',
+})
 
 const INTRO =
   'A product should be tailored to it’s target audience, while preserving the value of the brand associated with it. Here’s what I put on the market.'

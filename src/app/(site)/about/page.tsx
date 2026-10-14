@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
+import { pageMetadata } from '@/lib/metadata'
 import { notFound } from 'next/navigation'
 import { STAGE_CONTENT_FADE, Stage, StageLayout } from '@/components/stage/Stage'
 import { navLinkClass } from '@/components/layout/NavLink'
 import { getCV, getHome } from '@/lib/content'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'About Me',
-  description: 'About Gianni Mendonça Semedo, full stack developer in Rotterdam, The Netherlands.',
-  alternates: { canonical: '/about' },
-}
+  description:
+    'About Gianni Mendonça Semedo, full stack developer born and raised in Rotterdam: building digital products that are obvious to use and logical all the way down.',
+  path: '/about',
+})
 
 export default async function AboutPage() {
   const [cv, home] = await Promise.all([getCV(), getHome()])
