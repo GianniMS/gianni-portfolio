@@ -144,7 +144,7 @@ export async function getProjects(): Promise<Project[]> {
 }
 
 export async function getDetailItems(): Promise<DetailItem[]> {
-  return (await getItems()).filter((i): i is DetailItem => i.link === 'internal')
+  return (await getItems()).filter((i): i is DetailItem => i.link === 'internal' && !i.linkOut)
 }
 
 export async function getDetailItem(slug: string): Promise<DetailItem | undefined> {

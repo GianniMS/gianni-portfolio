@@ -18,6 +18,8 @@ export type PortfolioItem = {
       image: string
       detailImage?: string
       gallery?: string[]
+      // Clicking through opens this site instead of the detail page, which is then not built
+      linkOut?: string
     } & DateInfo)
 )
 

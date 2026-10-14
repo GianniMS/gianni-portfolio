@@ -1,6 +1,7 @@
 import type { Tile } from '@/components/home/TileStrip'
 import type { TileOption } from '@/components/dashboard/HomeForm'
 import { CATEGORY_LABELS, HOME_TILE_CATEGORIES } from '@/data/categories'
+import { itemHref } from '@/data/itemText'
 import { CVData, HomeConfig, HomeTileRef, PickedTile, PortfolioItem, Product } from '@/types'
 
 export const HOME_TILE_COUNT = 4
@@ -47,7 +48,8 @@ function sourceFor(
   const item = items.find((i) => i.id === ref.id)
   if (!item || item.link !== 'internal') return null
   return {
-    href: `/experience/${item.slug}`,
+    href: itemHref(item),
+    external: Boolean(item.linkOut),
     image: item.image,
     title: item.title,
     description: item.description[0] ?? '',

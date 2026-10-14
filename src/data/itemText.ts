@@ -8,3 +8,9 @@ export function splitTitle(item: PortfolioItem): { title: string; organization?:
   if (split === -1) return { title: item.title }
   return { title: item.title.slice(0, split), organization: item.title.slice(split + 3) }
 }
+
+// Where clicking an entry goes: its detail page, unless it links out to another site
+export function itemHref(item: PortfolioItem): string {
+  if (item.link === 'external') return item.href
+  return item.linkOut || `/experience/${item.slug}`
+}

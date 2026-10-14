@@ -9,7 +9,7 @@ import {
   PREVIEW_CATEGORIES,
 } from '@/data/categories'
 import { formatItemDuration, formatItemYear, getItemTimestamp } from '@/data/itemDates'
-import { splitTitle } from '@/data/itemText'
+import { itemHref, splitTitle } from '@/data/itemText'
 
 export const metadata: Metadata = {
   title: 'Experience',
@@ -49,8 +49,8 @@ export default async function ExperiencePage() {
         title: listTitle(item),
         isPrivate: Boolean(item.isPrivate),
         year: category === 'experience' ? formatItemDuration(item) : formatItemYear(item),
-        href: item.link === 'internal' ? `/experience/${item.slug}` : item.href,
-        external: item.link === 'external',
+        href: itemHref(item),
+        external: item.link === 'external' || Boolean(item.linkOut),
         stage: stageFor(item),
       })),
   })).filter((section) => section.rows.length > 0)

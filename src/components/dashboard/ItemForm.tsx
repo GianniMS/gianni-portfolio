@@ -118,6 +118,19 @@ export default function ItemForm({
           <div className={panelClass}>
             <p className={panelTitle}>Content</p>
             <label className={labelClass}>
+              Link out
+              <span className={hintClass}>
+                Optional. Clicking this entry opens that site in a new tab instead of its detail
+                page here
+              </span>
+              <input
+                name="linkOut"
+                type="url"
+                defaultValue={item?.link === 'internal' ? item.linkOut : ''}
+                className={inputClass}
+              />
+            </label>
+            <label className={labelClass}>
               Slug
               <span className={hintClass}>Used in the page URL</span>
               <input
