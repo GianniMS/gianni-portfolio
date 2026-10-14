@@ -3,7 +3,7 @@ import { Product, ProductDoc } from '@/types'
 const GMS_CONTACT: ProductDoc['sections'][number] = {
   heading: 'Contact',
   blocks: [
-    'GMS Development\nClazina Kouwenberzoom 215, 3065 GK Rotterdam, the Netherlands\nEmail: giannims2002@gmail.com',
+    'GMS Development\nRotterdam, the Netherlands\nEmail: giannims2002@gmail.com',
   ],
 }
 
