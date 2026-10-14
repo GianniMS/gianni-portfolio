@@ -44,6 +44,7 @@ export default function StageIndex({
     <StageLayout
       stage={<Stage entries={entries} active={hovered} fadeIn={fadeIn} />}
       contentClassName={fadeIn ? STAGE_CONTENT_FADE : ''}
+      mobileLabel={defaultTitle}
     >
       {/* One grid for every section, so all years share a column and the rows run on
           evenly from one section into the next */}

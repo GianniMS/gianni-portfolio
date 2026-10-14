@@ -24,7 +24,12 @@ export default async function AboutPage() {
   )
 
   return (
-    <StageLayout alignTops contentClassName={STAGE_CONTENT_FADE} stage={stage}>
+    <StageLayout
+      alignTops
+      contentClassName={STAGE_CONTENT_FADE}
+      mobileLabel="About Me"
+      stage={stage}
+    >
       <h1 className="sr-only">About Me</h1>
       <div className="flex max-w-[616px] flex-col gap-[1lh] lg:text-right">
         {(cv.name || cv.cvPdfPath) && (

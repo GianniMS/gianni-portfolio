@@ -24,6 +24,7 @@ export default async function ContactPage() {
   return (
     <StageLayout
       contentClassName={STAGE_CONTENT_FADE}
+      mobileLabel="Contact"
       stage={<Stage entries={[{ id: null, title: 'Contact' }]} active={null} fadeIn />}
     >
       <h1 className="sr-only">Contact</h1>

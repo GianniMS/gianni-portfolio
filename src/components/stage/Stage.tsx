@@ -84,12 +84,15 @@ export function StageLayout({
   stage,
   contentClassName = '',
   alignTops = false,
+  mobileLabel,
   children,
 }: {
   stage: ReactNode
   contentClassName?: string
   // Starts the content level with the top of the stage instead of above it
   alignTops?: boolean
+  // Below 1024px the stage is hidden; this closes the page with a small block in its colours
+  mobileLabel?: string
   children: ReactNode
 }) {
   return (
@@ -102,6 +105,14 @@ export function StageLayout({
       >
         {children}
       </div>
+      {mobileLabel && (
+        <div
+          aria-hidden
+          className="-mr-2.5 ml-auto mt-16 flex aspect-[330/180] w-3/5 items-center bg-placeholder px-5 text-[9vw] leading-none tracking-tight text-background md:-mr-5 lg:hidden"
+        >
+          {mobileLabel}
+        </div>
+      )}
     </div>
   )
 }
