@@ -1,4 +1,4 @@
-import { get, put } from '@vercel/blob'
+import { del, list, put } from '@vercel/blob'
 import { unstable_cache, revalidatePath, revalidateTag } from 'next/cache'
 import { PortfolioItem, CVData, Product, HomeConfig } from '@/types'
 import { getItemTimestamp } from '@/data/itemDates'
@@ -13,18 +13,31 @@ const CV_TAG = 'cv'
 const PRODUCTS_TAG = 'products'
 const HOME_TAG = 'home'
 
-// An overwritten blob stays in the CDN cache for at least a minute, so a cached read
-// right after a save returns the old document; and a save built on that read writes the
-// old values back. Reads skip the CDN and go to origin storage instead.
+// The blob CDN keeps an overwritten file for at least a minute and ignores cache-busting
+// query strings, so a document is never overwritten in place: each save is a new file
+// with a random suffix, and a read lists the store (an API call, not the CDN) and fetches
+// the newest. A URL that has never been served cannot come back stale.
+const KEEP_VERSIONS = 3
+
+async function versions(pathname: string) {
+  const base = pathname.replace(/\.json$/, '')
+  const { blobs } = await list({ prefix: base })
+  return blobs
+    .filter((b) => b.pathname === pathname || b.pathname.startsWith(`${base}-`))
+    .sort((a, b) => b.uploadedAt.getTime() - a.uploadedAt.getTime())
+}
+
 // Only a missing document reads as null; any other failure throws, so the dashboard
 // never builds a save on an empty read and wipes the stored document.
 async function readJson<T>(pathname: string): Promise<T | null> {
-  const result = await get(pathname, { access: 'public', useCache: false })
-  if (!result || result.statusCode !== 200) return null
-  return (await new Response(result.stream).json()) as T
+  const [latest] = await versions(pathname)
+  if (!latest) return null
+  const res = await fetch(latest.url, { cache: 'no-store' })
+  if (!res.ok) throw new Error(`Could not read ${pathname}: ${res.status}`)
+  return res.json() as Promise<T>
 }
 
-// Reading a document from origin storage is slow, so every render paid for it before
+// Listing and fetching a document is two round trips, so every render paid for it before
 // this. Cached until a save invalidates the tag.
 function cachedRead<T>(pathname: string, tag: string) {
   return unstable_cache(() => readJson<T>(pathname).catch(() => null), [`blob-${tag}`], {
@@ -44,12 +57,12 @@ const readHome = cachedRead<HomeConfig>(HOME_PATH, HOME_TAG)
 async function writeJson(pathname: string, data: unknown): Promise<void> {
   await put(pathname, JSON.stringify(data), {
     access: 'public',
-    addRandomSuffix: false,
-    allowOverwrite: true,
+    addRandomSuffix: true,
     contentType: 'application/json',
-    // The lowest the store allows; reads bypass this cache anyway
-    cacheControlMaxAge: 60,
   })
+  // A few older versions stay so a read that listed just before this save can still fetch
+  const stale = (await versions(pathname)).slice(KEEP_VERSIONS)
+  if (stale.length) await del(stale.map((b) => b.url))
 }
 
 // 'max' would serve the pre-save document once more (stale-while-revalidate), which
