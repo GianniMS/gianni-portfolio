@@ -49,6 +49,7 @@ export default async function DetailPage({ params }: Props) {
 
   return (
     <StageLayout
+      alignTops
       contentClassName={STAGE_CONTENT_FADE}
       stage={
         <Stage

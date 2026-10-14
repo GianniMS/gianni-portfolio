@@ -58,7 +58,7 @@ export function Stage({
                 sizes="25vw"
                 className={`object-cover transition-opacity duration-800 ${shown(e.id)}`}
               />
-            )
+            ),
         )}
         {entries.map((e) => (
           <p
@@ -83,10 +83,13 @@ export const STAGE_CONTENT_FADE =
 export function StageLayout({
   stage,
   contentClassName = '',
+  alignTops = false,
   children,
 }: {
   stage: ReactNode
   contentClassName?: string
+  // Starts the content level with the top of the stage instead of above it
+  alignTops?: boolean
   children: ReactNode
 }) {
   return (
@@ -95,7 +98,7 @@ export function StageLayout({
         <div className="ml-7">{stage}</div>
       </div>
       <div
-        className={`mt-16 flex shrink-0 flex-col gap-[1lh] [overflow-wrap:anywhere] lg:mt-36 lg:items-end ${contentClassName}`}
+        className={`mt-16 flex shrink-0 flex-col gap-[1lh] [overflow-wrap:anywhere] lg:items-end ${alignTops ? 'lg:mt-[13.4vw]' : 'lg:mt-36'} ${contentClassName}`}
       >
         {children}
       </div>
