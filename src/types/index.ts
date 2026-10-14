@@ -60,8 +60,12 @@ export type HoverText = { title: string; description: string }
 
 export type HomeTileRef = { kind: 'product'; slug: string } | { kind: 'item'; id: string }
 
-// The about tile always comes first and links to /about; the picked tiles follow it
+export type PickedTile = { ref: HomeTileRef } & HoverText
+
+// The about tile always comes first and links to /about; the picked tiles follow it.
+// The Products page keeps its own picked tiles in the same document.
 export type HomeConfig = {
   about: { image: string } & HoverText
-  tiles: ({ ref: HomeTileRef } & HoverText)[]
+  tiles: PickedTile[]
+  productsPage?: { tiles: PickedTile[] }
 }

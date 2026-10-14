@@ -19,10 +19,10 @@ import {
   saveItems,
   saveProducts,
 } from '@/lib/content'
-import { HOME_TILE_COUNT, decodeTileRef } from '@/lib/home'
+import { HOME_TILE_COUNT, PRODUCTS_PAGE_TILE_COUNT, decodeTileRef } from '@/lib/home'
 import { GALLERY_MAX } from '@/lib/images'
 import { RESERVED_SLUGS } from '@/data/products'
-import { CVData, HomeConfig, PortfolioItem, Product } from '@/types'
+import { CVData, HomeConfig, PickedTile, PortfolioItem, Product } from '@/types'
 import { toLines, toParagraphs } from '@/lib/text'
 
 export type LoginState = { error?: string } | undefined
@@ -214,16 +214,19 @@ export async function updateProduct(slug: string, formData: FormData) {
   products[index] = updated
   await saveProducts(products)
 
-  // Home tiles point at products by slug, so a rename must carry them along
+  // Home and Products page tiles point at products by slug, so a rename must carry them along
   const home = await getHomeFresh()
   if (home && updated.slug !== slug) {
-    await saveHome({
-      ...home,
-      tiles: home.tiles.map((tile) =>
+    const rename = (tiles: PickedTile[]): PickedTile[] =>
+      tiles.map((tile) =>
         tile.ref.kind === 'product' && tile.ref.slug === slug
           ? { ...tile, ref: { kind: 'product', slug: updated.slug } }
           : tile
-      ),
+      )
+    await saveHome({
+      ...home,
+      tiles: rename(home.tiles),
+      ...(home.productsPage ? { productsPage: { tiles: rename(home.productsPage.tiles) } } : {}),
     })
   }
   redirect('/dashboard/products')
@@ -236,24 +239,41 @@ export async function deleteProduct(slug: string) {
   revalidatePath('/dashboard/products')
 }
 
-export async function saveHomeAction(formData: FormData) {
-  await requireAuth()
+function tilesFromFormData(formData: FormData, count: number): PickedTile[] {
   const text = (key: string) => String(formData.get(key) ?? '').trim()
-
-  const tiles = Array.from({ length: HOME_TILE_COUNT }, (_, i) => i).flatMap((i) => {
+  return Array.from({ length: count }, (_, i) => i).flatMap((i) => {
     const ref = decodeTileRef(text(`tile${i}`))
     if (!ref) return []
     return [{ ref, title: text(`tile${i}Title`), description: text(`tile${i}Description`) }]
   })
+}
+
+export async function saveHomeAction(formData: FormData) {
+  await requireAuth()
+  const text = (key: string) => String(formData.get(key) ?? '').trim()
+  const existing = await getHomeFresh()
 
   const home: HomeConfig = {
+    ...existing,
     about: {
       image: text('aboutImage'),
       title: text('aboutTitle'),
       description: text('aboutDescription'),
     },
-    tiles,
+    tiles: tilesFromFormData(formData, HOME_TILE_COUNT),
   }
   await saveHome(home)
   redirect('/dashboard/home')
+}
+
+export async function saveProductsPageAction(formData: FormData) {
+  await requireAuth()
+  const existing = await getHomeFresh()
+  await saveHome({
+    about: { image: '', title: '', description: '' },
+    tiles: [],
+    ...existing,
+    productsPage: { tiles: tilesFromFormData(formData, PRODUCTS_PAGE_TILE_COUNT) },
+  })
+  redirect('/dashboard/products/tiles')
 }

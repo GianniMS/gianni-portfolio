@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import ImageUploadField from './ImageUploadField'
-import { HomeConfig, HoverText } from '@/types'
+import { HomeConfig, HoverText, PickedTile } from '@/types'
 import { HOME_TILE_COUNT, encodeTileRef } from '@/lib/home'
 import { imageSrc } from '@/lib/images'
 import { buttonPrimary, hintClass, inputClass, labelClass, panelClass, panelTitle } from './styles'
@@ -43,6 +43,78 @@ function HoverFields({
   )
 }
 
+// Picker per slot; an empty slot is left out of the page entirely
+export function TileSlots({
+  saved,
+  count,
+  options,
+  firstNumber = 1,
+}: {
+  saved: PickedTile[]
+  count: number
+  options: TileOption[]
+  firstNumber?: number
+}) {
+  const [picked, setPicked] = useState(() =>
+    Array.from({ length: count }, (_, i) => (saved[i] ? encodeTileRef(saved[i].ref) : ''))
+  )
+  const groups = [...new Set(options.map((o) => o.group))]
+
+  return picked.map((value, i) => {
+    const option = options.find((o) => o.value === value)
+    const tile = saved[i]
+    const keepText = tile && encodeTileRef(tile.ref) === value
+    return (
+      <div key={i} className={panelClass}>
+        <p className={panelTitle}>Tile {i + firstNumber}</p>
+        <label className={labelClass}>
+          Links to
+          <select
+            name={`tile${i}`}
+            value={value}
+            onChange={(e) =>
+              setPicked((prev) => prev.map((v, j) => (j === i ? e.target.value : v)))
+            }
+            className={inputClass}
+          >
+            <option value="">Nothing (tile hidden)</option>
+            {groups.map((group) => (
+              <optgroup key={group} label={group}>
+                {options
+                  .filter((o) => o.group === group)
+                  .map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label} ({o.group})
+                    </option>
+                  ))}
+              </optgroup>
+            ))}
+          </select>
+        </label>
+        {option &&
+          (option.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={imageSrc(option.image)}
+              alt={`${option.label} thumbnail`}
+              className="aspect-[346/450] w-40 object-cover"
+            />
+          ) : (
+            <div className="aspect-[346/450] w-40 bg-placeholder" />
+          ))}
+        {option && (
+          <HoverFields
+            key={value}
+            prefix={`tile${i}`}
+            value={keepText ? tile : undefined}
+            fallback={option}
+          />
+        )}
+      </div>
+    )
+  })
+}
+
 export default function HomeForm({
   home,
   options,
@@ -54,14 +126,6 @@ export default function HomeForm({
   aboutFallback: HoverText
   action: (formData: FormData) => void
 }) {
-  const [picked, setPicked] = useState(() =>
-    Array.from({ length: HOME_TILE_COUNT }, (_, i) => {
-      const tile = home?.tiles[i]
-      return tile ? encodeTileRef(tile.ref) : ''
-    })
-  )
-  const groups = [...new Set(options.map((o) => o.group))]
-
   return (
     <form action={action} className="flex max-w-2xl flex-col gap-10">
       <p className={hintClass}>
@@ -76,59 +140,12 @@ export default function HomeForm({
         <HoverFields prefix="about" value={home?.about} fallback={aboutFallback} />
       </div>
 
-      {picked.map((value, i) => {
-        const option = options.find((o) => o.value === value)
-        const saved = home?.tiles[i]
-        const keepText = saved && encodeTileRef(saved.ref) === value
-        return (
-          <div key={i} className={panelClass}>
-            <p className={panelTitle}>Tile {i + 2}</p>
-            <label className={labelClass}>
-              Links to
-              <select
-                name={`tile${i}`}
-                value={value}
-                onChange={(e) =>
-                  setPicked((prev) => prev.map((v, j) => (j === i ? e.target.value : v)))
-                }
-                className={inputClass}
-              >
-                <option value="">Nothing (tile hidden)</option>
-                {groups.map((group) => (
-                  <optgroup key={group} label={group}>
-                    {options
-                      .filter((o) => o.group === group)
-                      .map((o) => (
-                        <option key={o.value} value={o.value}>
-                          {o.label} ({o.group})
-                        </option>
-                      ))}
-                  </optgroup>
-                ))}
-              </select>
-            </label>
-            {option &&
-              (option.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={imageSrc(option.image)}
-                  alt={`${option.label} thumbnail`}
-                  className="aspect-[346/450] w-40 object-cover"
-                />
-              ) : (
-                <div className="aspect-[346/450] w-40 bg-placeholder" />
-              ))}
-            {option && (
-              <HoverFields
-                key={value}
-                prefix={`tile${i}`}
-                value={keepText ? saved : undefined}
-                fallback={option}
-              />
-            )}
-          </div>
-        )
-      })}
+      <TileSlots
+        saved={home?.tiles ?? []}
+        count={HOME_TILE_COUNT}
+        options={options}
+        firstNumber={2}
+      />
 
       <button type="submit" className={buttonPrimary}>
         Save changes

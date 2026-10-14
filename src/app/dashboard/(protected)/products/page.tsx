@@ -3,7 +3,13 @@ import { getProductsFresh } from '@/lib/content'
 import { deleteProduct } from '@/app/dashboard/actions'
 import DeleteButton from '@/components/dashboard/DeleteButton'
 import PageHeader from '@/components/dashboard/PageHeader'
-import { buttonPrimary, linkClass, tdClass, thClass } from '@/components/dashboard/styles'
+import {
+  buttonPrimary,
+  buttonSecondary,
+  linkClass,
+  tdClass,
+  thClass,
+} from '@/components/dashboard/styles'
 
 export default async function ProductsPage() {
   const products = await getProductsFresh()
@@ -14,9 +20,14 @@ export default async function ProductsPage() {
         title="Products"
         meta={`${products.length} product${products.length === 1 ? '' : 's'}`}
         action={
-          <Link href="/dashboard/products/new" className={buttonPrimary}>
-            Add new
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/dashboard/products/tiles" className={buttonSecondary}>
+              Page tiles
+            </Link>
+            <Link href="/dashboard/products/new" className={buttonPrimary}>
+              Add new
+            </Link>
+          </div>
         }
       />
 

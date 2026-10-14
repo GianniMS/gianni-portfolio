@@ -1,7 +1,10 @@
 import type { Tile } from '@/components/home/TileStrip'
-import { CVData, HomeConfig, HomeTileRef, PortfolioItem, Product } from '@/types'
+import type { TileOption } from '@/components/dashboard/HomeForm'
+import { CATEGORY_LABELS, HOME_TILE_CATEGORIES } from '@/data/categories'
+import { CVData, HomeConfig, HomeTileRef, PickedTile, PortfolioItem, Product } from '@/types'
 
 export const HOME_TILE_COUNT = 4
+export const PRODUCTS_PAGE_TILE_COUNT = 5
 
 export function encodeTileRef(ref: HomeTileRef): string {
   return ref.kind === 'product' ? `product:${ref.slug}` : `item:${ref.id}`
@@ -46,6 +49,25 @@ function sourceFor(
 
 // Blank hover text falls back to the linked entry's own title and description,
 // and a tile whose entry was deleted is dropped rather than rendered empty.
+export function resolvePickedTiles(
+  tiles: PickedTile[],
+  items: PortfolioItem[],
+  products: Product[]
+): Tile[] {
+  return tiles.flatMap((tile) => {
+    const source = sourceFor(tile.ref, items, products)
+    if (!source) return []
+    return [
+      {
+        ...source,
+        key: encodeTileRef(tile.ref),
+        title: tile.title || source.title,
+        description: tile.description || source.description,
+      },
+    ]
+  })
+}
+
 export function resolveHomeTiles(
   home: HomeConfig | null,
   cv: CVData | null,
@@ -59,19 +81,35 @@ export function resolveHomeTiles(
     title: home?.about.title || 'About Me',
     description: home?.about.description || cv?.about[0] || '',
   }
+  return [about, ...resolvePickedTiles(home?.tiles ?? [], items, products)]
+}
 
-  const picked = (home?.tiles ?? []).flatMap((tile) => {
-    const source = sourceFor(tile.ref, items, products)
-    if (!source) return []
-    return [
-      {
-        ...source,
-        key: encodeTileRef(tile.ref),
-        title: tile.title || source.title,
-        description: tile.description || source.description,
-      },
-    ]
-  })
-
-  return [about, ...picked]
+// Only entries with a detail page have an image and somewhere to link to
+export function tileOptions(items: PortfolioItem[], products: Product[]): TileOption[] {
+  return [
+    ...products.map((p) => ({
+      value: encodeTileRef({ kind: 'product', slug: p.slug }),
+      label: p.name,
+      group: 'Products',
+      image: p.image ?? '',
+      title: p.name,
+      description: p.description,
+    })),
+    ...HOME_TILE_CATEGORIES.flatMap((category) =>
+      items.flatMap((item) =>
+        item.category === category && item.link === 'internal'
+          ? [
+              {
+                value: encodeTileRef({ kind: 'item', id: item.id }),
+                label: item.title,
+                group: CATEGORY_LABELS[category],
+                image: item.image,
+                title: item.title,
+                description: item.description[0] ?? '',
+              },
+            ]
+          : []
+      )
+    ),
+  ]
 }
