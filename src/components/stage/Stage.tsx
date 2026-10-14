@@ -96,7 +96,9 @@ export function StageLayout({
   children: ReactNode
 }) {
   return (
-    <div className="px-2.5 pb-20 md:px-5 lg:flex lg:items-start lg:gap-10">
+    // On mobile the page fills at least the screen below the header, so the label block
+    // always lands at the same low point however short the content is
+    <div className="flex min-h-[calc(100svh-3rem)] flex-col px-2.5 pb-20 md:px-5 lg:min-h-0 lg:flex-row lg:items-start lg:gap-10">
       <div className="@container hidden min-w-0 flex-1 lg:sticky lg:top-[13.4vw] lg:mt-[13.4vw] lg:block">
         <div className="ml-7">{stage}</div>
       </div>
@@ -105,10 +107,11 @@ export function StageLayout({
       >
         {children}
       </div>
+      {mobileLabel && <div className="h-16 shrink-0 lg:hidden" />}
       {mobileLabel && (
         <div
           aria-hidden
-          className="-mr-2.5 ml-auto mt-16 flex aspect-[330/180] w-1/2 items-center bg-placeholder px-4 text-[7.5vw] leading-none tracking-tight text-background md:-mr-5 lg:hidden"
+          className="-mr-2.5 ml-auto mt-auto flex aspect-[330/180] w-1/2 items-center bg-placeholder px-4 text-[7.5vw] leading-none tracking-tight text-background md:-mr-5 lg:hidden"
         >
           {mobileLabel}
         </div>
