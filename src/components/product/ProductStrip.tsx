@@ -28,14 +28,17 @@ export default function ProductStrip({ name, images }: { name: string; images: s
     }
   }, [])
 
-  const slideTo = (end: 'start' | 'end') => {
+  // Steps to the image just past the one at the start edge, lining it up where snapping would
+  const step = (direction: 1 | -1) => {
     const list = listRef.current
     if (!list) return
+    const edge =
+      list.getBoundingClientRect().left + parseFloat(getComputedStyle(list).scrollPaddingLeft)
+    const offsets = [...list.children].map((item) => item.getBoundingClientRect().left - edge)
+    const target = direction === 1 ? offsets.find((o) => o > 1) : offsets.findLast((o) => o < -1)
+    if (target === undefined) return
     const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    list.scrollTo({
-      left: end === 'start' ? 0 : list.scrollWidth,
-      behavior: smooth ? 'smooth' : 'auto',
-    })
+    list.scrollBy({ left: target, behavior: smooth ? 'smooth' : 'auto' })
   }
 
   // Both arrows show whenever the strip can scroll at all; the one with nowhere to go dims
@@ -66,8 +69,8 @@ export default function ProductStrip({ name, images }: { name: string; images: s
       <div className="mt-2 flex justify-between">
         <button
           type="button"
-          onClick={() => slideTo('start')}
-          aria-label="Slide back to the first image"
+          onClick={() => step(-1)}
+          aria-label="Previous image"
           className={arrowClass(canSlide.back)}
           disabled={!canSlide.back}
           inert={!scrollable}
@@ -76,8 +79,8 @@ export default function ProductStrip({ name, images }: { name: string; images: s
         </button>
         <button
           type="button"
-          onClick={() => slideTo('end')}
-          aria-label="Slide to the last image"
+          onClick={() => step(1)}
+          aria-label="Next image"
           className={arrowClass(canSlide.forward)}
           disabled={!canSlide.forward}
           inert={!scrollable}
