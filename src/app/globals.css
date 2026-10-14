@@ -8,7 +8,9 @@
 
   --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  --animate-fade-in: fade-in 0.8s ease both;
+  /* backwards, not both: holding the end state keeps the element on its own compositing
+     layer, where Chrome skips repainting hover changes such as underline colour */
+  --animate-fade-in: fade-in 0.8s ease backwards;
 
   @keyframes fade-in {
     from {
