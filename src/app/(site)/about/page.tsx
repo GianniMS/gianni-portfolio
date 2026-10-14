@@ -28,6 +28,7 @@ export default async function AboutPage() {
       alignTops
       contentClassName={STAGE_CONTENT_FADE}
       mobileLabel="About Me"
+      mobileImage={home?.about.image || undefined}
       stage={stage}
     >
       <h1 className="sr-only">About Me</h1>

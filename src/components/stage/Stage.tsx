@@ -85,6 +85,7 @@ export function StageLayout({
   contentClassName = '',
   alignTops = false,
   mobileLabel,
+  mobileImage,
   children,
 }: {
   stage: ReactNode
@@ -93,8 +94,13 @@ export function StageLayout({
   alignTops?: boolean
   // Below 1024px the stage is hidden; this closes the page with a small block in its colours
   mobileLabel?: string
+  // Sits behind the label block on mobile, overlapping it from the left
+  mobileImage?: string
   children: ReactNode
 }) {
+  const labelClass =
+    'flex aspect-[330/180] w-1/2 items-center bg-placeholder px-4 text-[7.5vw] leading-none tracking-tight text-background'
+
   return (
     // On mobile the page fills at least the screen below the header, so the label block
     // always lands at the same low point however short the content is
@@ -108,14 +114,21 @@ export function StageLayout({
         {children}
       </div>
       {mobileLabel && <div className="h-16 shrink-0 lg:hidden" />}
-      {mobileLabel && (
-        <div
-          aria-hidden
-          className="-mr-2.5 ml-auto mt-auto flex aspect-[330/180] w-1/2 items-center bg-placeholder px-4 text-[7.5vw] leading-none tracking-tight text-background md:-mr-5 lg:hidden"
-        >
-          {mobileLabel}
-        </div>
-      )}
+      {mobileLabel &&
+        (mobileImage ? (
+          <div aria-hidden className="relative mt-auto lg:hidden">
+            <div className="relative ml-[9%] aspect-[264/385] w-[48%]">
+              <Image src={imageSrc(mobileImage)} alt="" fill sizes="50vw" className="object-cover" />
+            </div>
+            <div className={`absolute bottom-[9%] -right-2.5 md:-right-5 ${labelClass}`}>
+              {mobileLabel}
+            </div>
+          </div>
+        ) : (
+          <div aria-hidden className={`-mr-2.5 ml-auto mt-auto md:-mr-5 lg:hidden ${labelClass}`}>
+            {mobileLabel}
+          </div>
+        ))}
     </div>
   )
 }
