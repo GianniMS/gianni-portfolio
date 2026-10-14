@@ -45,10 +45,10 @@ export default function ProductStrip({ name, images }: { name: string; images: s
 
   return (
     <div>
-      {/* The end padding lets the last image scroll clear of the reading column */}
+      {/* Bleeds to the screen edges so images scroll off the side rather than stop short */}
       <ul
         ref={listRef}
-        className="-mx-2.5 flex snap-x gap-5 overflow-x-auto px-2.5 pb-2 md:-mx-5 md:px-5 lg:mx-0 lg:pr-[calc(640px+2.5rem)] lg:pl-0"
+        className="-mx-2.5 flex snap-x scroll-px-2.5 gap-5 overflow-x-auto px-2.5 pb-2 md:-mx-5 md:scroll-px-5 md:px-5"
       >
         {images.map((src, i) => (
           <li key={src} className="shrink-0 snap-start">
@@ -63,7 +63,7 @@ export default function ProductStrip({ name, images }: { name: string; images: s
           </li>
         ))}
       </ul>
-      <div className="mt-2 flex justify-between lg:pr-[calc(640px+2.5rem+10rem)]">
+      <div className="mt-2 flex justify-between">
         <button
           type="button"
           onClick={() => slideTo('start')}

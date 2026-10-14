@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { getProduct, getProducts } from '@/lib/content'
-import ReadingShell from '@/components/layout/ReadingShell'
 import { ProductDocSections } from '@/components/product/ProductDocView'
 import { imageSrc } from '@/lib/images'
 import ProductStrip from '@/components/product/ProductStrip'
@@ -28,12 +27,14 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound()
 
   const gallery = product.gallery ?? []
+  // Contact lives on the Support page; here the support copy only sells the product
+  const sections =
+    product.support?.sections.filter((section) => section.heading !== 'Contact') ?? []
 
   return (
-    <ReadingShell
-      title={product.name}
-      icon={
-        product.icon && (
+    <div className="mt-12 lg:mt-20">
+      <h1 className="flex items-center gap-[0.15em] text-[clamp(2.5rem,9vw,8rem)] leading-none tracking-tight [overflow-wrap:anywhere]">
+        {product.icon && (
           <Image
             src={imageSrc(product.icon)}
             alt=""
@@ -42,35 +43,32 @@ export default async function ProductPage({ params }: Props) {
             className="size-[0.8em] shrink-0 object-contain"
             priority
           />
-        )
-      }
-      strip={
-        gallery.length > 0 && (
+        )}
+        <span className="min-w-0">{product.name}</span>
+      </h1>
+
+      <div className="mt-10 flex max-w-[640px] flex-col gap-10 lg:mt-16">
+        {product.description && <p className="leading-relaxed">{product.description}</p>}
+        {sections.length > 0 && <ProductDocSections doc={{ sections }} />}
+        {product.link && (
+          <p>
+            <a
+              href={product.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-foreground px-5 py-3 text-background transition-opacity duration-800 hover:opacity-70"
+            >
+              Get {product.name} →
+            </a>
+          </p>
+        )}
+      </div>
+
+      {gallery.length > 0 && (
+        <div className="mt-12 lg:mt-16">
           <ProductStrip name={product.name} images={gallery} />
-        )
-      }
-    >
-      {product.description && (
-        <p className="text-[clamp(1.25rem,1.7vw,1.75rem)] leading-snug">{product.description}</p>
+        </div>
       )}
-      {product.link && (
-        <p className="mt-10 first:mt-0">
-          <a
-            href={product.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-foreground px-5 py-3 text-background transition-opacity duration-800 hover:opacity-70"
-          >
-            Get {product.name} →
-          </a>
-        </p>
-      )}
-      {product.support && (
-        <section className="mt-16 border-t border-foreground pt-4 first:mt-0">
-          {/* The support document's sections double as the product's feature copy */}
-          <ProductDocSections doc={product.support} />
-        </section>
-      )}
-    </ReadingShell>
+    </div>
   )
 }

@@ -5,12 +5,12 @@ import { getProduct, getProducts } from '@/lib/content'
 
 export type DocKind = 'support' | 'privacy' | 'terms'
 
-export const DOC_KINDS: DocKind[] = ['support', 'privacy', 'terms']
+export const DOC_KINDS: DocKind[] = ['support', 'terms', 'privacy']
 
 export const DOC_NAV_LABELS: Record<DocKind, string> = {
   support: 'Support',
-  privacy: 'Privacy',
-  terms: 'Terms',
+  privacy: 'Privacy Statement',
+  terms: 'Terms of Service',
 }
 
 export const DOC_TITLES: Record<DocKind, string> = {
