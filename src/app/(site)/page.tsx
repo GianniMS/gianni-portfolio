@@ -29,16 +29,16 @@ export default async function HomePage() {
       <p className="ml-auto mt-40 max-w-[335px] pr-3.5 text-right intro:animate-fade-in md:mt-[15vw] md:max-w-[656px] md:px-5">
         {INTRO}
       </p>
-      {/* With an odd tile count the roles fill the free cell beside the last tile on mobile;
-          the bottom margin keeps the back-to-top arrow off whichever comes last */}
-      <div className={`mt-2 md:mt-5 ${fillsGap ? 'mb-20 md:mb-0' : ''}`}>
+      {/* With an odd tile count the roles fill the free cell beside the last tile on mobile,
+          so the page ends on that row */}
+      <div className="mt-2 md:mt-5">
         <TileStrip
           tiles={tiles}
           mobileFiller={<RoleCycle startAfterMs={tilesDoneMs} className="text-[15cqw]" />}
         />
       </div>
       <div
-        className={`mb-20 mt-5 px-3.5 intro:animate-fade-in md:mb-10 md:block md:px-5 ${fillsGap ? 'hidden' : ''}`}
+        className={`mb-10 mt-5 px-3.5 intro:animate-fade-in md:block md:px-5 ${fillsGap ? 'hidden' : ''}`}
       >
         <RoleCycle startAfterMs={tilesDoneMs} />
       </div>

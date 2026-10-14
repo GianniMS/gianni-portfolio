@@ -1,8 +1,10 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function BackToTop() {
+  const pathname = usePathname()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -12,6 +14,9 @@ export default function BackToTop() {
     observer.observe(header)
     return () => observer.disconnect()
   }, [])
+
+  // Home ends on its last tile, with nothing below for the arrow to sit over
+  if (pathname === '/') return null
 
   return (
     <button

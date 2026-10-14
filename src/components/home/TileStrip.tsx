@@ -55,7 +55,7 @@ export default function TileStrip({
         </li>
       ))}
       {mobileFiller && tiles.length % 2 === 1 && (
-        <li className="@container flex items-end justify-end px-3.5 intro:animate-fade-in md:hidden">
+        <li className="@container flex items-end justify-end px-3.5 pb-3 intro:animate-fade-in md:hidden">
           {mobileFiller}
         </li>
       )}
