@@ -27,7 +27,19 @@ export default async function AboutPage() {
     <StageLayout contentClassName={STAGE_CONTENT_FADE} stage={stage}>
       <h1 className="sr-only">About Me</h1>
       <div className="flex max-w-[616px] flex-col gap-[1lh] lg:text-right">
-        {cv.name && <p className="text-foreground/50">{cv.name}</p>}
+        {(cv.name || cv.cvPdfPath) && (
+          <p>
+            <span className="text-foreground/50">
+              {cv.name}
+              {cv.name && cv.cvPdfPath && ' | '}
+            </span>
+            {cv.cvPdfPath && (
+              <a href={cv.cvPdfPath} download className={`font-bold ${navLinkClass}`}>
+                Download CV
+              </a>
+            )}
+          </p>
+        )}
         {cv.about.map((paragraph, i) => (
           <p key={i} className="whitespace-pre-line">
             {paragraph}
@@ -38,13 +50,6 @@ export default async function AboutPage() {
             <h2 className="font-bold">Involved With</h2>
             <p>{cv.involvedWith.join(', ')}</p>
           </section>
-        )}
-        {cv.cvPdfPath && (
-          <p>
-            <a href={cv.cvPdfPath} download className={navLinkClass}>
-              Download CV
-            </a>
-          </p>
         )}
       </div>
     </StageLayout>
