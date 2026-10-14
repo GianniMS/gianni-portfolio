@@ -7,7 +7,13 @@ const HOLD_MS = 4000
 const FADE_MS = 800
 
 // Cycles through the roles once the tiles have faded in, each held 4s before a 0.8s crossfade
-export default function RoleCycle({ startAfterMs }: { startAfterMs: number }) {
+export default function RoleCycle({
+  startAfterMs,
+  className = 'text-[clamp(2.5rem,7vw,6rem)]',
+}: {
+  startAfterMs: number
+  className?: string
+}) {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
@@ -24,7 +30,7 @@ export default function RoleCycle({ startAfterMs }: { startAfterMs: number }) {
   }, [startAfterMs])
 
   return (
-    <p className="text-[clamp(2.5rem,7vw,6rem)] leading-none tracking-tight">
+    <p className={`${className} leading-none tracking-tight`}>
       <span className="sr-only">{ROLES.join(', ')}</span>
       {/* Every role shares one grid cell, so the line never changes size as they swap */}
       <span aria-hidden className="grid justify-items-end md:justify-items-start">

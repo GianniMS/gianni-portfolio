@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { ReactNode } from 'react'
 import { imageSrc } from '@/lib/images'
 
 // Unlike the nav and text, the tiles fade in on every visit, not just the first load.
@@ -20,7 +21,14 @@ export type Tile = {
   description: string
 }
 
-export default function TileStrip({ tiles }: { tiles: Tile[] }) {
+export default function TileStrip({
+  tiles,
+  mobileFiller,
+}: {
+  tiles: Tile[]
+  // Fills the empty cell beside the last tile in the two-column mobile grid
+  mobileFiller?: ReactNode
+}) {
   return (
     <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {tiles.map((tile, i) => (
@@ -46,6 +54,11 @@ export default function TileStrip({ tiles }: { tiles: Tile[] }) {
           </Link>
         </li>
       ))}
+      {mobileFiller && tiles.length % 2 === 1 && (
+        <li className="@container flex items-end justify-end px-3.5 intro:animate-fade-in md:hidden">
+          {mobileFiller}
+        </li>
+      )}
     </ul>
   )
 }
