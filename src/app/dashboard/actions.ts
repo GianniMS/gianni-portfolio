@@ -19,7 +19,7 @@ import {
   saveItems,
   saveProducts,
 } from '@/lib/content'
-import { HOME_TILE_COUNT, PRODUCTS_PAGE_TILE_COUNT, decodeTileRef } from '@/lib/home'
+import { HOME_TILE_COUNT, LINK_TILE, PRODUCTS_PAGE_TILE_COUNT, decodeTileRef } from '@/lib/home'
 import { GALLERY_MAX } from '@/lib/images'
 import { RESERVED_SLUGS } from '@/data/products'
 import { CVData, HomeConfig, PickedTile, PortfolioItem, Product } from '@/types'
@@ -242,7 +242,12 @@ export async function deleteProduct(slug: string) {
 function tilesFromFormData(formData: FormData, count: number): PickedTile[] {
   const text = (key: string) => String(formData.get(key) ?? '').trim()
   return Array.from({ length: count }, (_, i) => i).flatMap((i) => {
-    const ref = decodeTileRef(text(`tile${i}`))
+    const value = text(`tile${i}`)
+    const href = text(`tile${i}Href`)
+    const ref =
+      value === LINK_TILE
+        ? href && { kind: 'link' as const, href, image: text(`tile${i}Image`) }
+        : decodeTileRef(value)
     if (!ref) return []
     return [{ ref, title: text(`tile${i}Title`), description: text(`tile${i}Description`) }]
   })

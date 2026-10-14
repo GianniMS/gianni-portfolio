@@ -19,6 +19,7 @@ export type Tile = {
   image: string
   title: string
   description: string
+  external?: boolean
 }
 
 export default function TileStrip({
@@ -33,7 +34,11 @@ export default function TileStrip({
     <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {tiles.map((tile, i) => (
         <li key={tile.key} className={`motion-safe:animate-fade-in ${FADE_DELAYS[i] ?? ''}`}>
-          <Link href={tile.href} className="group relative block aspect-[346/450] overflow-hidden">
+          <Link
+            href={tile.href}
+            {...(tile.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            className="group relative block aspect-[346/450] overflow-hidden"
+          >
             {tile.image ? (
               <Image
                 src={imageSrc(tile.image)}

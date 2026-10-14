@@ -6,7 +6,11 @@ import { CVData, HomeConfig, HomeTileRef, PickedTile, PortfolioItem, Product } f
 export const HOME_TILE_COUNT = 4
 export const PRODUCTS_PAGE_TILE_COUNT = 5
 
+export const LINK_TILE = 'link'
+
+// Every link tile shares one picker value; its URL and image live in their own fields
 export function encodeTileRef(ref: HomeTileRef): string {
+  if (ref.kind === 'link') return LINK_TILE
   return ref.kind === 'product' ? `product:${ref.slug}` : `item:${ref.id}`
 }
 
@@ -27,6 +31,9 @@ function sourceFor(
   items: PortfolioItem[],
   products: Product[]
 ): Source | null {
+  if (ref.kind === 'link') {
+    return { href: ref.href, image: ref.image, title: '', description: '', external: true }
+  }
   if (ref.kind === 'product') {
     const product = products.find((p) => p.slug === ref.slug)
     if (!product) return null
@@ -54,13 +61,13 @@ export function resolvePickedTiles(
   items: PortfolioItem[],
   products: Product[]
 ): Tile[] {
-  return tiles.flatMap((tile) => {
+  return tiles.flatMap((tile, i) => {
     const source = sourceFor(tile.ref, items, products)
     if (!source) return []
     return [
       {
         ...source,
-        key: encodeTileRef(tile.ref),
+        key: `${encodeTileRef(tile.ref)}-${i}`,
         title: tile.title || source.title,
         description: tile.description || source.description,
       },

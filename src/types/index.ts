@@ -58,7 +58,11 @@ export type Product = {
 
 export type HoverText = { title: string; description: string }
 
-export type HomeTileRef = { kind: 'product'; slug: string } | { kind: 'item'; id: string }
+export type HomeTileRef =
+  | { kind: 'product'; slug: string }
+  | { kind: 'item'; id: string }
+  // Straight out to another site, with its own image
+  | { kind: 'link'; href: string; image: string }
 
 export type PickedTile = { ref: HomeTileRef } & HoverText
 

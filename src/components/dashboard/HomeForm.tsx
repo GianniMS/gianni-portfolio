@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import ImageUploadField from './ImageUploadField'
 import { HomeConfig, HoverText, PickedTile } from '@/types'
-import { HOME_TILE_COUNT, encodeTileRef } from '@/lib/home'
+import { HOME_TILE_COUNT, LINK_TILE, encodeTileRef } from '@/lib/home'
 import { imageSrc } from '@/lib/images'
 import { buttonPrimary, hintClass, inputClass, labelClass, panelClass, panelTitle } from './styles'
 
@@ -64,6 +64,7 @@ export function TileSlots({
     const option = options.find((o) => o.value === value)
     const tile = saved[i]
     const keepText = tile && encodeTileRef(tile.ref) === value
+    const savedLink = keepText && tile.ref.kind === 'link' ? tile.ref : undefined
     return (
       <div key={i} className={panelClass}>
         <p className={panelTitle}>Tile {i + firstNumber}</p>
@@ -78,6 +79,7 @@ export function TileSlots({
             className={inputClass}
           >
             <option value="">Nothing (tile hidden)</option>
+            <option value={LINK_TILE}>External link</option>
             {groups.map((group) => (
               <optgroup key={group} label={group}>
                 {options
@@ -102,6 +104,27 @@ export function TileSlots({
           ) : (
             <div className="aspect-[346/450] w-40 bg-placeholder" />
           ))}
+        {value === LINK_TILE && (
+          <>
+            <label className={labelClass}>
+              Link
+              <span className={hintClass}>Opens in a new tab</span>
+              <input
+                name={`tile${i}Href`}
+                type="url"
+                required
+                defaultValue={savedLink?.href}
+                className={inputClass}
+              />
+            </label>
+            <ImageUploadField name={`tile${i}Image`} defaultValue={savedLink?.image} />
+            <HoverFields
+              prefix={`tile${i}`}
+              value={keepText ? tile : undefined}
+              fallback={{ title: '', description: '' }}
+            />
+          </>
+        )}
         {option && (
           <HoverFields
             key={value}
