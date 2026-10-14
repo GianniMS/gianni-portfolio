@@ -79,11 +79,7 @@ export default async function DetailPage({ params }: Props) {
         {item.skills.length > 0 && (
           <section>
             <h2 className="font-bold">Skills</h2>
-            <ul>
-              {item.skills.map((skill) => (
-                <li key={skill}>{skill}</li>
-              ))}
-            </ul>
+            <p>{item.skills.join(', ')}</p>
           </section>
         )}
         {gallery.map((src, i) => (
