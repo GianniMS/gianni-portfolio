@@ -175,7 +175,7 @@ function productFromFormData(formData: FormData, existing?: Product): Product {
     ...existing,
     slug: String(formData.get('slug') ?? '').trim(),
     name: String(formData.get('name') ?? ''),
-    description: String(formData.get('description') ?? ''),
+    description: String(formData.get('description') ?? '').trim(),
     link: String(formData.get('link') ?? ''),
     image: image || undefined,
     icon: icon || undefined,

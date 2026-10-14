@@ -40,11 +40,11 @@ export default function ProductForm({
         </label>
         <label className={labelClass}>
           Description
+          <span className={hintClass}>Optional</span>
           <textarea
             name="description"
             rows={4}
             defaultValue={product?.description}
-            required
             className={inputClass}
           />
         </label>

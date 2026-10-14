@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return {}
   return {
     title: product.name,
-    description: product.description,
+    description: product.description || `${product.name} by Gianni Mendonça Semedo.`,
     alternates: { canonical: `/${product.slug}` },
   }
 }
@@ -50,9 +50,11 @@ export default async function ProductPage({ params }: Props) {
         )
       }
     >
-      <p className="text-[clamp(1.25rem,1.7vw,1.75rem)] leading-snug">{product.description}</p>
+      {product.description && (
+        <p className="text-[clamp(1.25rem,1.7vw,1.75rem)] leading-snug">{product.description}</p>
+      )}
       {product.link && (
-        <p className="mt-10">
+        <p className="mt-10 first:mt-0">
           <a
             href={product.link}
             target="_blank"
@@ -64,7 +66,7 @@ export default async function ProductPage({ params }: Props) {
         </p>
       )}
       {product.support && (
-        <section className="mt-16 border-t border-foreground pt-4">
+        <section className="mt-16 border-t border-foreground pt-4 first:mt-0">
           {/* The support document's sections double as the product's feature copy */}
           <ProductDocSections doc={product.support} />
         </section>
