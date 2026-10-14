@@ -108,7 +108,7 @@ export function StageLayout({
       {mobileLabel && (
         <div
           aria-hidden
-          className="-mr-2.5 ml-auto mt-16 flex aspect-[330/180] w-3/5 items-center bg-placeholder px-5 text-[9vw] leading-none tracking-tight text-background md:-mr-5 lg:hidden"
+          className="-mr-2.5 ml-auto mt-16 flex aspect-[330/180] w-1/2 items-center bg-placeholder px-4 text-[7.5vw] leading-none tracking-tight text-background md:-mr-5 lg:hidden"
         >
           {mobileLabel}
         </div>
