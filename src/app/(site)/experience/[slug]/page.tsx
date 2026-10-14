@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import ReadingShell from '@/components/layout/ReadingShell'
+import { STAGE_CONTENT_FADE, Stage, StageLayout } from '@/components/stage/Stage'
 import { getDetailItem, getDetailItems } from '@/lib/content'
 import { formatItemDuration, formatItemYear } from '@/data/itemDates'
 import { splitTitle } from '@/data/itemText'
@@ -44,67 +44,60 @@ export default async function DetailPage({ params }: Props) {
   const when = item.category === 'experience' ? formatItemDuration(item) : formatItemYear(item)
   const meta = [organization, when, item.isPrivate && 'Private'].filter(Boolean).join(' | ')
 
-  // Private work never shows its images, matching the Experience index
-  const hero = item.isPrivate ? undefined : item.detailImage || item.image
+  // Like the Experience index, private work keeps its stage image but not its extra images
   const gallery = item.isPrivate ? [] : (item.gallery ?? [])
 
   return (
-    <div className="px-2.5 pb-24 md:px-5">
-      <nav className="mt-16 lg:mt-24">
-        <Link
-          href="/experience"
-          aria-label="Back to Experience"
-          className="text-3xl leading-none transition-opacity duration-800 hover:opacity-50"
-        >
-          ←
-        </Link>
-      </nav>
-      <ReadingShell title={title} aside={meta}>
-        <div className="flex flex-col gap-12">
-          {hero ? (
-            <Image
-              src={imageSrc(hero)}
-              alt={title}
-              width={854}
-              height={1112}
-              sizes="(min-width: 1024px) 427px, 100vw"
-              className="aspect-[427/556] w-full max-w-[427px] object-cover"
-              priority
-            />
-          ) : (
-            <div className="aspect-[427/556] w-full max-w-[427px] bg-placeholder" />
-          )}
-
-          {item.description.length > 0 && (
-            <div className="flex flex-col gap-[1lh] leading-relaxed">
-              {item.description.map((paragraph, i) => (
-                <p key={i} className="whitespace-pre-line">
-                  {paragraph}
-                </p>
+    <StageLayout
+      contentClassName={STAGE_CONTENT_FADE}
+      stage={
+        <Stage
+          entries={[{ id: null, title, image: item.detailImage || item.image || undefined }]}
+          active={null}
+          fadeIn
+        />
+      }
+    >
+      <Link
+        href="/experience"
+        aria-label="Back to Experience"
+        className="text-3xl leading-none transition-opacity duration-800 hover:opacity-50"
+      >
+        ←
+      </Link>
+      <div className="flex max-w-[616px] flex-col gap-[1lh] lg:text-right">
+        {/* The stage carries the title from 1024px up; below that it is hidden */}
+        <h1 className="text-[clamp(2.5rem,10vw,4rem)] leading-none tracking-tight lg:sr-only">
+          {title}
+        </h1>
+        {meta && <p className="text-foreground/50">{meta}</p>}
+        {item.description.map((paragraph, i) => (
+          <p key={i} className="whitespace-pre-line">
+            {paragraph}
+          </p>
+        ))}
+        {item.skills.length > 0 && (
+          <section>
+            <h2 className="font-bold">Skills</h2>
+            <ul>
+              {item.skills.map((skill) => (
+                <li key={skill}>{skill}</li>
               ))}
-            </div>
-          )}
-
-          {item.skills.length > 0 && (
-            <section className="border-t border-foreground pt-4">
-              <h2 className="font-bold">Skills</h2>
-              <p className="mt-2 leading-relaxed">{item.skills.join(', ')}</p>
-            </section>
-          )}
-
-          {gallery.map((src, i) => (
-            <Image
-              key={src}
-              src={imageSrc(src)}
-              alt={`${title} image ${i + 1}`}
-              width={1280}
-              height={960}
-              sizes="(min-width: 1024px) 640px, 100vw"
-              className="h-auto w-full"
-            />
-          ))}
-        </div>
-      </ReadingShell>
-    </div>
+            </ul>
+          </section>
+        )}
+        {gallery.map((src, i) => (
+          <Image
+            key={src}
+            src={imageSrc(src)}
+            alt={`${title} image ${i + 1}`}
+            width={1280}
+            height={960}
+            sizes="(min-width: 1024px) 616px, 100vw"
+            className="h-auto w-full"
+          />
+        ))}
+      </div>
+    </StageLayout>
   )
 }
