@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react'
 
 const ROLES = ['Developer', 'Designer', 'Analyst', 'Strategist']
-const HOLD_MS = 3000
+const HOLD_MS = 4000
 const FADE_MS = 800
 
-// Cycles through the roles once the tiles have faded in, each held 3s before a 0.8s crossfade
+// Cycles through the roles once the tiles have faded in, each held 4s before a 0.8s crossfade
 export default function RoleCycle({ startAfterMs }: { startAfterMs: number }) {
   const [index, setIndex] = useState(0)
 
