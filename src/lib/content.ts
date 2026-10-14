@@ -1,4 +1,4 @@
-import { put, head } from '@vercel/blob'
+import { get, put } from '@vercel/blob'
 import { unstable_cache, revalidatePath, revalidateTag } from 'next/cache'
 import { PortfolioItem, CVData, Product, HomeConfig } from '@/types'
 import { getItemTimestamp } from '@/data/itemDates'
@@ -13,20 +13,21 @@ const CV_TAG = 'cv'
 const PRODUCTS_TAG = 'products'
 const HOME_TAG = 'home'
 
+// An overwritten blob stays in the CDN cache for at least a minute, so a cached read
+// right after a save returns the old document; and a save built on that read writes the
+// old values back. Reads skip the CDN and go to origin storage instead.
+// Only a missing document reads as null; any other failure throws, so the dashboard
+// never builds a save on an empty read and wipes the stored document.
 async function readJson<T>(pathname: string): Promise<T | null> {
-  const blob = await head(pathname).catch(() => null)
-  if (!blob) return null
-  // uploadedAt lags the write, so it is not a reliable cache buster: a unique
-  // query per read is what keeps the blob CDN from serving the pre-save body.
-  const res = await fetch(`${blob.url}?v=${Date.now()}`, { cache: 'no-store' })
-  if (!res.ok) return null
-  return res.json() as Promise<T>
+  const result = await get(pathname, { access: 'public', useCache: false })
+  if (!result || result.statusCode !== 200) return null
+  return (await new Response(result.stream).json()) as T
 }
 
-// Reading a document costs two round trips to the blob store, so every render
-// paid ~600ms before this. Cached until a save invalidates the tag.
+// Reading a document from origin storage is slow, so every render paid for it before
+// this. Cached until a save invalidates the tag.
 function cachedRead<T>(pathname: string, tag: string) {
-  return unstable_cache(() => readJson<T>(pathname), [`blob-${tag}`], {
+  return unstable_cache(() => readJson<T>(pathname).catch(() => null), [`blob-${tag}`], {
     tags: [tag],
     revalidate: 300,
   })
@@ -46,7 +47,8 @@ async function writeJson(pathname: string, data: unknown): Promise<void> {
     addRandomSuffix: false,
     allowOverwrite: true,
     contentType: 'application/json',
-    cacheControlMaxAge: 0,
+    // The lowest the store allows; reads bypass this cache anyway
+    cacheControlMaxAge: 60,
   })
 }
 
