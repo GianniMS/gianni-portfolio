@@ -1,28 +1,10 @@
 import type { Tile } from '@/components/home/TileStrip'
-import type { TileOption } from '@/components/dashboard/HomeForm'
-import { CATEGORY_LABELS, HOME_TILE_CATEGORIES } from '@/data/categories'
 import { itemHref } from '@/data/itemText'
 import { CVData, HomeConfig, HomeTileRef, PickedTile, PortfolioItem, Product } from '@/types'
 
-export const HOME_TILE_COUNT = 4
-export const PRODUCTS_PAGE_TILE_COUNT = 5
-
-export const LINK_TILE = 'link'
-
-// Every link tile shares one picker value; its URL and image live in their own fields
-export function encodeTileRef(ref: HomeTileRef): string {
-  if (ref.kind === 'link') return LINK_TILE
+function tileKey(ref: HomeTileRef): string {
+  if (ref.kind === 'link') return ref.href
   return ref.kind === 'product' ? `product:${ref.slug}` : `item:${ref.id}`
-}
-
-export function decodeTileRef(value: string): HomeTileRef | null {
-  const split = value.indexOf(':')
-  const kind = value.slice(0, split)
-  const key = value.slice(split + 1)
-  if (split === -1 || !key) return null
-  if (kind === 'product') return { kind, slug: key }
-  if (kind === 'item') return { kind, id: key }
-  return null
 }
 
 type Source = Omit<Tile, 'key'>
@@ -69,7 +51,7 @@ export function resolvePickedTiles(
     return [
       {
         ...source,
-        key: `${encodeTileRef(tile.ref)}-${i}`,
+        key: `${tileKey(tile.ref)}-${i}`,
         title: tile.title || source.title,
         description: tile.description || source.description,
       },
@@ -91,34 +73,4 @@ export function resolveHomeTiles(
     description: home?.about.description || cv?.about[0] || '',
   }
   return [about, ...resolvePickedTiles(home?.tiles ?? [], items, products)]
-}
-
-// Only entries with a detail page have an image and somewhere to link to
-export function tileOptions(items: PortfolioItem[], products: Product[]): TileOption[] {
-  return [
-    ...products.map((p) => ({
-      value: encodeTileRef({ kind: 'product', slug: p.slug }),
-      label: p.name,
-      group: 'Products',
-      image: p.image ?? '',
-      title: p.name,
-      description: p.description,
-    })),
-    ...HOME_TILE_CATEGORIES.flatMap((category) =>
-      items.flatMap((item) =>
-        item.category === category && item.link === 'internal'
-          ? [
-              {
-                value: encodeTileRef({ kind: 'item', id: item.id }),
-                label: item.title,
-                group: CATEGORY_LABELS[category],
-                image: item.image,
-                title: item.title,
-                description: item.description[0] ?? '',
-              },
-            ]
-          : []
-      )
-    ),
-  ]
 }

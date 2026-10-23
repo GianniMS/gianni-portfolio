@@ -1,20 +1,11 @@
-import { Product, ProductDoc } from '@/types'
+import { Product } from '@/types'
 
-const GMS_CONTACT: ProductDoc['sections'][number] = {
-  heading: 'Contact',
-  blocks: [
-    'GMS Development\nRotterdam, the Netherlands\nEmail: giannims2002@gmail.com',
-  ],
-}
-
-// Seeds the dashboard until the first products save writes data/products.json
-export const defaultProducts: Product[] = [
+export const products: Product[] = [
   {
     slug: 'tabcraft',
     name: 'TabCraft',
-    description:
-      'A browser extension that brings a character to the web pages you visit and to your new tab page.',
-    link: '',
+    description: 'A browser extension that brings a character to the web pages you visit and to your new tab page.',
+    link: 'https://chromewebstore.google.com/detail/hgdekiomoidcgbhjfpiinofjmgdeealg?utm_source=item-share-cb',
     support: {
       sections: [
         {
@@ -24,11 +15,15 @@ export const defaultProducts: Product[] = [
         },
         {
           heading: 'One-time purchase',
-          blocks: ['No subscription, no ads, no tracking. Pay once and TabCraft is yours.'],
+          blocks: [
+            'No subscription, no ads, no tracking. Pay once and TabCraft is yours.',
+          ],
         },
         {
           heading: 'Contact',
-          blocks: ['Questions or feedback? Email giannims2002@gmail.com.'],
+          blocks: [
+            'Questions or feedback? Email giannims2002@gmail.com.',
+          ],
         },
       ],
     },
@@ -43,7 +38,7 @@ export const defaultProducts: Product[] = [
         {
           heading: 'Data that stays on your device',
           blocks: [
-            "TabCraft saves the following in your browser's extension storage. It never leaves your device and we (GMS Development) never receive it:",
+            'TabCraft saves the following in your browser\'s extension storage. It never leaves your device and we (GMS Development) never receive it:',
             [
               'The skins you upload and the names you give them',
               'Your settings (the switches in the popup)',
@@ -63,7 +58,7 @@ export const defaultProducts: Product[] = [
               'Whether a page is in fullscreen, so he can step out of view',
             ],
             'None of this is recorded, stored or sent anywhere.',
-            "The TabCraft new tab page shows your most visited sites as shortcuts, using Chrome's own list. This list is only used to show the shortcuts and stays on your device.",
+            'The TabCraft new tab page shows your most visited sites as shortcuts, using Chrome\'s own list. This list is only used to show the shortcuts and stays on your device.',
           ],
         },
         {
@@ -90,10 +85,17 @@ export const defaultProducts: Product[] = [
             'Under the GDPR you can ask to see, correct or delete the personal data we hold about you (your email address and purchase details). Contact us at the address below.',
           ],
         },
-        GMS_CONTACT,
+        {
+          heading: 'Contact',
+          blocks: [
+            'GMS Development\nRotterdam, the Netherlands\nEmail: giannims2002@gmail.com',
+          ],
+        },
         {
           heading: 'Changes',
-          blocks: ['If this policy changes, the new version will be published on this page with a new date.'],
+          blocks: [
+            'If this policy changes, the new version will be published on this page with a new date.',
+          ],
         },
       ],
     },
@@ -142,7 +144,7 @@ export const defaultProducts: Product[] = [
         {
           heading: 'Availability and changes',
           blocks: [
-            "We work to keep TabCraft running well, but we cannot guarantee it works on every website (for example, Chrome does not allow extensions on its own pages, and some fullscreen video players can't show your character). We may update TabCraft to improve it or to keep it working with Chrome.",
+            'We work to keep TabCraft running well, but we cannot guarantee it works on every website (for example, Chrome does not allow extensions on its own pages, and some fullscreen video players can\'t show your character). We may update TabCraft to improve it or to keep it working with Chrome.',
           ],
         },
         {
@@ -159,23 +161,24 @@ export const defaultProducts: Product[] = [
         },
         {
           heading: 'Changes to these terms',
-          blocks: ['If these terms change, the new version will be published on this page with a new date.'],
+          blocks: [
+            'If these terms change, the new version will be published on this page with a new date.',
+          ],
         },
-        GMS_CONTACT,
+        {
+          heading: 'Contact',
+          blocks: [
+            'GMS Development\nRotterdam, the Netherlands\nEmail: giannims2002@gmail.com',
+          ],
+        },
       ],
     },
+    icon: 'images/products/tabcraft/icon.png',
+    gallery: [
+      'images/products/tabcraft/screen-1.png',
+      'images/products/tabcraft/screen-2.png',
+      'images/products/tabcraft/screen-3.png',
+    ],
+    image: 'images/tiles/tccrd.webp',
   },
-]
-
-// Products live at the site root, so a slug must not shadow a page or redirect
-export const RESERVED_SLUGS = [
-  'products',
-  'experience',
-  'about',
-  'contact',
-  'dashboard',
-  'api',
-  'cv',
-  'portfolio',
-  'projects',
 ]

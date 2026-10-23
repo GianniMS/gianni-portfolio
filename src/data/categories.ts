@@ -39,7 +39,3 @@ export const CATEGORY_LABELS: Record<PortfolioItem['category'], string> = {
   press: 'Press',
   award: 'Awards',
 }
-
-export function isCategory(value: string): value is PortfolioItem['category'] {
-  return (CATEGORIES as string[]).includes(value)
-}

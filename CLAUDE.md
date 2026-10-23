@@ -32,18 +32,16 @@ Font: `font-sans` → Helvetica Neue (system font, never self-hosted), falling b
 src/
   app/
     (site)/      # public: /, products, [slug] (a product) + [slug]/{support,privacy,terms}, experience, experience/[slug], about, contact
-    dashboard/   # protected CMS: Home, Products, Projects, Experience, Certificates, Pages
   components/
     layout/      # Navbar, MobileMenu, NavLink, BackToTop, ReadingShell (title + reading column)
     home/        # TileStrip
     stage/       # Stage + StageLayout (shared page layout), StageIndex (Experience/Products list)
     product/     # ProductDocView, productDocs
-    dashboard/
-  data/          # products.ts (seed until the first save), categories.ts, itemDates.ts
-  lib/           # content.ts (blob-backed items, CV, products, home), home.ts, images.ts, text.ts, auth.ts
+  data/          # all site content: items.ts, cv.ts, products.ts, home.ts (edit these to change content); categories.ts, itemDates.ts
+  lib/           # content.ts (reads src/data), home.ts, images.ts, metadata.ts
   types/         # index.ts (PortfolioItem, Product + shared types)
 public/
-  images/        # portrait.jpg, projects/, press/, awards/
+  images/        # tiles/ (home/experience cards), products/, portrait.jpg, projects/, experiences/
 ```
 
 ## Data types
