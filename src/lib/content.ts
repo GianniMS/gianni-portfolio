@@ -37,13 +37,15 @@ async function readJson<T>(pathname: string): Promise<T | null> {
   return res.json() as Promise<T>
 }
 
-// Listing and fetching a document is two round trips, so every render paid for it before
-// this. Cached until a save invalidates the tag.
+// list() is a billed Advanced Operation (2,000/month on Hobby), so a timed revalidate
+// that re-lists every few minutes per document burns the quota. Cached until a save
+// invalidates the tag. A failed read is caught outside the cache so it is never stored.
 function cachedRead<T>(pathname: string, tag: string) {
-  return unstable_cache(() => readJson<T>(pathname).catch(() => null), [`blob-${tag}`], {
+  const read = unstable_cache(() => readJson<T>(pathname), [`blob-${tag}`], {
     tags: [tag],
-    revalidate: 300,
+    revalidate: false,
   })
+  return () => read().catch(() => null)
 }
 
 const readItems = cachedRead<PortfolioItem[]>(ITEMS_PATH, ITEMS_TAG)
