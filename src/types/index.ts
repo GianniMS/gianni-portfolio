@@ -50,3 +50,10 @@ export type MockupDevice = 'macbook' | 'iphone'
 
 // screen is the colour shown until (or without) a screenshot; image is the screenshot itself
 export type Mockup = { device: MockupDevice; screen: string; image?: string }
+
+export type LegalPage = {
+  title: string
+  description: string
+  updated: string
+  sections: { title: string; paragraphs: string[] }[]
+}

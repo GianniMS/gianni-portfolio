@@ -35,13 +35,13 @@ Wordmark: `font-caslon` → Libre Caslon Text Regular (next/font/google) for the
 ```
 src/
   app/
-    (site)/      # public: /, work, work/[slug] (project or job), cv
+    (site)/      # public: /, work, work/[slug] (project or job), cv, privacy-policy, cookie-policy
   components/
     layout/      # NavLink (navLinkClass), SiteFooter (TextureWordmark + legal links), FaviconGleam (pulses light round the tab icon's rim), FlagSection (flags <html> with data-dark / data-footer while in view; `footer:` variant), CommandBar (sticky bottom search over lib/search.ts, menu opens nav above; `gleam` rim in globals.css)
     home/        # HomeHero (clock + intro stages: loader → header/nav (.intro-chrome) → devices fly in + ScrollCue → carousel) → MockupCarousel + devices (3D GLB mockups) + ScrollCue; SprayText + GooReveal (on useSprayTrigger; goo filter in lib/goo.ts)
-    list/        # ItemList: ListPageTitle, ListSection, ItemRow (Work + CV lists)
+    list/        # ItemList: ListPageTitle, ListSection, ItemRow (Work + CV lists); LegalPage (privacy + cookie policy)
     work/        # project page: DeviceRender (3D device per panel, screenshots from item.screens), BackLink
-  data/          # all site content: items.ts, cv.ts, home.ts, work.ts (edit these to change content); categories.ts, itemDates.ts
+  data/          # all site content: items.ts, cv.ts, home.ts, work.ts (edit these to change content); legal.ts (policies), categories.ts, itemDates.ts
   lib/           # content.ts (reads src/data), metadata.ts, search.ts (command bar search), logos.ts, goo.ts
   types/         # index.ts (PortfolioItem + shared types)
 public/
