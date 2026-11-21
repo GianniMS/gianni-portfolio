@@ -151,7 +151,8 @@ function Slot({
       tween.current = { from: current(g, lid.current), start: now, offset, entered, duration: STEP_S }
     }
     const { from, start, duration } = tween.current!
-    const p = easeInOut(Math.max(0, Math.min(1, (now - start) / duration)))
+    // Reduced motion: no flights or glides, each device just takes its new place
+    const p = calm() ? 1 : easeInOut(Math.max(0, Math.min(1, (now - start) / duration)))
     const [px, py, pz, rx, ry, rz, sc, close] = target.map((v, i) => MathUtils.lerp(from[i], v, p))
     g.position.set(px, py, pz)
     g.rotation.set(rx, ry, rz)

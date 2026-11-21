@@ -31,7 +31,10 @@ function Device({
   const mouse = useRef({ x: 0, y: 0 })
   const follow = useRef({ x: 0, y: 0 })
 
+  const calm = useRef(false)
+
   useEffect(() => {
+    calm.current = matchMedia('(prefers-reduced-motion: reduce)').matches
     const onMove = (e: PointerEvent) => {
       mouse.current = { x: (e.clientX / innerWidth) * 2 - 1, y: (e.clientY / innerHeight) * 2 - 1 }
     }
@@ -47,7 +50,7 @@ function Device({
   // screen always keeps facing you
   useFrame(({ clock }, delta) => {
     const g = group.current
-    if (!g) return
+    if (!g || calm.current) return
     const t = clock.elapsedTime
     follow.current.x = MathUtils.damp(follow.current.x, mouse.current.x, 2, delta)
     follow.current.y = MathUtils.damp(follow.current.y, mouse.current.y, 2, delta)

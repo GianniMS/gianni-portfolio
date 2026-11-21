@@ -59,9 +59,10 @@ export default function HomeHero({ mockups }: { mockups: Mockup[] }) {
     return () => document.removeEventListener('visibilitychange', onChange)
   }, [])
 
-  // Keyed on pos, so a manual step also restarts the full hold; nothing moves until the intro is over
+  // Keyed on pos, so a manual step also restarts the full hold; nothing moves until the intro is over.
+  // With reduced motion it never turns by itself, only when stepped
   useEffect(() => {
-    if (stage !== 'running' || !visible) return
+    if (stage !== 'running' || !visible || matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const timer = setTimeout(() => setPos((p) => p + 1), HOLD_MS)
     return () => clearTimeout(timer)
   }, [pos, stage, visible])

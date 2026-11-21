@@ -193,6 +193,13 @@
   animation: fade-in 0.8s ease backwards;
 }
 
+/* Reduced motion keeps the command bar's fade but drops the blur and rise */
+@media (prefers-reduced-motion: reduce) {
+  .animate-chip-in {
+    animation-name: fade-in;
+  }
+}
+
 /* A dark card of moving film grain: white specks from SVG fractal noise over the text colour, the
    noise layer jumping a few frames a second so it flickers like static. Used by the Work list's hover */
 @keyframes grain {
