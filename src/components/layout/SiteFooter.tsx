@@ -21,9 +21,6 @@ export default function SiteFooter() {
         <Link href="/cookie-policy" className={navLinkClass}>
           Cookie Policy
         </Link>
-        <Link href="/terms-and-conditions" className={navLinkClass}>
-          Terms and Conditions
-        </Link>
       </nav>
     </FlagSection>
   )
