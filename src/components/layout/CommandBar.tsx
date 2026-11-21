@@ -37,6 +37,8 @@ export default function CommandBar() {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
+  const barRef = useRef<HTMLElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   const results = useMemo(() => search(query), [query])
   const searching = query.trim() !== ''
   // The panel shows the links when the menu is open, or the results while there's a query
@@ -50,6 +52,7 @@ export default function CommandBar() {
 
   const go = (result: SearchResult) => {
     close()
+    inputRef.current?.blur()
     if (outside(result.href)) window.open(result.href, result.href.startsWith('mailto:') ? '_self' : '_blank')
     else router.push(result.href)
   }
@@ -74,6 +77,25 @@ export default function CommandBar() {
     return () => observer.disconnect()
   }, [])
 
+  // A fixed bar stays behind the on-screen keyboard (the layout viewport doesn't shrink on iOS),
+  // so the visual viewport's lost height lifts it and caps the results above the keyboard
+  useEffect(() => {
+    const vv = window.visualViewport
+    const bar = barRef.current
+    if (!vv || !bar) return
+    const sync = () => {
+      bar.style.setProperty('--kb', `${Math.max(0, window.innerHeight - vv.height - vv.offsetTop)}px`)
+      bar.style.setProperty('--vvh', `${vv.height}px`)
+    }
+    sync()
+    vv.addEventListener('resize', sync)
+    vv.addEventListener('scroll', sync)
+    return () => {
+      vv.removeEventListener('resize', sync)
+      vv.removeEventListener('scroll', sync)
+    }
+  }, [])
+
   useEffect(() => {
     if (!panel) return
     const dismiss = () => {
@@ -93,8 +115,9 @@ export default function CommandBar() {
 
   return (
     <aside
+      ref={barRef}
       aria-label="Command bar"
-      className="intro-chrome fixed inset-x-0 bottom-4 z-40 flex justify-center px-8 transition-transform duration-400 ease-linear footer:-translate-y-[12svh] md:bottom-6 md:px-2.5"
+      className="intro-chrome fixed inset-x-0 bottom-[calc(1rem+var(--kb,0px))] z-40 flex justify-center px-8 transition-transform duration-400 ease-linear footer:-translate-y-[12svh] md:bottom-6 md:px-2.5"
     >
       <div
         ref={ref}
@@ -110,7 +133,7 @@ export default function CommandBar() {
           <div className="overflow-hidden">
             {searching ? (
               results.length ? (
-                <ul id="command-results" role="listbox" aria-label="Results" className="flex flex-col p-2">
+                <ul id="command-results" role="listbox" aria-label="Results" className="flex max-h-[calc(var(--vvh,100svh)-7rem)] flex-col overflow-y-auto overscroll-contain p-2">
                   {results.map((result, i) => (
                     <li
                       key={`${result.kind}-${result.href}-${result.title}`}
@@ -119,7 +142,7 @@ export default function CommandBar() {
                       aria-selected={i === selected}
                       onPointerEnter={() => setSelected(i)}
                       onClick={() => go(result)}
-                      className="flex animate-chip-in cursor-pointer items-baseline justify-between gap-4 rounded-2xl px-3 py-2.5 text-sm aria-selected:bg-background/10"
+                      className="flex animate-chip-in cursor-pointer items-baseline justify-between gap-4 rounded-2xl px-3 py-2.5 text-sm select-none pointer-fine:aria-selected:bg-background/10 active:bg-background/10"
                       style={{ animationDelay: `${i * 40}ms` }}
                     >
                       <span className="truncate">{result.title}</span>
@@ -190,6 +213,7 @@ export default function CommandBar() {
             <label className="min-w-0 flex-1 animate-chip-in">
               <span className="sr-only">Search the site</span>
               <input
+                ref={inputRef}
                 type="search"
                 role="combobox"
                 placeholder="Looking for something?"
@@ -203,7 +227,12 @@ export default function CommandBar() {
                 aria-controls="command-results"
                 aria-activedescendant={searching && results.length ? `command-result-${selected}` : undefined}
                 autoComplete="off"
-                className="w-full bg-transparent text-sm placeholder:text-background/50 focus:outline-none"
+                autoCorrect="off"
+                autoCapitalize="none"
+                spellCheck={false}
+                enterKeyHint="search"
+                // 16px on touch screens, below that iOS zooms the page in on focus
+                className="w-full bg-transparent text-base placeholder:text-background/50 focus:outline-none md:text-sm [&::-webkit-search-cancel-button]:appearance-none"
               />
             </label>
           )}
