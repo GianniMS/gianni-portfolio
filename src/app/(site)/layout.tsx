@@ -1,13 +1,13 @@
 import { ReactNode } from 'react'
-import Navbar from '@/components/layout/Navbar'
-import BackToTop from '@/components/layout/BackToTop'
+import CommandBar from '@/components/layout/CommandBar'
+import SiteHeader from '@/components/layout/SiteHeader'
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <Navbar />
+      <SiteHeader />
       <main>{children}</main>
-      <BackToTop />
+      <CommandBar />
     </>
   )
 }

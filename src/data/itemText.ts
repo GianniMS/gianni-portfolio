@@ -12,5 +12,5 @@ export function splitTitle(item: PortfolioItem): { title: string; organization?:
 // Where clicking an entry goes: its detail page, unless it links out to another site
 export function itemHref(item: PortfolioItem): string {
   if (item.link === 'external') return item.href
-  return item.linkOut || `/experience/${item.slug}`
+  return item.linkOut || `/work/${item.slug}`
 }

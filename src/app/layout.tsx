@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
+import { Libre_Caslon_Text } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import { ReactNode } from 'react'
+import FaviconGleam from '@/components/layout/FaviconGleam'
 
 const NAME = 'Gianni Mendonça Semedo'
-const HEADLINE = `${NAME} | Full Stack Developer`
+const HEADLINE = `${NAME} | Full Stack Developer in Rotterdam`
 const DESCRIPTION =
-  'Gianni Mendonça Semedo, full stack developer in Rotterdam. Research, design and development, from a complex problem to a structured solution.'
+  'Gianni Mendonça Semedo, full stack developer in Rotterdam. Development, design, research, strategy and marketing: from the thought to the realization.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.giannims.com'),
@@ -14,6 +17,18 @@ export const metadata: Metadata = {
   applicationName: 'GianniMS',
   authors: [{ name: NAME, url: 'https://www.giannims.com' }],
   creator: NAME,
+  keywords: [
+    'Gianni Mendonça Semedo',
+    'full stack developer',
+    'Rotterdam',
+    'Next.js',
+    'TypeScript',
+    'Symfony',
+    'web development',
+    'iOS development',
+    'UX design',
+    'product strategy',
+  ],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
@@ -35,17 +50,16 @@ export const metadata: Metadata = {
   },
 }
 
-const INTRO_SCRIPT = `if (location.pathname === '/' && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.dataset.intro = ''`
+const caslon = Libre_Caslon_Text({ weight: '400', subsets: ['latin'], variable: '--font-libre-caslon' })
+const painterz = localFont({ src: './fonts/Painterz.ttf', variable: '--font-painterz-local' })
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    // The intro script below adds data-intro before hydration, so React must not flag it
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Runs before first paint, so a direct visit to home starts blank instead of flashing */}
-        <script dangerouslySetInnerHTML={{ __html: INTRO_SCRIPT }} />
-      </head>
-      <body>{children}</body>
+    <html lang="en" className={`${caslon.variable} ${painterz.variable}`}>
+      <body>
+        {children}
+        <FaviconGleam />
+      </body>
     </html>
   )
 }

@@ -1,64 +1,24 @@
-import { HomeConfig } from '@/types'
+import { Mockup } from '@/types'
 
-export const home: HomeConfig = {
-  about: {
-    image: 'images/tiles/about.svg',
-    title: 'Gianni Mendonça Semedo',
-    description: 'I translate the complex, to something simple. Born and raised in Rotterdam, The Netherlands.',
-  },
-  tiles: [
-    {
-      ref: {
-        kind: 'item',
-        id: '65fa326b-9a05-4fbc-9b2c-eb9212dadb27',
-      },
-      title: '',
-      description: 'A browser extension that brings your favorite characters to every page.',
-    },
-    {
-      ref: {
-        kind: 'item',
-        id: 'soundcheckd',
-      },
-      title: '',
-      description: 'A social media app where users can discover and rate music, share their concert experiences and track their collection.',
-    },
-    {
-      ref: {
-        kind: 'item',
-        id: 'nursitree',
-      },
-      title: '',
-      description: 'A visual registry of trees, tree pits and leveling units. Managed through an excel import and export system.',
-    },
-    {
-      ref: {
-        kind: 'item',
-        id: 'c36e4fbc-7c5f-47a8-b075-fb5fff5424b8',
-      },
-      title: '',
-      description: 'A dashboard to manage inventory and inbound and outbound containers. Connected with mail integration and various 3rd parties.',
-    },
-  ],
-  productsPage: {
-    tiles: [
-      {
-        ref: {
-          kind: 'link',
-          href: 'https://soundcheckd.app/',
-          image: 'images/tiles/sccrd.webp',
-        },
-        title: 'SoundCheckd',
-        description: 'A social media app where users can discover and rate music, share their concert experiences and track their collection.',
-      },
-      {
-        ref: {
-          kind: 'product',
-          slug: 'tabcraft',
-        },
-        title: '',
-        description: '',
-      },
-    ],
-  },
+export const intro = {
+  title: 'From the thought to the realization.',
+  body: 'A problem can have different solutions. With my expertise in software development, design, research, marketing and full scale business strategies, I find the right one. A solution with reason at its core.',
 }
+
+// The second text, under the photo
+export const intro2 = {
+  title: 'Built for the people it is meant for.',
+  body: 'Discovering and researching the relevant target audience, market and laws allows me to find what needs to be done. Which leads to a product built with intent.',
+}
+
+// Alternating case on purpose: Painterz only drips on its lowercase letters
+export const sprayWords = ['SoFtWaRe', 'DeSiGn', 'ReSeArCh', 'StRaTeGy', 'MaRkEtInG']
+
+// The home carousel, in order; the colour shows while each screenshot loads
+export const mockups: Mockup[] = [
+  { device: 'macbook', screen: '#0ea5e9', image: '/images/screens/skai-desktop-1.png' },
+  { device: 'iphone', screen: '#f43f5e', image: '/images/screens/soundcheckd-mobile.png' },
+  { device: 'macbook', screen: '#10b981', image: '/images/screens/nursitree-desktop-1.jpg' },
+  { device: 'iphone', screen: '#fbbf24', image: '/images/screens/marlog-mobile.png' },
+  { device: 'macbook', screen: '#8b5cf6', image: '/images/screens/fidocs-desktop-1.png' },
+]

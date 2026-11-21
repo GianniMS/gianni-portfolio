@@ -8,6 +8,10 @@ export type PortfolioItem = {
   category: 'project' | 'experience' | 'certificate' | 'press' | 'award'
   isPrivate?: boolean
   organization?: string
+  // Shown beside a project in the Work list (platform, kind of work); search matches on them too
+  tags?: string[]
+  // Extra words only the command bar search matches on, never shown
+  keywords?: string[]
 } & (
   | { link: 'external'; href: string; year: number }
   | ({
@@ -15,11 +19,15 @@ export type PortfolioItem = {
       slug: string
       description: string[]
       skills: string[]
-      image: string
-      detailImage?: string
-      gallery?: string[]
       // Clicking through opens this site instead of the detail page, which is then not built
       linkOut?: string
+      // The detail page's three columns; without them it falls back to the description paragraphs
+      story?: { challenge: string; approach: string; result: string }
+      // Screenshots for the project page's two device renders (public/images/screens), in order, each
+      // on the device it was taken for; a single one shows in both
+      screens?: { device: MockupDevice; src: string }[]
+      // An experience page's single wide "What I did" column
+      summary?: string
     } & DateInfo)
 )
 
@@ -31,47 +39,14 @@ export type SocialLinks = {
 export type CVData = {
   name: string
   about: string[]
-  involvedWith: string[]
+  // A logo (SVG or transparent PNG in public/images/brands) replaces the name; it is shown in black
+  involvedWith: { name: string; logo?: string }[]
   cvPdfPath: string
   email: string
   socials: SocialLinks
 }
 
-// A string is a paragraph, a string array is a bulleted list
-export type DocBlock = string | string[]
+export type MockupDevice = 'macbook' | 'iphone'
 
-export type ProductDoc = {
-  updated?: string
-  sections: { heading?: string; blocks: DocBlock[] }[]
-}
-
-export type Product = {
-  slug: string
-  name: string
-  description: string
-  link: string
-  image?: string
-  icon?: string
-  gallery?: string[]
-  support?: ProductDoc
-  privacy?: ProductDoc
-  terms?: ProductDoc
-}
-
-export type HoverText = { title: string; description: string }
-
-export type HomeTileRef =
-  | { kind: 'product'; slug: string }
-  | { kind: 'item'; id: string }
-  // Straight out to another site, with its own image
-  | { kind: 'link'; href: string; image: string }
-
-export type PickedTile = { ref: HomeTileRef } & HoverText
-
-// The about tile always comes first and links to /about; the picked tiles follow it.
-// The Products page keeps its own picked tiles in the same document.
-export type HomeConfig = {
-  about: { image: string } & HoverText
-  tiles: PickedTile[]
-  productsPage?: { tiles: PickedTile[] }
-}
+// screen is the colour shown until (or without) a screenshot; image is the screenshot itself
+export type Mockup = { device: MockupDevice; screen: string; image?: string }

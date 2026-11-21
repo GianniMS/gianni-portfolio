@@ -1,16 +1,50 @@
 @import "tailwindcss";
 
+/* Set by FlagSection while the end of the page holds the screen */
+@custom-variant footer (:root[data-footer] &);
+
+@theme inline {
+  --font-caslon: var(--font-libre-caslon), Georgia, serif;
+  --font-painterz: var(--font-painterz-local), cursive;
+}
+
 @theme {
   --color-background: #fffefc;
   --color-foreground: #000000;
   --color-slate-light: #444e55;
   --color-slate-dark: #21272b;
+  --color-spray: #e85ed9;
 
   --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* SF Pro can't be served on the web; Apple devices use their system copy, others fall back */
+  --font-sf: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   /* backwards, not both: holding the end state keeps the element on its own compositing
      layer, where Chrome skips repainting hover changes such as underline colour */
   --animate-fade-in: fade-in 0.8s ease backwards;
+  /* The scroll cue's dash running down its line once, on the same 1.6s ease as a carousel step */
+  --animate-scroll-cue: scroll-cue 1.6s cubic-bezier(0.65, 0, 0.35, 1) both;
+
+  @keyframes scroll-cue {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      /* From just above the 48px line to just below it */
+      transform: translateY(240%);
+    }
+  }
+
+  /* Command bar items arriving: out of a blur, rising a touch (as AKQA's command bar does) */
+  --animate-chip-in: chip-in 0.45s cubic-bezier(0.2, 0.65, 0.3, 1) both;
+
+  @keyframes chip-in {
+    from {
+      opacity: 0;
+      filter: blur(6px);
+      transform: translateY(6px);
+    }
+  }
 
   @keyframes fade-in {
     from {
@@ -31,8 +65,263 @@
   );
 }
 
-/* Set on <html> only while the home page's first-load intro plays */
-@custom-variant intro (&:where(html[data-intro] *));
+/* One pass of the can: a band with a tilted edge slides down, the left side slightly ahead, so the
+   paint comes on top down with a lean towards the right; scrolling back up runs it in reverse */
+@keyframes spray-sweep {
+  to {
+    translate: 0 450px;
+  }
+}
+
+@keyframes spray-unsweep {
+  from {
+    translate: 0 450px;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+@utility spray-sweep {
+  fill: #fff;
+  filter: blur(8px);
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: skewY(15deg);
+  translate: 0 0;
+
+  [data-spray="on"] & {
+    animation: spray-sweep 0.4s linear forwards;
+  }
+
+  [data-spray="off"] & {
+    animation: spray-unsweep 0.4s linear forwards;
+  }
+
+  /* Hovering the photo wipes the paint off to show it clean, and leaving sprays it back on */
+  @media (hover: hover) {
+    .spray-host:hover [data-spray="on"] & {
+      animation: spray-unsweep 0.4s linear forwards;
+    }
+  }
+
+  /* Waits behind the home loader, so a refresh that lands here still shows the spray */
+  :root[data-loading] & {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-spray="on"] & {
+      animation: none;
+      translate: 0 450px;
+    }
+
+    [data-spray="off"] & {
+      animation: none;
+    }
+  }
+}
+
+/* The footer wordmark's texture wandering slowly inside the letters, like light moving over snow */
+@keyframes texture-drift {
+  from {
+    transform: translate(-10%, -7%) scale(1.02);
+  }
+  to {
+    transform: translate(10%, 7%) scale(1.16);
+  }
+}
+
+@utility texture-drift {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: texture-drift 9s ease-in-out infinite alternate;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* The hover underline, pulsing like the home scroll cue: a short dash runs along under the words,
+   over and over, on the cue's 1.6s ease. Works on the link itself or, on a span inside a .group link,
+   when that link is hovered; data-pulse keeps it running all the time */
+@keyframes underline-pulse {
+  from {
+    background-position: -60% 100%;
+  }
+  to {
+    background-position: 160% 100%;
+  }
+}
+
+@utility pulse-underline {
+  padding-bottom: 2px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  background-position: -60% 100%;
+
+  &:hover,
+  &:focus-visible,
+  &[data-pulse],
+  :where(.group):hover &,
+  :where(.group):focus-visible & {
+    background-size: 35% 1px;
+    animation: underline-pulse 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:hover,
+    &:focus-visible,
+    &[data-pulse],
+    :where(.group):hover &,
+    :where(.group):focus-visible & {
+      background-size: 100% 1px;
+      animation: none;
+    }
+  }
+}
+
+/* The header and command bar stay hidden while the home intro holds them (data-intro, set by
+   HomeHero until the loader has gone), and fade in once it lets go; elsewhere they fade in on load */
+:root[data-intro] .intro-chrome {
+  opacity: 0;
+  pointer-events: none;
+}
+
+:root:not([data-intro]) .intro-chrome {
+  animation: fade-in 0.8s ease backwards;
+}
+
+/* A dark card of moving film grain: white specks from SVG fractal noise over the text colour, the
+   noise layer jumping a few frames a second so it flickers like static. Used by the Work list's hover */
+@keyframes grain {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  20% {
+    translate: -12% 8%;
+  }
+  40% {
+    translate: 9% -14%;
+  }
+  60% {
+    translate: -6% 16%;
+  }
+  80% {
+    translate: 14% 4%;
+  }
+}
+
+@utility noise {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-foreground);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.65;
+    /* Five jumps, one every 0.2s */
+    animation: grain 1s steps(5) infinite;
+  }
+
+  /* A soft light in the middle fading to the edges, so it reads as a screen rather than a flat block */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--color-background) 12%, transparent), transparent 70%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      animation: none;
+    }
+  }
+}
+
+/* Registered so the page can ease between its light and dark theme (see FlagSection) */
+@property --color-background {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fffefc;
+}
+
+@property --color-foreground {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #000000;
+}
+
+:root {
+  transition:
+    --color-background 1.125s ease,
+    --color-foreground 1.125s ease;
+}
+
+:root[data-dark] {
+  --color-background: #000000;
+  --color-foreground: #fffefc;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    transition: none;
+  }
+}
+
+/* A highlight that travels round the rim; registered so the angle can animate */
+@property --gleam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes gleam-rotate {
+  to {
+    --gleam-angle: 360deg;
+  }
+}
+
+@utility gleam {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--gleam-angle),
+      color-mix(in srgb, var(--color-background) 16%, transparent) 0deg 90deg,
+      color-mix(in srgb, var(--color-background) 20%, transparent) 160deg,
+      var(--color-background) 180deg,
+      color-mix(in srgb, var(--color-background) 20%, transparent) 200deg,
+      color-mix(in srgb, var(--color-background) 16%, transparent) 270deg 360deg
+    );
+    /* Cuts the fill away to leave a 1px ring that follows the corner radius */
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+    opacity: 0.7;
+    animation: gleam-rotate 3s linear infinite;
+    transition: opacity 0.4s ease-out;
+  }
+
+  &:focus-within::before {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      animation: none;
+    }
+  }
+}
 
 @layer base {
   * {

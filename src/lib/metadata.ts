@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 
 export const SITE_NAME = 'GianniMS'
-export const PERSON = 'Gianni Mendonça Semedo'
 
 // Next merges metadata one top-level key at a time, so a page that sets only a title
 // still shares the root's Open Graph and Twitter title, description and URL. Every page

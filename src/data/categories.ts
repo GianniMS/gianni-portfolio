@@ -8,30 +8,6 @@ export const CATEGORIES: PortfolioItem['category'][] = [
   'press',
 ]
 
-// Only these get a detail image and the hover preview on the Experience page
-export const PREVIEW_CATEGORIES: PortfolioItem['category'][] = ['project', 'experience']
-
-// These have an organization field; experience pairs it with the function (its title)
-export const ORGANIZATION_CATEGORIES: PortfolioItem['category'][] = [
-  'experience',
-  'certificate',
-  'award',
-  'press',
-]
-
-// For these the Experience stage shows the organization rather than the title
-export const ORGANIZATION_STAGE_CATEGORIES: PortfolioItem['category'][] = [
-  'certificate',
-  'award',
-  'press',
-]
-
-export const HOME_TILE_CATEGORIES: PortfolioItem['category'][] = [
-  'project',
-  'experience',
-  'certificate',
-]
-
 export const CATEGORY_LABELS: Record<PortfolioItem['category'], string> = {
   project: 'Projects',
   experience: 'Experience',
