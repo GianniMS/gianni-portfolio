@@ -44,9 +44,9 @@ export const items: PortfolioItem[] = [
       challenge:
         "A tree nursery keeps a registry of its trees, tree pits and leveling units. It needed to be clear at a glance and easy to keep up to date, within the client's budget.",
       approach:
-        'An interactive Mapbox map in Next.js and TypeScript shows every entity and its details. Managing the registry goes through an Excel sheet the client already knows: download it, make the changes, upload it, and the Symfony backend picks up the new data.',
+        'I designed and built an interactive Mapbox map in Next.js and TypeScript that shows every entity and its details. Managing the registry goes through an Excel sheet the client already knows: download it, make the changes, upload it, and the Symfony backend picks up the new data.',
       result:
-        "A registry that's clear on the map and simple to maintain, without the cost of a full management interface. Next to design and development, I was the client's main point of contact.",
+        "A registry that's clear on the map and simple to maintain, without the cost of a full management interface. I was also the client's main point of contact.",
     },
     slug: 'nursitree',
     description: [
@@ -168,7 +168,7 @@ export const items: PortfolioItem[] = [
       challenge:
         'FiDocs validated e-commerce import documents by hand before they could be submitted to customs. Slow, repetitive work, at a scale where every minute counts.',
       approach:
-        'An internal validation tool built in Next.js and TypeScript on a Symfony backend, that checks the Excel import documents automatically.',
+        'An internal validation tool I designed and built in Next.js and TypeScript on a Symfony backend, that checks the Excel import documents automatically.',
       result:
         'Internal validation became 200% faster. In August 2026 the tool validated around 1.55 million of the roughly 13 million e-commerce goods lines processed in the Netherlands: almost 12% of the national total.',
     },
@@ -274,7 +274,7 @@ export const items: PortfolioItem[] = [
     story: {
       challenge: 'The web can feel a little empty. TabCraft brings some life to every page you visit.',
       approach:
-        'A Chrome extension that puts a character on the pages you visit and on your new tab page. It walks, sits, watches videos with you and reacts when you click or drag it.',
+        'A Chrome extension I designed and built that puts a character on the pages you visit and on your new tab page. It walks, sits, watches videos with you and reacts when you click or drag it.',
       result:
         "A companion that's truly yours: upload up to 8 skins and give them names. At its peak, a little over 1,000 installs.",
     },
