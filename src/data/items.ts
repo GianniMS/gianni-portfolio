@@ -26,7 +26,7 @@ export const items: PortfolioItem[] = [
     ],
     skills: ['Next.js', 'TypeScript', 'Mapbox API', 'Third-party API'],
     dateType: 'single',
-    date: '2026-11-01',
+    date: '2025-11-01',
   },
   {
     id: 'soundcheckd',
