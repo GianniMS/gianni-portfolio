@@ -3,7 +3,8 @@ import { CVData } from '@/types'
 export const cv: CVData = {
   name: 'Gianni Mendonça Semedo',
   about: [
-    "Growing up in Rotterdam, The Netherlands, you get used to change. And you learn that change doesn't just happen. You can make it happen. For me, tech isn't just code or hardware. It's intertwined with culture and people's everyday lifestyle, and there are a lot of people out there. I'm well versed in a variety of disciplines for a reason. Development, design, research, strategy and marketing. With the goal to connect these people, in ways that go beyond today's standards. In a way that makes room for change.",
+    "I come from more than one cultural background and grew up in Rotterdam, The Netherlands, a city where cultures meet on every street. That teaches you early that there's more than one way to see things, and that good work starts with good communication. I try to be kind in everything I do, because you never know what someone has going on.",
+    "For me, tech isn't just code or hardware. It's intertwined with culture and people's everyday lives, and there are a lot of people out there. That's why I work as a professional across development, design, research, strategy and marketing. With the goal to connect these people, in ways that go beyond today's standards. In a way that makes room for change.",
   ],
   involvedWith: [
     { name: 'CSI-Fresh Logistics', logo: '/images/brands/csi-fresh.png' },
