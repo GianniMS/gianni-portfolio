@@ -2,6 +2,33 @@ import { PortfolioItem } from '@/types'
 
 export const items: PortfolioItem[] = [
   {
+    id: 'csi-fresh',
+    title: 'CSI Fresh',
+    category: 'project',
+    tags: ['Web', 'Dashboard'],
+    keywords: ['web', 'web app', 'dashboard', 'map', 'ships', 'vessels', 'logistics', 'customs'],
+    link: 'internal',
+    screens: [
+      { device: 'macbook', src: '/images/screens/csi-desktop-1.png' },
+      { device: 'macbook', src: '/images/screens/csi-desktop-2.png' },
+    ],
+    story: {
+      challenge:
+        'A dashboard full of numbers tells you what is happening, but not where. CSI Fresh wanted insight that speaks to the imagination a bit more.',
+      approach:
+        'I built an interactive Mapbox map in Next.js that shows the ships on their way, live from a third-party vessel data API. Click a ship and a detail panel shows its name, position, course and when it was last updated.',
+      result:
+        'A more dynamic way of getting insight: the shipments behind the numbers, visible on the map as they move.',
+    },
+    slug: 'csi-fresh',
+    description: [
+      'An interactive map with a live ship view and a detail panel for every visible vessel, added to the CSI Fresh dashboard.',
+    ],
+    skills: ['Next.js', 'TypeScript', 'Mapbox API', 'Third-party API'],
+    dateType: 'single',
+    date: '2026-11-01',
+  },
+  {
     id: 'soundcheckd',
     title: 'SoundCheckd',
     category: 'project',
@@ -218,8 +245,10 @@ export const items: PortfolioItem[] = [
     keywords: ['web', 'frontend', 'migration', 'non-profit'],
     isPrivate: true,
     link: 'internal',
-    // Client work that can't be shown
-    screens: [{ device: 'macbook', src: '/images/screens/private-desktop.png' }],
+    screens: [
+      { device: 'macbook', src: '/images/screens/tvb-desktop-1.png' },
+      { device: 'macbook', src: '/images/screens/tvb-desktop-2.png' },
+    ],
     story: {
       challenge: 'The application De Tilburgse Voedselbank relies on ran on an outdated version of Next.js.',
       approach:
@@ -242,8 +271,7 @@ export const items: PortfolioItem[] = [
     keywords: ['web', 'integration', 'email', 'automation', 'backend'],
     isPrivate: true,
     link: 'internal',
-    // Client work that can't be shown
-    screens: [{ device: 'macbook', src: '/images/screens/private-desktop.png' }],
+    screens: [{ device: 'macbook', src: '/images/screens/storax-desktop-1.png' }],
     story: {
       challenge:
         'Requests reach Storax through WeTransfer links in their email. Those links expire, and the request goes with them.',
@@ -294,8 +322,10 @@ export const items: PortfolioItem[] = [
     tags: ['Web', 'Dashboard'],
     keywords: ['web', 'web app', 'dashboard', 'logistics', 'transport', 'internal tool'],
     link: 'internal',
-    // Client work that can't be shown
-    screens: [{ device: 'macbook', src: '/images/screens/private-desktop.png' }],
+    screens: [
+      { device: 'macbook', src: '/images/screens/vanderhaas-desktop-1.png' },
+      { device: 'macbook', src: '/images/screens/vanderhaas-desktop-2.png' },
+    ],
     story: {
       challenge:
         'Van der Haas Transport needed real-time insight into its shipments, and one place for the documents that come with them.',
