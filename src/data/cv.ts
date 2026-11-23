@@ -3,7 +3,7 @@ import { CVData } from '@/types'
 export const cv: CVData = {
   name: 'Gianni Mendonça Semedo',
   about: [
-    "I grew up in Rotterdam, The Netherlands, with roots in more than one culture. A city that diverse teaches you early that there's more than one way to see the world, and that it all starts with communication. I'm direct, but always kind. You never know what someone has going on.",
+    "Rotterdam raised me, and my roots reach into more than one culture. Growing up between them showed me there's more than one way to see the world, and that it all starts with communication. I'm direct, but always kind. You never know what someone has going on.",
     'I like structure, and I like taking charge. As a professional in development, design, research, strategy and marketing, I bring those worlds together into one clear direction. My inspiration comes from fashion, fiction and nature. Places where ideas get to go a little further.',
   ],
   involvedWith: [
