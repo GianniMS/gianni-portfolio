@@ -16,9 +16,9 @@ export const sprayWords = ['SoFtWaRe', 'DeSiGn', 'ReSeArCh', 'StRaTeGy', 'MaRkEt
 
 // The home carousel, in order; the colour shows while each screenshot loads
 export const mockups: Mockup[] = [
-  { device: 'macbook', screen: '#0ea5e9', image: '/images/screens/skai-desktop-1.png' },
-  { device: 'iphone', screen: '#f43f5e', image: '/images/screens/soundcheckd-mobile.png' },
-  { device: 'macbook', screen: '#10b981', image: '/images/screens/nursitree-desktop-1.jpg' },
-  { device: 'iphone', screen: '#fbbf24', image: '/images/screens/marlog-mobile.png' },
-  { device: 'macbook', screen: '#8b5cf6', image: '/images/screens/fidocs-desktop-1.png' },
+  { device: 'macbook', screen: '#0ea5e9', image: '/images/screens/skai-desktop-1.webp' },
+  { device: 'iphone', screen: '#f43f5e', image: '/images/screens/soundcheckd-mobile.webp' },
+  { device: 'macbook', screen: '#10b981', image: '/images/screens/nursitree-desktop-1.webp' },
+  { device: 'iphone', screen: '#fbbf24', image: '/images/screens/marlog-mobile.webp' },
+  { device: 'macbook', screen: '#8b5cf6', image: '/images/screens/fidocs-desktop-1.webp' },
 ]

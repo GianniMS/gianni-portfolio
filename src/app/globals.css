@@ -230,10 +230,12 @@
     content: "";
     position: absolute;
     inset: -50%;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.6 0 0 0 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    /* Drawn at 1.5x so each speck spans a few pixels, still visible on a non-retina screen */
+    background-size: 270px 270px;
     opacity: 0.65;
-    /* Five jumps, one every 0.2s */
-    animation: grain 1s steps(5) infinite;
+    /* Five jumps, one every 0.25s */
+    animation: grain 1.25s steps(5) infinite;
   }
 
   /* A soft light in the middle fading to the edges, so it reads as a screen rather than a flat block */

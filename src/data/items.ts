@@ -9,8 +9,8 @@ export const items: PortfolioItem[] = [
     keywords: ['web', 'web app', 'dashboard', 'map', 'ships', 'vessels', 'logistics', 'customs'],
     link: 'internal',
     screens: [
-      { device: 'macbook', src: '/images/screens/csi-desktop-1.png' },
-      { device: 'macbook', src: '/images/screens/csi-desktop-2.png' },
+      { device: 'macbook', src: '/images/screens/csi-desktop-1.webp' },
+      { device: 'macbook', src: '/images/screens/csi-desktop-2.webp' },
     ],
     story: {
       challenge:
@@ -36,8 +36,8 @@ export const items: PortfolioItem[] = [
     keywords: ['mobile', 'app', 'iOS', 'iPhone', 'native', 'social', 'music'],
     link: 'internal',
     screens: [
-      { device: 'iphone', src: '/images/screens/soundcheckd-mobile.png' },
-      { device: 'macbook', src: '/images/screens/soundcheckd-desktop.png' },
+      { device: 'iphone', src: '/images/screens/soundcheckd-mobile.webp' },
+      { device: 'macbook', src: '/images/screens/soundcheckd-desktop.webp' },
     ],
     story: {
       challenge:
@@ -64,8 +64,8 @@ export const items: PortfolioItem[] = [
     keywords: ['web', 'web app', 'dashboard', 'management', 'map', 'internal tool', 'design'],
     link: 'internal',
     screens: [
-      { device: 'macbook', src: '/images/screens/nursitree-desktop-1.jpg' },
-      { device: 'macbook', src: '/images/screens/nursitree-desktop-2.png' },
+      { device: 'macbook', src: '/images/screens/nursitree-desktop-1.webp' },
+      { device: 'macbook', src: '/images/screens/nursitree-desktop-2.webp' },
     ],
     story: {
       challenge:
@@ -94,8 +94,8 @@ export const items: PortfolioItem[] = [
     link: 'internal',
     // The company's logo, then its website
     screens: [
-      { device: 'macbook', src: '/images/screens/louvels-logo.png' },
-      { device: 'macbook', src: '/images/screens/louvels-site.png' },
+      { device: 'macbook', src: '/images/screens/louvels-logo.webp' },
+      { device: 'macbook', src: '/images/screens/louvels-site.webp' },
     ],
     summary:
       'At Louvels.dev I develop custom software for small and medium-sized businesses, within an agile Kanban team. Every business has its own processes and its own problems, so every solution is built to fit, with Next.js, TypeScript, Symfony, Docker and Azure DevOps. Where it adds real value I implement AI to optimize business processes and workflows: large language models, retrieval-augmented generation, prompt engineering and AI APIs.',
@@ -118,8 +118,8 @@ export const items: PortfolioItem[] = [
     link: 'internal',
     // The company's logo, then its website
     screens: [
-      { device: 'macbook', src: '/images/screens/outlier-logo.png' },
-      { device: 'macbook', src: '/images/screens/outlier-site.png' },
+      { device: 'macbook', src: '/images/screens/outlier-logo.webp' },
+      { device: 'macbook', src: '/images/screens/outlier-site.webp' },
     ],
     summary:
       'At Outlier I helped improve large language models for the Dutch language. Language is more than grammar, it carries culture. So in the prompt engineering process I made sure answers were not only correct, but culturally relevant too, and gave feedback on response models to sharpen them further.',
@@ -141,8 +141,8 @@ export const items: PortfolioItem[] = [
     link: 'internal',
     // The company's logo, then its website
     screens: [
-      { device: 'macbook', src: '/images/screens/jem-id-logo.png' },
-      { device: 'macbook', src: '/images/screens/jem-id-site.png' },
+      { device: 'macbook', src: '/images/screens/jem-id-logo.webp' },
+      { device: 'macbook', src: '/images/screens/jem-id-site.webp' },
     ],
     summary:
       'During my internship at Jem-id I designed and developed a customer information dashboard, made to be easy to use for the people who work with it every day. It started with wireframes and prototypes, validated with the target audience through different forms of testing before anything got built. That design was then realized in React and TypeScript, working within an agile Scrum team.',
@@ -188,8 +188,8 @@ export const items: PortfolioItem[] = [
     keywords: ['web', 'web app', 'internal tool', 'automation', 'validation', 'logistics'],
     link: 'internal',
     screens: [
-      { device: 'macbook', src: '/images/screens/fidocs-desktop-1.png' },
-      { device: 'macbook', src: '/images/screens/fidocs-desktop-2.png' },
+      { device: 'macbook', src: '/images/screens/fidocs-desktop-1.webp' },
+      { device: 'macbook', src: '/images/screens/fidocs-desktop-2.webp' },
     ],
     story: {
       challenge:
@@ -217,8 +217,8 @@ export const items: PortfolioItem[] = [
     keywords: ['web', 'web app', 'dashboard', 'management', 'internal tool', 'logistics'],
     link: 'internal',
     screens: [
-      { device: 'macbook', src: '/images/screens/marlog-desktop.png' },
-      { device: 'iphone', src: '/images/screens/marlog-mobile.png' },
+      { device: 'macbook', src: '/images/screens/marlog-desktop.webp' },
+      { device: 'iphone', src: '/images/screens/marlog-mobile.webp' },
     ],
     story: {
       challenge:
@@ -246,8 +246,8 @@ export const items: PortfolioItem[] = [
     isPrivate: true,
     link: 'internal',
     screens: [
-      { device: 'macbook', src: '/images/screens/tvb-desktop-1.png' },
-      { device: 'macbook', src: '/images/screens/tvb-desktop-2.png' },
+      { device: 'macbook', src: '/images/screens/tvb-desktop-1.webp' },
+      { device: 'macbook', src: '/images/screens/tvb-desktop-2.webp' },
     ],
     story: {
       challenge: 'The application De Tilburgse Voedselbank relies on ran on an outdated version of Next.js.',
@@ -272,8 +272,8 @@ export const items: PortfolioItem[] = [
     isPrivate: true,
     link: 'internal',
     screens: [
-      { device: 'macbook', src: '/images/screens/storax-desktop-1.png' },
-      { device: 'macbook', src: '/images/screens/coming-soon-desktop.png' },
+      { device: 'macbook', src: '/images/screens/storax-desktop-1.webp' },
+      { device: 'macbook', src: '/images/screens/coming-soon-desktop.webp' },
     ],
     story: {
       challenge:
@@ -299,8 +299,8 @@ export const items: PortfolioItem[] = [
     keywords: ['browser extension', 'Chrome', 'extension', 'product'],
     link: 'internal',
     screens: [
-      { device: 'macbook', src: '/images/screens/tabcraft-desktop-1.png' },
-      { device: 'macbook', src: '/images/screens/tabcraft-desktop-2.png' },
+      { device: 'macbook', src: '/images/screens/tabcraft-desktop-1.webp' },
+      { device: 'macbook', src: '/images/screens/tabcraft-desktop-2.webp' },
     ],
     story: {
       challenge: 'The web can feel a little empty. TabCraft brings some life to every page you visit.',
@@ -326,8 +326,8 @@ export const items: PortfolioItem[] = [
     keywords: ['web', 'web app', 'dashboard', 'logistics', 'transport', 'internal tool'],
     link: 'internal',
     screens: [
-      { device: 'macbook', src: '/images/screens/vanderhaas-desktop-1.png' },
-      { device: 'macbook', src: '/images/screens/vanderhaas-desktop-2.png' },
+      { device: 'macbook', src: '/images/screens/vanderhaas-desktop-1.webp' },
+      { device: 'macbook', src: '/images/screens/vanderhaas-desktop-2.webp' },
     ],
     story: {
       challenge:
@@ -351,8 +351,8 @@ export const items: PortfolioItem[] = [
     keywords: ['web', 'web app', 'internal tool', 'customs', 'logistics'],
     link: 'internal',
     screens: [
-      { device: 'macbook', src: '/images/screens/skai-desktop-1.png' },
-      { device: 'macbook', src: '/images/screens/skai-desktop-2.png' },
+      { device: 'macbook', src: '/images/screens/skai-desktop-1.webp' },
+      { device: 'macbook', src: '/images/screens/skai-desktop-2.webp' },
     ],
     story: {
       challenge:
