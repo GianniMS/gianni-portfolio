@@ -271,7 +271,10 @@ export const items: PortfolioItem[] = [
     keywords: ['web', 'integration', 'email', 'automation', 'backend'],
     isPrivate: true,
     link: 'internal',
-    screens: [{ device: 'macbook', src: '/images/screens/storax-desktop-1.png' }],
+    screens: [
+      { device: 'macbook', src: '/images/screens/storax-desktop-1.png' },
+      { device: 'macbook', src: '/images/screens/coming-soon-desktop.png' },
+    ],
     story: {
       challenge:
         'Requests reach Storax through WeTransfer links in their email. Those links expire, and the request goes with them.',
