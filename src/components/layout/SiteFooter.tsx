@@ -13,7 +13,7 @@ export default function SiteFooter() {
       aria-label="Contact"
       className="relative flex h-[60svh] items-end overflow-hidden md:h-svh"
     >
-      <TextureWordmark text="GMS" texture="/images/white-texture.jpg" textureOpacity={0.2} />
+      <TextureWordmark text="GMS" texture="/images/white-texture.jpg" textureOpacity={0.25} />
       <nav aria-label="Legal" className="absolute inset-x-0 bottom-4 flex justify-center gap-6 font-sf text-xs md:bottom-6">
         <Link href="/privacy-policy" className={navLinkClass}>
           Privacy Policy
