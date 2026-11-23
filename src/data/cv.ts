@@ -3,8 +3,8 @@ import { CVData } from '@/types'
 export const cv: CVData = {
   name: 'Gianni Mendonça Semedo',
   about: [
-    "I grew up in Rotterdam, The Netherlands. A diverse city, and coming from a mixed cultural background myself, I learned early that there are different ways to see the world. And through my work I want to connect these different views. As a professional in development, design, research, strategy and marketing, I look at a problem from every side, and bring those sides together into one clear direction.",
-    "I'm direct, but always kind. You never know what someone has going on. I like structure, I like taking charge, and I believe it all starts with communication. My inspiration comes from fashion, fiction and nature.",
+    "I grew up in Rotterdam, The Netherlands. A diverse city, and coming from a mixed cultural background myself, I learned early that there are different ways to see the world. And through my work I want to connect these different views. With my experience in development, design, research, strategy and marketing, I look at a problem from every side, and bring those sides together into one clear direction.",
+    "I prefer a direct approach, with communication and kindness at its core. My inspiration comes from fashion, fiction, music and nature. Places where creative boundaries are pushed. It's what gives me the energy to get results. And what gives me the energy to connect people.",
   ],
   involvedWith: [
     { name: 'CSI-Fresh Logistics', logo: '/images/brands/csi-fresh.png' },
