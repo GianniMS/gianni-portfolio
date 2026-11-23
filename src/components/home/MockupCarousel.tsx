@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useRef, type KeyboardEvent, type PointerEvent } from 'react'
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber'
 import { useGLTF, useTexture } from '@react-three/drei'
-import { MathUtils, type Group, type Object3D } from 'three'
+import { MathUtils, Mesh, Texture, type Group, type Object3D } from 'three'
 import type { Mockup, MockupDevice } from '@/types'
 import { DEVICE_HEIGHT, DeviceModel, MAC_WIDTH, MODELS, Studio } from '@/components/home/devices'
 
@@ -180,16 +180,43 @@ function Slot({
   )
 }
 
-// Suspends until every model is in, then waits two frames so the first render (and its shader
-// compiles) has happened before anyone is told the scene is ready
-function Loaded({ onLoad, images }: { onLoad: () => void; images: string[] }) {
-  useGLTF(Object.values(MODELS).map((m) => m.url))
-  // The screenshots too, so no screen shows its placeholder colour once the loader has gone
-  useTexture(images)
+// Each asset is warmed by itself, with the same single-url call the devices make: the loaders cache
+// on their whole input, so an array call would be a separate entry and the devices would load again
+function WarmModel({ url }: { url: string }) {
+  useGLTF(url)
+  return null
+}
+
+function WarmImage({ src }: { src: string }) {
+  useTexture(src)
+  return null
+}
+
+// Inside the same boundary as the warmers, so it only mounts once every model and screenshot is in.
+// Then it gives the devices two frames to mount, uploads every texture and compiles every shader up
+// front (the devices wait off-screen before the intro, so culling would otherwise leave that work for
+// their first visible frame, mid-flight), and only then tells the loader the scene is ready
+function Ready({ onLoad }: { onLoad: () => void }) {
+  const { gl, scene, camera } = useThree()
   useEffect(() => {
-    let id = requestAnimationFrame(() => (id = requestAnimationFrame(onLoad)))
-    return () => cancelAnimationFrame(id)
-  }, [onLoad])
+    let cancelled = false
+    let id = requestAnimationFrame(
+      () =>
+        (id = requestAnimationFrame(async () => {
+          scene.traverse((o) => {
+            if (!(o instanceof Mesh)) return
+            for (const material of [o.material].flat())
+              for (const value of Object.values(material)) if (value instanceof Texture) gl.initTexture(value)
+          })
+          await gl.compileAsync(scene, camera)
+          if (!cancelled) onLoad()
+        })),
+    )
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(id)
+    }
+  }, [gl, scene, camera, onLoad])
   return null
 }
 
@@ -243,7 +270,13 @@ export default function MockupCarousel({
         <Canvas camera={{ position: [0, 0, 14], fov: FOV }} dpr={[1, 2]} eventSource={section} eventPrefix="client">
           <Studio />
           <Suspense fallback={null}>
-            <Loaded onLoad={onLoad} images={mockups.flatMap((m) => (m.image ? [m.image] : []))} />
+            {Object.values(MODELS).map((m) => (
+              <WarmModel key={m.url} url={m.url} />
+            ))}
+            {[...new Set(mockups.flatMap((m) => (m.image ? [m.image] : [])))].map((src) => (
+              <WarmImage key={src} src={src} />
+            ))}
+            <Ready onLoad={onLoad} />
           </Suspense>
           {[-2, -1, 0, 1, 2].map((offset) => {
             const key = pos + offset
