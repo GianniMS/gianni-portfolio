@@ -63,18 +63,18 @@ export default function Slide({ slide }: { slide: IntroSlide }) {
     </>
   )
 
-  // One device turns in towards the text; a pair turns in towards each other
+  // One device turns in towards the text; a pair faces you square on
   const aside = devices ? (
     <div
       className={`order-first grid aspect-square md:order-none md:aspect-auto md:h-[88svh] ${devices.length > 1 ? 'grid-cols-2' : ''}`}
     >
-      {devices.map(({ device, src }, i) => (
+      {devices.map(({ device, src }) => (
         <div key={src} className="relative">
           <DeviceRender
             device={device}
             screen={placeholderFor(id)}
             image={src}
-            view={devices.length > 1 && i === 0 ? 'front' : 'angle'}
+            view={devices.length > 1 ? 'straight' : 'angle'}
             snug={devices.length > 1}
           />
         </div>

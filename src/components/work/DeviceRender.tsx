@@ -6,7 +6,8 @@ import { MathUtils, type Group } from 'three'
 import type { MockupDevice } from '@/types'
 import { DEVICE_HEIGHT, DeviceModel, MAC_WIDTH, Studio } from '@/components/home/devices'
 
-export type DeviceView = 'front' | 'angle'
+// straight faces you square on and only hovers, without turning
+export type DeviceView = 'front' | 'angle' | 'straight'
 
 // Rotation (x, y, z) per view: the left device turns in towards the middle and the right one mirrors
 // it, so the pair faces each other rather than away
@@ -14,8 +15,8 @@ export type DeviceView = 'front' | 'angle'
 const PHONE_WIDTH = 1.4
 
 const POSES: Record<MockupDevice, Record<DeviceView, [number, number, number]>> = {
-  macbook: { front: [0.26, 0.22, -0.03], angle: [0.26, -0.22, 0.03] },
-  iphone: { front: [0.08, 0.2, -0.03], angle: [0.08, -0.2, 0.03] },
+  macbook: { front: [0.26, 0.22, -0.03], angle: [0.26, -0.22, 0.03], straight: [0.26, 0, 0] },
+  iphone: { front: [0.08, 0.2, -0.03], angle: [0.08, -0.2, 0.03], straight: [0, 0, 0] },
 }
 
 function Device({
@@ -58,6 +59,10 @@ function Device({
     const g = group.current
     if (!g || calm.current) return
     const t = clock.elapsedTime
+    if (view === 'straight') {
+      g.position.y = Math.sin(t * 0.6) * 0.02 * fit
+      return
+    }
     follow.current.x = MathUtils.damp(follow.current.x, mouse.current.x, 2, delta)
     follow.current.y = MathUtils.damp(follow.current.y, mouse.current.y, 2, delta)
     g.position.y = Math.sin(t * 0.6) * 0.04 * fit
