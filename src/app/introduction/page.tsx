@@ -30,7 +30,7 @@ export default async function IntroductionPage() {
         <GooReveal play="load" className="relative text-center">
           <h1 className="font-caslon text-[2.5rem] leading-[1.05] text-balance md:text-7xl lg:text-8xl">{cv.name}</h1>
           {/* The role sprayed across the lower half of the name, once the name has melted in */}
-          <div className="absolute top-[35%] left-1/2 aspect-[400/60] w-[min(96vw,60rem)] -translate-x-1/2">
+          <div className="absolute top-[18%] left-1/2 aspect-[400/60] w-[min(96vw,60rem)] -translate-x-1/2">
             <SprayText words={introduction.spray} box={COVER_SPRAY} delay={1600} duration={1400} speckle />
           </div>
         </GooReveal>
