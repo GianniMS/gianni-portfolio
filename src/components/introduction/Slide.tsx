@@ -7,10 +7,12 @@ export default function Slide({ slide, number }: { slide: IntroSlide; number: nu
   const { id, kicker, title, body, blocks, device } = slide
   const text = (
     <>
-      <p className="mb-6 flex gap-4 font-sf text-xs tracking-wide text-foreground/60 uppercase md:mb-10 md:text-sm">
-        <span className="tabular-nums">{String(number).padStart(2, '0')}</span>
-        <T text={kicker} />
-      </p>
+      {kicker && (
+        <p className="mb-6 flex gap-4 font-sf text-xs tracking-wide text-foreground/60 uppercase md:mb-10 md:text-sm">
+          <span className="tabular-nums">{String(number).padStart(2, '0')}</span>
+          <T text={kicker} />
+        </p>
+      )}
       <h2 className="max-w-5xl font-caslon text-[1.75rem] leading-[1.15] md:text-5xl lg:text-6xl">
         <T text={title} />
       </h2>

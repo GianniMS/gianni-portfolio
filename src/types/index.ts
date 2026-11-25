@@ -67,7 +67,7 @@ export type Localized = Record<Lang, string>
 // challenge, approach and result) and optionally a row of skills
 export type IntroSlide = {
   id: string
-  kicker: Localized
+  kicker?: Localized
   title: Localized
   body?: Localized
   blocks?: { label: Localized; text: Localized; tags?: string[] }[]

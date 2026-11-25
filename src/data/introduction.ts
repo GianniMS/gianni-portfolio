@@ -22,17 +22,16 @@ const RESULT = { nl: 'Resultaat', en: 'Result' }
 export const introSlides: IntroSlide[] = [
   {
     id: 'over-mij',
-    kicker: { nl: 'Gianni Mendonça Semedo', en: 'Gianni Mendonça Semedo' },
     title: { nl: 'Wie ben ik?', en: 'Who am I?' },
     body: {
-      nl: 'Ik ben Gianni. Opgegroeid in Rotterdam, met een gemengde culturele achtergrond, en afgestudeerd hier aan Hogeschool Rotterdam. Nu ben ik full stack developer bij Louvels.dev. Ik kijk naar een probleem vanuit development, design, onderzoek en strategie, en breng die kanten samen. Ik ben direct, met communicatie en vriendelijkheid als basis.',
-      en: 'I’m Gianni. I grew up in Rotterdam, with a mixed cultural background, and graduated here at Rotterdam University of Applied Sciences. Today I’m a full stack developer at Louvels.dev. I look at a problem from development, design, research and strategy, and bring those sides together. I’m direct, with communication and kindness at my core.',
+      nl: 'Ik ben Gianni. Momenteel ben ik full stack developer bij Louvels.dev, waar ik maatwerksoftware ontwikkel. Daarvoor rondde ik mijn stage af bij Jem-id en deed ik AI-ervaring op bij Outlier.ai. Recent ben ik afgestudeerd aan Hogeschool Rotterdam, in Creative Media and Game Technologies, met een 10 voor mijn afstudeerproject: SoundCheckd.',
+      en: 'I’m Gianni. I currently work as a full stack developer at Louvels.dev, where I build custom software. Before that I completed my internship at Jem-id and gained AI experience at Outlier.ai. I recently graduated from Rotterdam University of Applied Sciences in Creative Media and Game Technologies, with a 10 for my graduation project: SoundCheckd.',
     },
   },
   {
     id: 'soundcheckd',
     device: { device: 'iphone', src: '/images/screens/soundcheckd-mobile.webp' },
-    kicker: { nl: 'SoundCheckd · Zelfstandig', en: 'SoundCheckd · Independent' },
+    kicker: { nl: 'SoundCheckd · Afstudeerproject', en: 'SoundCheckd · Graduation project' },
     title: { nl: 'Van idee tot App Store. Volledig zelf.', en: 'From idea to App Store. Entirely my own.' },
     blocks: [
       {
