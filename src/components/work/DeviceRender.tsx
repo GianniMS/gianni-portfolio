@@ -6,7 +6,7 @@ import { MathUtils, type Group } from 'three'
 import type { MockupDevice } from '@/types'
 import { DEVICE_HEIGHT, DeviceModel, MAC_WIDTH, Studio } from '@/components/home/devices'
 
-// straight faces you square on and only hovers, without turning
+// straight faces you square on and only hovers, turning just slightly after the mouse
 export type DeviceView = 'front' | 'angle' | 'straight'
 
 // Rotation (x, y, z) per view: the left device turns in towards the middle and the right one mirrors
@@ -59,12 +59,13 @@ function Device({
     const g = group.current
     if (!g || calm.current) return
     const t = clock.elapsedTime
-    if (view === 'straight') {
-      g.position.y = Math.sin(t * 0.6) * 0.02 * fit
-      return
-    }
     follow.current.x = MathUtils.damp(follow.current.x, mouse.current.x, 2, delta)
     follow.current.y = MathUtils.damp(follow.current.y, mouse.current.y, 2, delta)
+    if (view === 'straight') {
+      g.position.y = Math.sin(t * 0.6) * 0.02 * fit
+      g.rotation.set(rx + follow.current.y * 0.03, ry + follow.current.x * 0.06, rz)
+      return
+    }
     g.position.y = Math.sin(t * 0.6) * 0.04 * fit
     g.rotation.set(
       rx + Math.cos(t * 0.45) * 0.02 + follow.current.y * 0.06,
