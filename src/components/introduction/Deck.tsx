@@ -31,6 +31,8 @@ export default function Deck({ children }: { children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null)
   const [current, setCurrent] = useState(0)
   const [lang, setLang] = useState<Lang>('nl')
+  // The deck waits behind a Start button, so the cover melts in when the presentation begins
+  const [started, setStarted] = useState(false)
   const total = Children.count(children)
 
   const goTo = useCallback(
@@ -42,7 +44,7 @@ export default function Deck({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const root = ref.current
-    if (!root) return
+    if (!root || !started) return
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -53,9 +55,10 @@ export default function Deck({ children }: { children: ReactNode }) {
     )
     Array.from(root.children).forEach((slide) => observer.observe(slide))
     return () => observer.disconnect()
-  }, [total])
+  }, [total, started])
 
   useEffect(() => {
+    if (!started) return
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return
       const target =
@@ -70,11 +73,26 @@ export default function Deck({ children }: { children: ReactNode }) {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [current, goTo, total])
+  }, [current, goTo, total, started])
 
   const toggleFullscreen = () => {
     if (document.fullscreenElement) document.exitFullscreen()
     else document.documentElement.requestFullscreen?.()
+  }
+
+  if (!started) {
+    return (
+      <div className="grid h-svh place-items-center">
+        <button
+          type="button"
+          autoFocus
+          onClick={() => setStarted(true)}
+          className="pulse-underline font-caslon text-4xl md:text-6xl"
+        >
+          Start
+        </button>
+      </div>
+    )
   }
 
   return (
@@ -85,7 +103,7 @@ export default function Deck({ children }: { children: ReactNode }) {
           {children}
         </div>
 
-        <div className="pointer-events-none fixed inset-x-0 top-0 h-0.5 bg-foreground/10">
+        <div className="pointer-events-none fixed inset-x-0 top-0 h-0.5 animate-fade-in bg-foreground/10 [animation-delay:1200ms]">
           <div
             className="h-full bg-foreground transition-[width] duration-500 ease-out"
             style={{ width: `${((current + 1) / total) * 100}%` }}
@@ -94,7 +112,7 @@ export default function Deck({ children }: { children: ReactNode }) {
 
         <nav
           aria-label="Slides"
-          className="fixed right-4 bottom-4 flex items-center gap-1 rounded-full bg-foreground p-1 font-sf text-xs text-background md:right-8 md:bottom-8"
+          className="fixed right-4 bottom-4 flex animate-fade-in [animation-delay:1200ms] items-center gap-1 rounded-full bg-foreground p-1 font-sf text-xs text-background md:right-8 md:bottom-8"
         >
           <div role="group" aria-label={deckLabels.language[lang]} className="flex">
             {LANGS.map((option) => (
