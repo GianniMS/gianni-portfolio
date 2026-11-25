@@ -62,3 +62,13 @@ export type Lang = 'nl' | 'en'
 
 // A string in both languages of the /introduction deck
 export type Localized = Record<Lang, string>
+
+// One slide of the /introduction deck after its cover: a statement, then labelled blocks (a case's
+// challenge, approach and result) and optionally a row of skills
+export type IntroSlide = {
+  id: string
+  kicker: Localized
+  title: Localized
+  body?: Localized
+  blocks?: { label: Localized; text: Localized; tags?: string[] }[]
+}

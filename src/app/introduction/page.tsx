@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/metadata'
 import { getCV } from '@/lib/content'
 import Deck, { SlideFrame, T } from '@/components/introduction/Deck'
-import { introduction } from '@/data/introduction'
+import Slide from '@/components/introduction/Slide'
+import { introduction, introSlides } from '@/data/introduction'
 
 export const metadata: Metadata = {
   ...pageMetadata({
@@ -29,6 +30,10 @@ export default async function IntroductionPage() {
           <T text={introduction.hint} />
         </p>
       </SlideFrame>
+
+      {introSlides.map((slide, i) => (
+        <Slide key={slide.id} slide={slide} number={i + 2} />
+      ))}
     </Deck>
   )
 }
