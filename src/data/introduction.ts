@@ -47,27 +47,23 @@ export const introSlides: IntroSlide[] = [
       { device: 'iphone', src: '/images/screens/soundcheckd-appstore.webp' },
     ],
     title: { nl: 'Van idee tot App Store. Volledig zelf.', en: 'From idea to App Store. Entirely my own.' },
-    blocks: [
+    bullets: [
+      { nl: 'Afstuderen met eigen startup', en: 'Graduating with my own startup' },
       {
-        label: CHALLENGE,
-        text: {
-          nl: 'Muziek beoordelen, je collectie en concerten bijhouden en delen met vrienden. Er was geen plek die dat samenbracht.',
-          en: 'Rating music, tracking your collection and concerts, and sharing it with friends. No single place brought that together.',
-        },
+        nl: 'Onderzoeken van wet- en regelgeving, de markt en de muziekindustrie',
+        en: 'Researching laws and regulations, the market and the music industry',
       },
       {
-        label: APPROACH,
-        text: {
-          nl: 'Analyse, planning en architectuur. Een Symfony-API met PostgreSQL en een native iOS-app in Swift. Zelf getest, gedeployd en beheerd, met security en AVG vanaf de eerste regel.',
-          en: 'Analysis, planning and architecture. A Symfony API with PostgreSQL and a native iOS app in Swift. Tested, deployed and run by me, with security and GDPR from the first line.',
-        },
+        nl: 'Zelfstandig plannen, analyseren en technische afwegingen maken',
+        en: 'Planning, analysing and making technical trade-offs on my own',
       },
       {
-        label: RESULT,
-        text: {
-          nl: 'Live in de App Store. 20+ installs, zonder marketing.',
-          en: 'Live in the App Store. 20+ installs, without any marketing.',
-        },
+        nl: 'Security-, identity- en AVG-richtlijnen volgen',
+        en: 'Following security, identity and GDPR guidelines',
+      },
+      {
+        nl: 'Full scale development: architectuur, code, deployment, externe API’s koppelen',
+        en: 'Full scale development: architecture, code, deployment, integrating external APIs',
       },
     ],
   },
