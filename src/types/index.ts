@@ -57,3 +57,17 @@ export type LegalPage = {
   updated: string
   sections: { title: string; paragraphs: string[] }[]
 }
+
+// One slide of the /introduction deck; every part is optional so a slide can be a statement, a list,
+// a row of figures or a requirement-by-requirement match
+export type IntroSlide = {
+  id: string
+  kicker: string
+  title: string
+  body?: string[]
+  points?: { label: string; text: string }[]
+  stats?: { value: string; label: string }[]
+  match?: { need: string; have: string; level: 'strong' | 'basis' | 'growth' }[]
+  // Shown small under the slide, e.g. which vacancy line it answers
+  note?: string
+}
