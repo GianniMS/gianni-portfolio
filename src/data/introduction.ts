@@ -5,7 +5,7 @@ export const introduction = {
   organization: 'Hogeschool Rotterdam',
   date: { nl: '27 november 2026', en: '27 November 2026' } satisfies Localized,
   // The role, sprayed over the name on the cover; alternating case on purpose, Painterz only drips on lowercase
-  spray: ['JuNiOr AI', 'PlAtFoRm EnGiNeEr'],
+  spray: ['JuNiOr AI PlAtFoRm EnGiNeEr'],
 }
 
 export const deckLabels = {

@@ -85,7 +85,6 @@ export default function Deck({ children }: { children: ReactNode }) {
       <div className="grid h-svh place-items-center">
         <button
           type="button"
-          autoFocus
           onClick={() => setStarted(true)}
           className="pulse-underline font-caslon text-4xl md:text-6xl"
         >
