@@ -25,8 +25,8 @@ export default function Slide({ slide }: { slide: IntroSlide }) {
       {bullets && (
         <ul className="mt-8 max-w-3xl space-y-3 text-base leading-relaxed md:mt-12 md:space-y-4 md:text-xl">
           {bullets.map((bullet) => (
-            <li key={bullet.en} className="flex gap-3">
-              <span aria-hidden>–</span>
+            <li key={bullet.en} className="flex items-baseline gap-3 md:gap-4">
+              <span aria-hidden className="size-1.5 shrink-0 -translate-y-0.5 rounded-full bg-foreground md:size-2" />
               <T text={bullet} />
             </li>
           ))}
