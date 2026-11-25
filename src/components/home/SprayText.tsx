@@ -11,15 +11,18 @@ const BASELINE = 0.75
 // The words are sprayed on as one piece, revealed in one sweep, whenever half of them come on
 // screen. Scrolling back up past them runs the sweep in reverse; carrying on down keeps them.
 // Painterz draws its capitals clean and its lowercase letters dripping, so the words come in
-// alternating case to get the drips. `delay` (ms) holds the sweep back, e.g. until text under it has arrived.
+// alternating case to get the drips. `delay` (ms) holds the sweep back, e.g. until text under it has arrived;
+// `duration` (ms) slows or speeds it.
 export default function SprayText({
   words,
   box = BOX,
   delay,
+  duration,
 }: {
   words: string[]
   box?: typeof BOX
   delay?: number
+  duration?: number
 }) {
   const ref = useRef<SVGSVGElement>(null)
   // useId can contain characters that break a url(#…) reference
@@ -46,7 +49,10 @@ export default function SprayText({
           width={WIDTH * 3}
           height={500}
           className="spray-sweep"
-          style={delay ? { animationDelay: `${delay}ms` } : undefined}
+          style={{
+            animationDelay: delay ? `${delay}ms` : undefined,
+            animationDuration: duration ? `${duration}ms` : undefined,
+          }}
         />
       </mask>
       <g mask={`url(#${mask})`} fill="currentColor" textAnchor="middle" fontSize={FONT_SIZE} className="font-painterz">

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/metadata'
 import { getCV } from '@/lib/content'
-import Deck, { SlideFrame, T } from '@/components/introduction/Deck'
+import Deck, { SlideFrame } from '@/components/introduction/Deck'
 import Slide from '@/components/introduction/Slide'
 import GooReveal from '@/components/home/GooReveal'
 import SprayText from '@/components/home/SprayText'
@@ -17,8 +17,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-// A wide, single-line box for the spray across the name
-const COVER_SPRAY = { width: 600, height: 140, fontSize: 96 }
+// A wide box for the two lines sprayed across the name, small enough in units that the tilted
+// band still starts clear of the words
+const COVER_SPRAY = { width: 400, height: 110, fontSize: 40 }
 
 export default async function IntroductionPage() {
   const cv = await getCV()
@@ -26,21 +27,12 @@ export default async function IntroductionPage() {
   return (
     <Deck>
       <SlideFrame>
-        <GooReveal play="load" className="text-center">
-          <p className="font-sf text-xs tracking-wide text-foreground/60 uppercase md:text-sm">
-            {introduction.organization} · <T text={introduction.date} />
-          </p>
-          <div className="relative mt-8 md:mt-12">
-            <h1 className="font-caslon text-[2.5rem] leading-[1.05] text-balance md:text-7xl lg:text-8xl">{cv.name}</h1>
-            {/* Over the lower half of the name, sprayed once it has melted in */}
-            <div className="absolute inset-x-0 top-[30%] h-full">
-              <SprayText words={introduction.spray} box={COVER_SPRAY} delay={1600} />
-            </div>
+        <GooReveal play="load" className="relative text-center">
+          <h1 className="font-caslon text-[2.5rem] leading-[1.05] text-balance md:text-7xl lg:text-8xl">{cv.name}</h1>
+          {/* The role sprayed across the lower half of the name, once the name has melted in */}
+          <div className="absolute top-[45%] left-1/2 aspect-[400/110] w-[min(92vw,52rem)] -translate-x-1/2">
+            <SprayText words={introduction.spray} box={COVER_SPRAY} delay={1600} duration={1400} />
           </div>
-          <p className="mt-10 text-xl md:mt-16 md:text-3xl">{introduction.role}</p>
-          <p className="mt-16 hidden font-sf text-xs text-foreground/50 md:block">
-            <T text={introduction.hint} />
-          </p>
         </GooReveal>
       </SlideFrame>
 

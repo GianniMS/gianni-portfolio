@@ -4,12 +4,8 @@ export const introduction = {
   role: 'Junior AI Platform Engineer',
   organization: 'Hogeschool Rotterdam',
   date: { nl: '27 november 2026', en: '27 November 2026' } satisfies Localized,
-  // Sprayed over the name on the cover; alternating case on purpose, Painterz only drips on lowercase
-  spray: ['AI PlAtFoRm'],
-  hint: {
-    nl: '↓ of spatie voor de volgende slide',
-    en: '↓ or space for the next slide',
-  } satisfies Localized,
+  // The role, sprayed over the name on the cover; alternating case on purpose, Painterz only drips on lowercase
+  spray: ['JuNiOr AI', 'PlAtFoRm EnGiNeEr'],
 }
 
 export const deckLabels = {
