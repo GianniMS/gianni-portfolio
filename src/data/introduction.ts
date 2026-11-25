@@ -22,14 +22,11 @@ const RESULT = { nl: 'Resultaat', en: 'Result' }
 export const introSlides: IntroSlide[] = [
   {
     id: 'over-mij',
-    kicker: { nl: 'Over mij', en: 'About me' },
-    title: {
-      nl: 'Elk probleem heeft meerdere kanten. Ik breng ze samen.',
-      en: 'Every problem has more than one side. I bring them together.',
-    },
+    kicker: { nl: 'Gianni Mendonça Semedo', en: 'Gianni Mendonça Semedo' },
+    title: { nl: 'Wie ben ik?', en: 'Who am I?' },
     body: {
-      nl: 'Opgegroeid in Rotterdam, met een gemengde culturele achtergrond. Development, design, onderzoek en strategie: ik kijk vanuit elke hoek en maak er één heldere richting van. Direct, met communicatie en vriendelijkheid als basis.',
-      en: 'Raised in Rotterdam, with a mixed cultural background. Development, design, research and strategy: I look from every angle and turn it into one clear direction. Direct, with communication and kindness at its core.',
+      nl: 'Ik ben Gianni. Opgegroeid in Rotterdam, met een gemengde culturele achtergrond, en afgestudeerd hier aan Hogeschool Rotterdam. Nu ben ik full stack developer bij Louvels.dev. Ik kijk naar een probleem vanuit development, design, onderzoek en strategie, en breng die kanten samen. Ik ben direct, met communicatie en vriendelijkheid als basis.',
+      en: 'I’m Gianni. I grew up in Rotterdam, with a mixed cultural background, and graduated here at Rotterdam University of Applied Sciences. Today I’m a full stack developer at Louvels.dev. I look at a problem from development, design, research and strategy, and bring those sides together. I’m direct, with communication and kindness at my core.',
     },
   },
   {
