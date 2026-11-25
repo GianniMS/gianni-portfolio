@@ -10,6 +10,9 @@ export type DeviceView = 'front' | 'angle'
 
 // Rotation (x, y, z) per view: the left device turns in towards the middle and the right one mirrors
 // it, so the pair faces each other rather than away
+// A phone's width in the layout box, for framing it on its own in a narrow panel
+const PHONE_WIDTH = 1.4
+
 const POSES: Record<MockupDevice, Record<DeviceView, [number, number, number]>> = {
   macbook: { front: [0.26, 0.22, -0.03], angle: [0.26, -0.22, 0.03] },
   iphone: { front: [0.08, 0.2, -0.03], angle: [0.08, -0.2, 0.03] },
@@ -20,11 +23,13 @@ function Device({
   screen,
   image,
   view,
+  snug,
 }: {
   device: MockupDevice
   screen: string
   image?: string
   view: DeviceView
+  snug?: boolean
 }) {
   const group = useRef<Group>(null)
   // The mouse anywhere on the page, from -1 to 1 across the window, and a damped copy to follow it with
@@ -43,7 +48,8 @@ function Device({
   }, [])
 
   const { viewport } = useThree()
-  const fit = Math.min((viewport.width * 0.72) / MAC_WIDTH, (viewport.height * 0.8) / DEVICE_HEIGHT)
+  const width = snug && device === 'iphone' ? PHONE_WIDTH : MAC_WIDTH
+  const fit = Math.min((viewport.width * 0.72) / width, (viewport.height * 0.8) / DEVICE_HEIGHT)
   const [rx, ry, rz] = POSES[device][view]
 
   // A slow float, plus a small turn towards the mouse as on the home carousel; small enough that the
@@ -69,23 +75,26 @@ function Device({
   )
 }
 
-// One device render for a project page, framed to fill its panel
+// One device render for a project page, framed to fill its panel; snug frames a phone by its own
+// width rather than the laptop's, so it fills a narrow panel too
 export default function DeviceRender({
   device,
   screen,
   image,
   view,
+  snug,
 }: {
   device: MockupDevice
   screen: string
   image?: string
   view: DeviceView
+  snug?: boolean
 }) {
   return (
     <Canvas camera={{ position: [0, 0, 14], fov: 30 }} dpr={[1, 2]} className="absolute! inset-0">
       <Studio />
       <Suspense fallback={null}>
-        <Device device={device} screen={screen} image={image} view={view} />
+        <Device device={device} screen={screen} image={image} view={view} snug={snug} />
       </Suspense>
     </Canvas>
   )

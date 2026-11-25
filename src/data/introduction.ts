@@ -42,7 +42,10 @@ export const introSlides: IntroSlide[] = [
   },
   {
     id: 'soundcheckd',
-    device: { device: 'iphone', src: '/images/screens/soundcheckd-mobile.webp' },
+    devices: [
+      { device: 'iphone', src: '/images/screens/soundcheckd-mobile.webp' },
+      { device: 'iphone', src: '/images/screens/soundcheckd-appstore.webp' },
+    ],
     title: { nl: 'Van idee tot App Store. Volledig zelf.', en: 'From idea to App Store. Entirely my own.' },
     blocks: [
       {
@@ -70,7 +73,7 @@ export const introSlides: IntroSlide[] = [
   },
   {
     id: 'fidocs',
-    device: { device: 'macbook', src: '/images/screens/fidocs-desktop-1.webp' },
+    devices: [{ device: 'macbook', src: '/images/screens/fidocs-desktop-1.webp' }],
     title: { nl: 'Zelf opgezet. Landelijke schaal.', en: 'Set up by me. National scale.' },
     blocks: [
       {
@@ -98,7 +101,7 @@ export const introSlides: IntroSlide[] = [
   },
   {
     id: 'louvels',
-    device: { device: 'macbook', src: '/images/screens/louvels-site.webp' },
+    devices: [{ device: 'macbook', src: '/images/screens/louvels-site.webp' }],
     title: { nl: 'Als het misgaat, sta ik er.', en: 'When things break, I’m there.' },
     blocks: [
       {

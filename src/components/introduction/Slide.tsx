@@ -9,7 +9,7 @@ import type { IntroSlide } from '@/types'
 const SQUARE_MAX_HEIGHT = 75
 
 export default function Slide({ slide }: { slide: IntroSlide }) {
-  const { id, title, body, bullets, blocks, device, logos } = slide
+  const { id, title, body, bullets, blocks, devices, logos } = slide
   const text = (
     <>
       <h2 className="max-w-5xl font-caslon text-[1.75rem] leading-[1.15] md:text-5xl lg:text-6xl">
@@ -36,7 +36,7 @@ export default function Slide({ slide }: { slide: IntroSlide }) {
       {blocks && (
         <ul
           className={`mt-10 grid gap-8 ${
-            device ? 'md:mt-12 md:gap-6' : `md:mt-16 md:gap-[3vw] ${blocks.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'}`
+            devices ? 'md:mt-12 md:gap-6' : `md:mt-16 md:gap-[3vw] ${blocks.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'}`
           }`}
         >
           {blocks.map(({ label, text, tags }) => (
@@ -63,9 +63,22 @@ export default function Slide({ slide }: { slide: IntroSlide }) {
     </>
   )
 
-  const aside = device ? (
-    <div className="relative order-first aspect-square md:order-none md:aspect-auto md:h-[88svh]">
-      <DeviceRender device={device.device} screen={placeholderFor(id)} image={device.src} view="angle" />
+  // One device turns in towards the text; a pair turns in towards each other
+  const aside = devices ? (
+    <div
+      className={`order-first grid aspect-square md:order-none md:aspect-auto md:h-[88svh] ${devices.length > 1 ? 'grid-cols-2' : ''}`}
+    >
+      {devices.map(({ device, src }, i) => (
+        <div key={src} className="relative">
+          <DeviceRender
+            device={device}
+            screen={placeholderFor(id)}
+            image={src}
+            view={devices.length > 1 && i === 0 ? 'front' : 'angle'}
+            snug={devices.length > 1}
+          />
+        </div>
+      ))}
     </div>
   ) : logos ? (
     // Sized by area, as in the CV's Involved With, then scaled up for the slide
