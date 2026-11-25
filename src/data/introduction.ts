@@ -53,6 +53,7 @@ export const introSlides: IntroSlide[] = [
         nl: 'Onderzoeken van wet- en regelgeving, de markt en de muziekindustrie',
         en: 'Researching laws and regulations, the market and the music industry',
       },
+      { nl: 'Doelgroeponderzoek en usertesting', en: 'Target audience research and user testing' },
       {
         nl: 'Zelfstandig plannen, analyseren en technische afwegingen maken',
         en: 'Planning, analysing and making technical trade-offs on my own',
@@ -71,28 +72,12 @@ export const introSlides: IntroSlide[] = [
     id: 'fidocs',
     devices: [{ device: 'macbook', src: '/images/screens/fidocs-desktop-1.webp' }],
     title: { nl: 'Zelf opgezet. Landelijke schaal.', en: 'Set up by me. National scale.' },
-    blocks: [
-      {
-        label: CHALLENGE,
-        text: {
-          nl: 'E-commerce importdocumenten werden met de hand gevalideerd voordat ze naar de douane gingen.',
-          en: 'E-commerce import documents were validated by hand before they could go to customs.',
-        },
-      },
-      {
-        label: APPROACH,
-        text: {
-          nl: 'Research naar douaneregels en wetgeving, daarna zelf ontworpen en opgezet: een validatietool in Next.js en TypeScript op Symfony.',
-          en: 'Research into customs rules and legislation, then designed and set up by me: a validation tool in Next.js and TypeScript on Symfony.',
-        },
-      },
-      {
-        label: RESULT,
-        text: {
-          nl: '200% snellere validatie. In augustus 2026 zo’n 1,55 miljoen goederenregels: bijna 12% van het landelijke totaal.',
-          en: '200% faster validation. In August 2026 around 1.55 million goods lines: almost 12% of the national total.',
-        },
-      },
+    bullets: [
+      { nl: 'In dienst bij Louvels.dev', en: 'Employed at Louvels.dev' },
+      { nl: 'API-koppeling', en: 'API integration' },
+      { nl: 'Research in wet- en regelgeving van de douane', en: 'Research into customs laws and regulations' },
+      { nl: 'Monitoren en oplossen van operationele problemen', en: 'Monitoring and solving operational issues' },
+      { nl: 'Klantcontact', en: 'Client contact' },
     ],
   },
   {
