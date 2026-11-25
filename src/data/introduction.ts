@@ -74,6 +74,7 @@ export const introSlides: IntroSlide[] = [
     title: { nl: 'Zelf opgezet. Landelijke schaal.', en: 'Set up by me. National scale.' },
     bullets: [
       { nl: 'In dienst bij Louvels.dev', en: 'Employed at Louvels.dev' },
+      { nl: 'Projectopzet en architectuur', en: 'Project setup and architecture' },
       { nl: 'API-koppeling', en: 'API integration' },
       { nl: 'Research in wet- en regelgeving van de douane', en: 'Research into customs laws and regulations' },
       { nl: 'Monitoren en oplossen van operationele problemen', en: 'Monitoring and solving operational issues' },
