@@ -63,8 +63,8 @@ export const introSlides: IntroSlide[] = [
         en: 'Following security, identity and GDPR guidelines',
       },
       {
-        nl: 'Full scale development: architectuur, code, deployment, externe API’s koppelen',
-        en: 'Full scale development: architecture, code, deployment, integrating external APIs',
+        nl: 'Full scale development: architectuur, code, RBAC, deployment, externe API’s koppelen',
+        en: 'Full scale development: architecture, code, RBAC, deployment, integrating external APIs',
       },
     ],
   },
