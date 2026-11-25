@@ -21,8 +21,8 @@ const AREA = 7200
 const MAX_WIDTH = 200
 const MAX_HEIGHT = 60
 
-export function logoSize(ratio: number): { width: number; height: number } {
+export function logoSize(ratio: number, maxHeight = MAX_HEIGHT): { width: number; height: number } {
   let height = Math.sqrt(AREA / ratio)
-  height = Math.min(height, MAX_HEIGHT, MAX_WIDTH / ratio)
+  height = Math.min(height, maxHeight, MAX_WIDTH / ratio)
   return { width: Math.round(height * ratio), height: Math.round(height) }
 }

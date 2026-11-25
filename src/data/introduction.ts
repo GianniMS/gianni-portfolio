@@ -23,10 +23,22 @@ export const introSlides: IntroSlide[] = [
   {
     id: 'over-mij',
     title: { nl: 'Wie ben ik?', en: 'Who am I?' },
-    body: {
-      nl: 'Ik ben Gianni. Momenteel ben ik full stack developer bij Louvels.dev, waar ik maatwerksoftware ontwikkel. Daarvoor rondde ik mijn stage af bij Jem-id en deed ik AI-ervaring op bij Outlier.ai. Recent ben ik afgestudeerd aan Hogeschool Rotterdam, in Creative Media and Game Technologies, met een 10 voor mijn afstudeerproject: SoundCheckd.',
-      en: 'I’m Gianni. I currently work as a full stack developer at Louvels.dev, where I build custom software. Before that I completed my internship at Jem-id and gained AI experience at Outlier.ai. I recently graduated from Rotterdam University of Applied Sciences in Creative Media and Game Technologies, with a 10 for my graduation project: SoundCheckd.',
-    },
+    bullets: [
+      { nl: 'Gianni Mendonça Semedo, 24', en: 'Gianni Mendonça Semedo, 24' },
+      { nl: 'Momenteel full stack developer bij Louvels.dev', en: 'Currently full stack developer at Louvels.dev' },
+      { nl: 'Stage bij Jem-id', en: 'Internship at Jem-id' },
+      { nl: 'Dutch Expert bij Outlier.ai: prompt engineering, LLMs', en: 'Dutch Expert at Outlier.ai: prompt engineering, LLMs' },
+      {
+        nl: 'Afgestudeerd aan Hogeschool Rotterdam met een 10',
+        en: 'Graduated from Rotterdam University of Applied Sciences with a 10',
+      },
+    ],
+    logos: [
+      { name: 'Louvels.dev', src: '/images/brands/louvels.png' },
+      { name: 'Jem-id', src: '/images/brands/jem-id.png' },
+      { name: 'Outlier.ai', src: '/images/brands/outlier.svg' },
+      { name: 'Hogeschool Rotterdam', src: '/images/brands/hogeschool-rotterdam.png', keepColors: true },
+    ],
   },
   {
     id: 'soundcheckd',

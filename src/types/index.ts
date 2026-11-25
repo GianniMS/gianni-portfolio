@@ -69,7 +69,10 @@ export type IntroSlide = {
   id: string
   title: Localized
   body?: Localized
+  bullets?: Localized[]
   blocks?: { label: Localized; text: Localized; tags?: string[] }[]
   // A case's screenshot, shown on one 3D device beside the text
   device?: { device: MockupDevice; src: string }
+  // Logos in a 2 × 2 grid beside the text, shown black unless keepColors (a logo already in black and white)
+  logos?: { name: string; src: string; keepColors?: boolean }[]
 }
