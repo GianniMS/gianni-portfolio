@@ -36,8 +36,8 @@ export default async function IntroductionPage() {
         </GooReveal>
       </SlideFrame>
 
-      {introSlides.map((slide, i) => (
-        <Slide key={slide.id} slide={slide} number={i + 2} />
+      {introSlides.map((slide) => (
+        <Slide key={slide.id} slide={slide} />
       ))}
     </Deck>
   )

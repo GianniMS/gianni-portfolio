@@ -3,16 +3,10 @@ import DeviceRender from '@/components/work/DeviceRender'
 import { placeholderFor } from '@/lib/placeholder'
 import type { IntroSlide } from '@/types'
 
-export default function Slide({ slide, number }: { slide: IntroSlide; number: number }) {
-  const { id, kicker, title, body, blocks, device } = slide
+export default function Slide({ slide }: { slide: IntroSlide }) {
+  const { id, title, body, blocks, device } = slide
   const text = (
     <>
-      {kicker && (
-        <p className="mb-6 flex gap-4 font-sf text-xs tracking-wide text-foreground/60 uppercase md:mb-10 md:text-sm">
-          <span className="tabular-nums">{String(number).padStart(2, '0')}</span>
-          <T text={kicker} />
-        </p>
-      )}
       <h2 className="max-w-5xl font-caslon text-[1.75rem] leading-[1.15] md:text-5xl lg:text-6xl">
         <T text={title} />
       </h2>
@@ -58,9 +52,9 @@ export default function Slide({ slide, number }: { slide: IntroSlide; number: nu
   // A case: the text on the left, its screenshot on one device on the right (above the text on phones); the angled pose turns it in towards the text
   return (
     <SlideFrame>
-      <div className="grid items-center gap-8 md:grid-cols-[1.1fr_1fr] md:gap-[4vw]">
+      <div className="grid items-center gap-8 md:grid-cols-[1fr_1.3fr] md:gap-[3vw]">
         <div>{text}</div>
-        <div className="relative order-first aspect-4/3 md:order-none md:aspect-auto md:h-[70svh]">
+        <div className="relative order-first aspect-square md:order-none md:aspect-auto md:h-[88svh]">
           <DeviceRender device={device.device} screen={placeholderFor(id)} image={device.src} view="angle" />
         </div>
       </div>
