@@ -71,4 +71,6 @@ export type IntroSlide = {
   title: Localized
   body?: Localized
   blocks?: { label: Localized; text: Localized; tags?: string[] }[]
+  // A case's screenshot, shown on one 3D device beside the text
+  device?: { device: MockupDevice; src: string }
 }
