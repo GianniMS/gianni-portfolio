@@ -353,4 +353,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+::selection {
+  background-color: var(--color-spray);
+  color: var(--color-foreground);
+}
+
 
