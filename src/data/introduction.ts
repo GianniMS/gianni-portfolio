@@ -7,6 +7,7 @@ export const introduction = {
   // The role, sprayed over the name on the cover; alternating case on purpose, Painterz only drips on lowercase
   spray: ['JuNiOr AI PlAtFoRm EnGiNeEr'],
   thanks: { nl: 'Bedankt voor het luisteren', en: 'Thanks for listening' } satisfies Localized,
+  sendOff: ['SeE yOu SoOn'],
 }
 
 export const deckLabels = {

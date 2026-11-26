@@ -41,9 +41,15 @@ export default async function IntroductionPage() {
       ))}
 
       <SlideFrame>
-        <h2 className="text-center font-caslon text-[2.5rem] leading-[1.05] text-balance md:text-7xl lg:text-8xl">
-          <T text={introduction.thanks} />
-        </h2>
+        <div className="relative text-center">
+          <h2 className="font-caslon text-[2.5rem] leading-[1.05] text-balance md:text-7xl lg:text-8xl">
+            <T text={introduction.thanks} />
+          </h2>
+          {/* Sprayed across the thanks like the role on the cover, once the slide has settled */}
+          <div className="absolute top-[18%] left-1/2 aspect-[400/60] w-[min(96vw,60rem)] -translate-x-1/2">
+            <SprayText words={introduction.sendOff} box={COVER_SPRAY} delay={600} duration={1400} speckle />
+          </div>
+        </div>
       </SlideFrame>
     </Deck>
   )
