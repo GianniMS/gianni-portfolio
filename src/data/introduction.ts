@@ -105,7 +105,7 @@ export const introSlides: IntroSlide[] = [
     title: { nl: 'Hoe ik mezelf zie groeien', en: 'How I see myself growing' },
     bullets: [
       { nl: 'Van developer naar platform engineer', en: 'From developer to platform engineer' },
-      { nl: 'Azure, Entra ID en RBAC verdiepen', en: 'Deepening Azure, Entra ID and RBAC' },
+      { nl: 'Azure en Entra ID verdiepen', en: 'Deepening Azure and Entra ID' },
       { nl: 'Microsoft Foundry en IaC in de praktijk', en: 'Microsoft Foundry and IaC in practice' },
       { nl: 'Certificeren richting AZ-900 en AI-900', en: 'Certifying towards AZ-900 and AI-900' },
       {
