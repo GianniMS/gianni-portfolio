@@ -17,13 +17,13 @@ export default function Slide({ slide }: { slide: IntroSlide }) {
       </h2>
 
       {body && (
-        <p className="mt-8 max-w-3xl text-base leading-relaxed md:mt-12 md:text-xl">
+        <p className="mt-6 max-w-3xl text-base leading-relaxed md:mt-12 md:text-xl">
           <T text={body} />
         </p>
       )}
 
       {bullets && (
-        <ul className="mt-8 max-w-3xl space-y-3 text-base leading-relaxed md:mt-12 md:space-y-4 md:text-xl">
+        <ul className="mt-6 max-w-3xl space-y-2.5 text-[0.9375rem] leading-relaxed md:mt-12 md:space-y-4 md:text-xl">
           {bullets.map((bullet) => (
             <li key={bullet.en} className="flex items-baseline gap-3 md:gap-4">
               <span aria-hidden className="size-1.5 shrink-0 -translate-y-0.5 rounded-full bg-foreground md:size-2" />
@@ -34,7 +34,7 @@ export default function Slide({ slide }: { slide: IntroSlide }) {
       )}
 
       {tags && (
-        <ul className="mt-10 flex max-w-4xl flex-wrap gap-2 md:mt-14 md:gap-3">
+        <ul className="mt-8 flex max-w-4xl flex-wrap gap-2 md:mt-14 md:gap-3">
           {tags.map((tag) => (
             <li
               key={tag}
@@ -51,7 +51,7 @@ export default function Slide({ slide }: { slide: IntroSlide }) {
   // One device turns in towards the text; a pair faces you square on
   const aside = devices ? (
     <div
-      className={`order-first grid aspect-square md:order-none md:aspect-auto md:h-[88svh] ${devices.length > 1 ? 'grid-cols-2' : ''}`}
+      className={`order-first grid h-[36svh] md:order-none md:h-[88svh] ${devices.length > 1 ? 'grid-cols-2' : ''}`}
     >
       {devices.map(({ device, src }) => (
         <div key={src} className="relative">
@@ -67,7 +67,7 @@ export default function Slide({ slide }: { slide: IntroSlide }) {
     </div>
   ) : logos ? (
     // Sized by area, as in the CV's Involved With, then scaled up for the slide
-    <ul className="grid grid-cols-2 items-center gap-x-8 gap-y-12 [--logo-scale:1] md:gap-y-20 lg:[--logo-scale:1.5]">
+    <ul className="grid grid-cols-2 items-center gap-x-6 gap-y-8 [--logo-scale:0.7] md:gap-x-8 md:gap-y-20 md:[--logo-scale:1] lg:[--logo-scale:1.5]">
       {logos.map(({ name, src, keepColors }) => {
         const size = logoSize(logoRatio(src), SQUARE_MAX_HEIGHT)
         return (
@@ -96,7 +96,7 @@ export default function Slide({ slide }: { slide: IntroSlide }) {
   // in towards the text by its angled pose)
   return (
     <SlideFrame>
-      <div className="grid items-center gap-12 md:grid-cols-[1fr_1.3fr] md:gap-[3vw]">
+      <div className="grid items-center gap-8 md:grid-cols-[1fr_1.3fr] md:gap-[3vw]">
         <div>{text}</div>
         {aside}
       </div>

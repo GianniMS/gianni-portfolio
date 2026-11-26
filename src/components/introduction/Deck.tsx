@@ -23,7 +23,7 @@ export function T({ text }: { text: Localized }) {
 
 export function SlideFrame({ children }: { children: ReactNode }) {
   return (
-    <section className="flex min-h-svh snap-start flex-col justify-center px-4 py-20 md:px-[6vw] md:py-24">
+    <section className="flex min-h-svh snap-start flex-col justify-center px-5 pt-14 pb-24 md:px-[6vw] md:py-24">
       {children}
     </section>
   )
@@ -40,6 +40,8 @@ export default function Deck({ children }: { children: ReactNode }) {
   // The deck waits behind a Start button, so the cover melts in when the presentation begins
   const [started, setStarted] = useState(false)
   const [fullscreen, setFullscreen] = useState(false)
+  // iPhone Safari has no Fullscreen API, so the button would do nothing there
+  const [canFullscreen, setCanFullscreen] = useState(false)
   const total = Children.count(children)
 
   const goTo = useCallback(
@@ -110,7 +112,10 @@ export default function Deck({ children }: { children: ReactNode }) {
       <div className="grid h-svh place-items-center">
         <button
           type="button"
-          onClick={() => setStarted(true)}
+          onClick={() => {
+            setCanFullscreen(Boolean(document.fullscreenEnabled))
+            setStarted(true)
+          }}
           className="pulse-underline font-caslon text-4xl md:text-6xl"
         >
           Start
@@ -136,7 +141,7 @@ export default function Deck({ children }: { children: ReactNode }) {
 
         <nav
           aria-label="Slides"
-          className="fixed right-4 bottom-4 flex animate-fade-in [animation-delay:1200ms] items-center gap-1 rounded-full bg-foreground p-1 font-sf text-xs text-background md:right-8 md:bottom-8"
+          className="fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] flex animate-fade-in [animation-delay:1200ms] items-center gap-1 rounded-full bg-foreground p-1 font-sf text-xs text-background md:right-8 md:bottom-8"
         >
           <div role="group" aria-label={deckLabels.language[lang]} className="relative grid grid-cols-2">
             {/* One pill that slides under the chosen language */}
@@ -178,28 +183,32 @@ export default function Deck({ children }: { children: ReactNode }) {
           >
             ↓
           </button>
-          <span className="mx-1 h-4 w-px bg-background/25" />
-          <button
-            type="button"
-            onClick={toggleFullscreen}
-            aria-label={(fullscreen ? deckLabels.exitFullscreen : deckLabels.fullscreen)[lang]}
-            className={`${BUTTON} grid-cols-1 grid-rows-1`}
-          >
-            {/* Corners pointing out to enter, pointing in to leave; the two cross-fade */}
-            {[false, true].map((exit) => (
-              <svg
-                key={String(exit)}
-                viewBox="0 0 16 16"
-                className={`col-start-1 row-start-1 size-3.5 transition duration-300 ${exit === fullscreen ? 'scale-100 opacity-100' : 'scale-75 opacity-0'}`}
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                aria-hidden
+          {canFullscreen && (
+            <>
+              <span className="mx-1 h-4 w-px bg-background/25" />
+              <button
+                type="button"
+                onClick={toggleFullscreen}
+                aria-label={(fullscreen ? deckLabels.exitFullscreen : deckLabels.fullscreen)[lang]}
+                className={`${BUTTON} grid-cols-1 grid-rows-1`}
               >
-                <path d={exit ? 'M6 2v4H2M10 2v4h4M14 10h-4v4M2 10h4v4' : 'M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4'} />
-              </svg>
-            ))}
-          </button>
+                {/* Corners pointing out to enter, pointing in to leave; the two cross-fade */}
+                {[false, true].map((exit) => (
+                  <svg
+                    key={String(exit)}
+                    viewBox="0 0 16 16"
+                    className={`col-start-1 row-start-1 size-3.5 transition duration-300 ${exit === fullscreen ? 'scale-100 opacity-100' : 'scale-75 opacity-0'}`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    aria-hidden
+                  >
+                    <path d={exit ? 'M6 2v4H2M10 2v4h4M14 10h-4v4M2 10h4v4' : 'M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4'} />
+                  </svg>
+                ))}
+              </button>
+            </>
+          )}
         </nav>
       </div>
     </LangContext.Provider>
