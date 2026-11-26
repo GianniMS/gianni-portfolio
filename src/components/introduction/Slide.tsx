@@ -9,7 +9,7 @@ import type { IntroSlide } from '@/types'
 const SQUARE_MAX_HEIGHT = 75
 
 export default function Slide({ slide }: { slide: IntroSlide }) {
-  const { id, title, body, bullets, blocks, devices, logos } = slide
+  const { id, title, body, bullets, tags, devices, logos } = slide
   const text = (
     <>
       <h2 className="max-w-5xl font-caslon text-[1.75rem] leading-[1.15] md:text-5xl lg:text-6xl">
@@ -33,29 +33,14 @@ export default function Slide({ slide }: { slide: IntroSlide }) {
         </ul>
       )}
 
-      {blocks && (
-        <ul
-          className={`mt-10 grid gap-8 ${
-            devices ? 'md:mt-12 md:gap-6' : `md:mt-16 md:gap-[3vw] ${blocks.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2'}`
-          }`}
-        >
-          {blocks.map(({ label, text, tags }) => (
-            <li key={label.en} className="border-t border-foreground pt-3">
-              <h3 className="text-base font-medium md:text-lg">
-                <T text={label} />
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/80 md:text-base">
-                <T text={text} />
-              </p>
-              {tags && (
-                <ul className="mt-4 flex flex-wrap gap-2">
-                  {tags.map((tag) => (
-                    <li key={tag} className="rounded-full border border-foreground/30 px-2.5 py-0.5 font-sf text-xs">
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
-              )}
+      {tags && (
+        <ul className="mt-10 flex max-w-4xl flex-wrap gap-2 md:mt-14 md:gap-3">
+          {tags.map((tag) => (
+            <li
+              key={tag}
+              className="rounded-full border border-foreground/30 px-3 py-1 font-sf text-sm md:px-4 md:py-1.5 md:text-lg"
+            >
+              {tag}
             </li>
           ))}
         </ul>

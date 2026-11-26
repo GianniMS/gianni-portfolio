@@ -6,6 +6,7 @@ export const introduction = {
   date: { nl: '27 november 2026', en: '27 November 2026' } satisfies Localized,
   // The role, sprayed over the name on the cover; alternating case on purpose, Painterz only drips on lowercase
   spray: ['JuNiOr AI PlAtFoRm EnGiNeEr'],
+  thanks: { nl: 'Bedankt voor het luisteren', en: 'Thanks for listening' } satisfies Localized,
 }
 
 export const deckLabels = {
@@ -15,10 +16,6 @@ export const deckLabels = {
   exitFullscreen: { nl: 'Volledig scherm sluiten', en: 'Exit full screen' },
   language: { nl: 'Taal', en: 'Language' },
 } satisfies Record<string, Localized>
-
-const CHALLENGE = { nl: 'Uitdaging', en: 'Challenge' }
-const APPROACH = { nl: 'Aanpak', en: 'Approach' }
-const RESULT = { nl: 'Resultaat', en: 'Result' }
 
 export const introSlides: IntroSlide[] = [
   {
@@ -83,58 +80,37 @@ export const introSlides: IntroSlide[] = [
     ],
   },
   {
-    id: 'louvels',
-    devices: [{ device: 'macbook', src: '/images/screens/louvels-site.webp' }],
-    title: { nl: 'Als het misgaat, sta ik er.', en: 'When things break, I’m there.' },
-    blocks: [
-      {
-        label: CHALLENGE,
-        text: {
-          nl: 'Een kritieke PHP-kwetsbaarheid, en supportverzoeken bij Skai Customs die niet konden wachten.',
-          en: 'A critical PHP vulnerability, and support requests at Skai Customs that couldn’t wait.',
-        },
-      },
-      {
-        label: APPROACH,
-        text: { nl: '[Uitwerking volgt]', en: '[To be written]' },
-      },
-      {
-        label: RESULT,
-        text: { nl: '[Uitwerking volgt]', en: '[To be written]' },
-      },
+    id: 'skills',
+    title: { nl: 'Waar ik nu sta', en: 'Where I stand now' },
+    body: {
+      nl: 'Dagelijkse praktijk in versiebeheer, deployments, API-koppelingen en AI in productie.',
+      en: 'Daily practice in version control, deployments, API integrations and AI in production.',
+    },
+    tags: [
+      'Git',
+      'CI/CD',
+      'Azure DevOps',
+      'Docker',
+      'LLMs',
+      'RAG',
+      'Prompt engineering',
+      'Azure',
+      'RBAC',
+      'IaC',
+      'Entra ID (Microsoft SSO)',
     ],
   },
   {
-    id: 'fit',
-    title: { nl: 'Waar ik nu sta', en: 'Where I stand now' },
-    blocks: [
+    id: 'groei',
+    title: { nl: 'Hoe ik mezelf zie groeien', en: 'How I see myself growing' },
+    bullets: [
+      { nl: 'Van developer naar platform engineer', en: 'From developer to platform engineer' },
+      { nl: 'Azure, Entra ID en RBAC verdiepen', en: 'Deepening Azure, Entra ID and RBAC' },
+      { nl: 'Microsoft Foundry en IaC in de praktijk', en: 'Microsoft Foundry and IaC in practice' },
+      { nl: 'Certificeren richting AZ-900 en AI-900', en: 'Certifying towards AZ-900 and AI-900' },
       {
-        label: { nl: 'Meebrengen', en: 'What I bring' },
-        text: {
-          nl: 'Dagelijkse praktijk in versiebeheer, deployments, API-koppelingen en AI in productie.',
-          en: 'Daily practice in version control, deployments, API integrations and AI in production.',
-        },
-        tags: [
-          'Git',
-          'CI/CD',
-          'Azure DevOps',
-          'Docker',
-          'LLMs',
-          'RAG',
-          'Prompt engineering',
-          'Azure',
-          'RBAC',
-          'IaC',
-          'Entra ID (Microsoft SSO)',
-        ],
-      },
-      {
-        label: { nl: 'Groeien', en: 'Growing' },
-        text: {
-          nl: 'Van developer naar platform engineer. Azure, Entra ID en RBAC verdiepen, Microsoft Foundry en IaC in de praktijk, richting AZ-900 en AI-900. Samen met ervaren engineers, door naar medior.',
-          en: 'From developer to platform engineer. Deepening Azure, Entra ID and RBAC, Microsoft Foundry and IaC in practice, towards AZ-900 and AI-900. Alongside experienced engineers, on to medior.',
-        },
-        tags: ['Microsoft Foundry', 'AZ-900', 'AI-900'],
+        nl: 'Samen met ervaren engineers, door naar medior',
+        en: 'Alongside experienced engineers, on to medior',
       },
     ],
   },

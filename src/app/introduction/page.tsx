@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { pageMetadata } from '@/lib/metadata'
 import { getCV } from '@/lib/content'
-import Deck, { SlideFrame } from '@/components/introduction/Deck'
+import Deck, { SlideFrame, T } from '@/components/introduction/Deck'
 import Slide from '@/components/introduction/Slide'
 import GooReveal from '@/components/home/GooReveal'
 import SprayText from '@/components/home/SprayText'
@@ -39,6 +39,12 @@ export default async function IntroductionPage() {
       {introSlides.map((slide) => (
         <Slide key={slide.id} slide={slide} />
       ))}
+
+      <SlideFrame>
+        <h2 className="text-center font-caslon text-[2.5rem] leading-[1.05] text-balance md:text-7xl lg:text-8xl">
+          <T text={introduction.thanks} />
+        </h2>
+      </SlideFrame>
     </Deck>
   )
 }
