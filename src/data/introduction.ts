@@ -114,10 +114,6 @@ export const introSlides: IntroSlide[] = [
         en: 'Learning Microsoft Foundry and going deeper into IaC in practice',
       },
       { nl: 'Certificeren richting AZ-900 en AI-900', en: 'Certifying towards AZ-900 and AI-900' },
-      {
-        nl: 'Samen met ervaren engineers, door naar medior',
-        en: 'Alongside experienced engineers, on to medior',
-      },
     ],
   },
 ]
