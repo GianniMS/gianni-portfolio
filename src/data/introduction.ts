@@ -109,7 +109,10 @@ export const introSlides: IntroSlide[] = [
         nl: 'Entra ID voorbij SSO: managed identities, Conditional Access en rechten op AI-data',
         en: 'Entra ID beyond SSO: managed identities, Conditional Access and permissions on AI data',
       },
-      { nl: 'Microsoft Foundry en IaC in de praktijk', en: 'Microsoft Foundry and IaC in practice' },
+      {
+        nl: 'Microsoft Foundry leren en meer verdiepen in IaC in de praktijk',
+        en: 'Learning Microsoft Foundry and going deeper into IaC in practice',
+      },
       { nl: 'Certificeren richting AZ-900 en AI-900', en: 'Certifying towards AZ-900 and AI-900' },
       {
         nl: 'Samen met ervaren engineers, door naar medior',
