@@ -104,7 +104,6 @@ export const introSlides: IntroSlide[] = [
     id: 'groei',
     title: { nl: 'Hoe ik mezelf zie groeien', en: 'How I see myself growing' },
     bullets: [
-      { nl: 'Van developer naar platform engineer', en: 'From developer to platform engineer' },
       {
         nl: 'Entra ID voorbij SSO: managed identities, Conditional Access en rechten op AI-data',
         en: 'Entra ID beyond SSO: managed identities, Conditional Access and permissions on AI data',
