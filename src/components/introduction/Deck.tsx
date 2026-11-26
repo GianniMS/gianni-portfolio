@@ -12,7 +12,13 @@ const LangContext = createContext<Lang>('nl')
 
 // Reads the deck's current language, so slides can stay server components that just place these
 export function T({ text }: { text: Localized }) {
-  return <>{text[useContext(LangContext)]}</>
+  const lang = useContext(LangContext)
+  // Keyed on the language, so a switch fades the new words in instead of swapping them hard
+  return (
+    <span key={lang} className="animate-fade-in">
+      {text[lang]}
+    </span>
+  )
 }
 
 export function SlideFrame({ children }: { children: ReactNode }) {
@@ -33,6 +39,7 @@ export default function Deck({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>('nl')
   // The deck waits behind a Start button, so the cover melts in when the presentation begins
   const [started, setStarted] = useState(false)
+  const [fullscreen, setFullscreen] = useState(false)
   const total = Children.count(children)
 
   const goTo = useCallback(
@@ -42,20 +49,38 @@ export default function Deck({ children }: { children: ReactNode }) {
     [total],
   )
 
+  // Read from the scroll position rather than an IntersectionObserver: its first report after a reload
+  // could land on the wrong slide, and a slide taller than two screens never reaches its threshold
   useEffect(() => {
     const root = ref.current
     if (!root || !started) return
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setCurrent(Array.from(root.children).indexOf(entry.target))
-        }
-      },
-      { root, threshold: 0.5 },
-    )
-    Array.from(root.children).forEach((slide) => observer.observe(slide))
-    return () => observer.disconnect()
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const middle = root.scrollTop + root.clientHeight / 2
+      const slides = Array.from(root.children) as HTMLElement[]
+      const index = slides.findLastIndex((slide) => slide.offsetTop <= middle)
+      setCurrent(Math.max(0, index))
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    root.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      cancelAnimationFrame(frame)
+      root.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [total, started])
+
+  useEffect(() => {
+    const onChange = () => setFullscreen(Boolean(document.fullscreenElement))
+    onChange()
+    document.addEventListener('fullscreenchange', onChange)
+    return () => document.removeEventListener('fullscreenchange', onChange)
+  }, [])
 
   useEffect(() => {
     if (!started) return
@@ -113,14 +138,19 @@ export default function Deck({ children }: { children: ReactNode }) {
           aria-label="Slides"
           className="fixed right-4 bottom-4 flex animate-fade-in [animation-delay:1200ms] items-center gap-1 rounded-full bg-foreground p-1 font-sf text-xs text-background md:right-8 md:bottom-8"
         >
-          <div role="group" aria-label={deckLabels.language[lang]} className="flex">
+          <div role="group" aria-label={deckLabels.language[lang]} className="relative grid grid-cols-2">
+            {/* One pill that slides under the chosen language */}
+            <span
+              aria-hidden
+              className={`absolute inset-y-0 left-0 w-1/2 rounded-full bg-background transition-transform duration-300 ease-out ${lang === 'en' ? 'translate-x-full' : ''}`}
+            />
             {LANGS.map((option) => (
               <button
                 key={option}
                 type="button"
                 onClick={() => setLang(option)}
                 aria-pressed={lang === option}
-                className={`h-8 rounded-full px-2.5 uppercase transition-colors ${lang === option ? 'bg-background text-foreground' : 'hover:bg-background/15'}`}
+                className={`relative h-8 w-9 rounded-full uppercase transition-colors duration-300 ${lang === option ? 'text-foreground' : 'hover:bg-background/15'}`}
               >
                 {option}
               </button>
@@ -136,7 +166,7 @@ export default function Deck({ children }: { children: ReactNode }) {
           >
             ↑
           </button>
-          <span className="min-w-12 text-center tabular-nums" aria-live="polite">
+          <span className="w-14 text-center tabular-nums" aria-live="polite">
             {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
           </span>
           <button
@@ -149,10 +179,26 @@ export default function Deck({ children }: { children: ReactNode }) {
             ↓
           </button>
           <span className="mx-1 h-4 w-px bg-background/25" />
-          <button type="button" onClick={toggleFullscreen} aria-label={deckLabels.fullscreen[lang]} className={BUTTON}>
-            <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-              <path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" />
-            </svg>
+          <button
+            type="button"
+            onClick={toggleFullscreen}
+            aria-label={(fullscreen ? deckLabels.exitFullscreen : deckLabels.fullscreen)[lang]}
+            className={`${BUTTON} grid-cols-1 grid-rows-1`}
+          >
+            {/* Corners pointing out to enter, pointing in to leave; the two cross-fade */}
+            {[false, true].map((exit) => (
+              <svg
+                key={String(exit)}
+                viewBox="0 0 16 16"
+                className={`col-start-1 row-start-1 size-3.5 transition duration-300 ${exit === fullscreen ? 'scale-100 opacity-100' : 'scale-75 opacity-0'}`}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                aria-hidden
+              >
+                <path d={exit ? 'M6 2v4H2M10 2v4h4M14 10h-4v4M2 10h4v4' : 'M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4'} />
+              </svg>
+            ))}
           </button>
         </nav>
       </div>

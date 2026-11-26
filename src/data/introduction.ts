@@ -12,6 +12,7 @@ export const deckLabels = {
   prev: { nl: 'Vorige slide', en: 'Previous slide' },
   next: { nl: 'Volgende slide', en: 'Next slide' },
   fullscreen: { nl: 'Volledig scherm', en: 'Full screen' },
+  exitFullscreen: { nl: 'Volledig scherm sluiten', en: 'Exit full screen' },
   language: { nl: 'Taal', en: 'Language' },
 } satisfies Record<string, Localized>
 
@@ -46,7 +47,7 @@ export const introSlides: IntroSlide[] = [
       { device: 'iphone', src: '/images/screens/soundcheckd-mobile.webp' },
       { device: 'iphone', src: '/images/screens/soundcheckd-appstore.webp' },
     ],
-    title: { nl: 'Van idee tot App Store. Volledig zelf.', en: 'From idea to App Store. Entirely my own.' },
+    title: { nl: 'Idee tot App Store', en: 'Idea to App Store' },
     bullets: [
       { nl: 'Afstuderen met eigen startup', en: 'Graduating with my own startup' },
       {
@@ -71,7 +72,7 @@ export const introSlides: IntroSlide[] = [
   {
     id: 'fidocs',
     devices: [{ device: 'macbook', src: '/images/screens/fidocs-desktop-1.webp' }],
-    title: { nl: 'Zelf opgezet. Landelijke schaal.', en: 'Set up by me. National scale.' },
+    title: { nl: 'Impact op landelijke schaal', en: 'Impact on a national scale' },
     bullets: [
       { nl: 'In dienst bij Louvels.dev', en: 'Employed at Louvels.dev' },
       { nl: 'Projectopzet en architectuur', en: 'Project setup and architecture' },
@@ -105,7 +106,7 @@ export const introSlides: IntroSlide[] = [
   },
   {
     id: 'fit',
-    title: { nl: 'Wat ik meebreng. Waar ik groei.', en: 'What I bring. Where I grow.' },
+    title: { nl: 'Waar ik nu sta', en: 'Where I stand now' },
     blocks: [
       {
         label: { nl: 'Meebrengen', en: 'What I bring' },
@@ -113,7 +114,19 @@ export const introSlides: IntroSlide[] = [
           nl: 'Dagelijkse praktijk in versiebeheer, deployments, API-koppelingen en AI in productie.',
           en: 'Daily practice in version control, deployments, API integrations and AI in production.',
         },
-        tags: ['Git', 'CI/CD', 'Azure DevOps', 'Docker', 'Microsoft SSO', 'LLMs', 'RAG', 'Prompt engineering', 'AVG/GDPR', 'Claude 101'],
+        tags: [
+          'Git',
+          'CI/CD',
+          'Azure DevOps',
+          'Docker',
+          'LLMs',
+          'RAG',
+          'Prompt engineering',
+          'Azure',
+          'RBAC',
+          'IaC',
+          'Entra ID (Microsoft SSO)',
+        ],
       },
       {
         label: { nl: 'Groeien', en: 'Growing' },
@@ -121,7 +134,7 @@ export const introSlides: IntroSlide[] = [
           nl: 'Van developer naar platform engineer. Azure, Entra ID en RBAC verdiepen, Microsoft Foundry en IaC in de praktijk, richting AZ-900 en AI-900. Samen met ervaren engineers, door naar medior.',
           en: 'From developer to platform engineer. Deepening Azure, Entra ID and RBAC, Microsoft Foundry and IaC in practice, towards AZ-900 and AI-900. Alongside experienced engineers, on to medior.',
         },
-        tags: ['Azure', 'Entra ID', 'RBAC', 'Microsoft Foundry', 'IaC'],
+        tags: ['Microsoft Foundry', 'AZ-900', 'AI-900'],
       },
     ],
   },
